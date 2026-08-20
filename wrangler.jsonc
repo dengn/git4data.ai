@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "git4data-ai",
+  "compatibility_date": "2026-08-20",
+
+  // Pure static site — no Worker script, just assets served from the repo root.
+  // Files listed in .assetsignore are not uploaded.
+  "assets": {
+    "directory": "./",
+
+    // "auto-trailing-slash" serves /benchmark from benchmark.html,
+    // which is what the canonical tags and sitemap.xml assume.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

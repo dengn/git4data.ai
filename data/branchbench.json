@@ -1,0 +1,589 @@
+{
+  "meta": {
+    "name": "BranchBench",
+    "subtitle": "Git4Data measured on the agentic database-branching benchmark",
+    "updated": "2026-08-20",
+    "primarySource": {
+      "label": "Git4Data: Database-Native Version Control for AI Agents — CIDR '27",
+      "authors": "Hongshen Gou, Zuyu Zhang, Yuze Sun, Peng Xu, Feng Tian, Long Wang (MatrixOrigin), Jianguo Wang (Purdue)",
+      "url": ""
+    },
+    "benchmarkSource": {
+      "label": "BranchBench: An Extensible Benchmark for Agentic Database Branching (CAIS '26 / arXiv:2604.17180)",
+      "url": "https://arxiv.org/abs/2604.17180"
+    },
+    "hardware": "Bare-metal CentOS · Intel Xeon Silver, 2.4 GHz, 64 cores · 256 GB RAM · local SSD · MatrixOne deployed on Kubernetes.",
+    "setup": "BranchBench at scale factor 100 is roughly 47 million rows. Each macro workflow is driven by five concurrent agents over twenty steps, each agent forking the database and merging or discarding its branch. Collaborative runs overlap on 10% of the primary keys, resolved with ACCEPT. Microbenchmarks use the TPC-H lineitem table at scale factor 100 (100 GB).",
+    "disclaimer": "Every value on this page is transcribed from the tables of the papers named under each suite. Nothing is estimated, interpolated, or read off a chart."
+  },
+  "suites": [
+    {
+      "id": "macro",
+      "name": "BranchBench macro workflows",
+      "short": "Macro · SF 100",
+      "desc": "End-to-end wall-clock time for the four agentic workflows at scale factor 100. Cold is the first run; warm is the average over subsequent runs.",
+      "unit": "s",
+      "lowerIsBetter": true,
+      "rowsLabel": "Workflow",
+      "source": "CIDR '27 Git4Data, Table 4",
+      "modes": [
+        {
+          "id": "warm",
+          "name": "Warm run"
+        },
+        {
+          "id": "cold",
+          "name": "Cold run"
+        }
+      ],
+      "cols": [
+        {
+          "id": "git4data",
+          "name": "Git4Data",
+          "self": true
+        },
+        {
+          "id": "dolt",
+          "name": "DoltDB"
+        }
+      ],
+      "rows": [
+        {
+          "id": "software_dev",
+          "name": "software_dev",
+          "desc": "An agent edits schema and code, backfills, and re-runs tests on each attempt.",
+          "values": {
+            "cold": {
+              "git4data": 138.9,
+              "dolt": 1938.8
+            },
+            "warm": {
+              "git4data": 122.1,
+              "dolt": 1925.6
+            }
+          }
+        },
+        {
+          "id": "failure_repro",
+          "name": "failure_repro",
+          "desc": "Binary search through a transaction log to isolate the change that broke something.",
+          "values": {
+            "cold": {
+              "git4data": 207.6,
+              "dolt": 1545.5
+            },
+            "warm": {
+              "git4data": 198.9,
+              "dolt": 1677.3
+            }
+          }
+        },
+        {
+          "id": "data_cleaning",
+          "name": "data_cleaning",
+          "desc": "Several competing repair strategies run in parallel; only the accepted deltas are merged.",
+          "values": {
+            "cold": {
+              "git4data": 62.6,
+              "dolt": 1075.2
+            },
+            "warm": {
+              "git4data": 58.6,
+              "dolt": 1084.2
+            }
+          }
+        },
+        {
+          "id": "mcts",
+          "name": "mcts",
+          "desc": "Monte Carlo tree search — a deep, narrow exploration tree, one branch per node.",
+          "values": {
+            "cold": {
+              "git4data": 36.0,
+              "dolt": 410.4
+            },
+            "warm": {
+              "git4data": 39.8,
+              "dolt": 410.2
+            }
+          }
+        }
+      ],
+      "decimals": 1
+    },
+    {
+      "id": "clone_time",
+      "name": "Clone a 100 GB table",
+      "short": "Micro · clone",
+      "desc": "Metadata-only branch creation from a snapshot, against materialising the same table with INSERT INTO T SELECT * FROM lineitem.",
+      "unit": "s",
+      "lowerIsBetter": true,
+      "rowsLabel": "Table shape",
+      "source": "CIDR '27 Git4Data, Table 1",
+      "cols": [
+        {
+          "id": "git4data",
+          "name": "Git4Data clone",
+          "self": true
+        },
+        {
+          "id": "sql",
+          "name": "INSERT … SELECT"
+        }
+      ],
+      "rows": [
+        {
+          "id": "pk",
+          "name": "With primary key",
+          "values": {
+            "_": {
+              "git4data": 0.2,
+              "sql": 114.6
+            }
+          }
+        },
+        {
+          "id": "nopk",
+          "name": "No primary key",
+          "values": {
+            "_": {
+              "git4data": 0.17,
+              "sql": 119.3
+            }
+          }
+        }
+      ],
+      "decimals": 1
+    },
+    {
+      "id": "clone_space",
+      "name": "Storage cost of a clone",
+      "short": "Micro · clone space",
+      "desc": "Bytes written when forking the same 100 GB table. A Git4Data branch copies the snapshot's object directory, not the objects.",
+      "unit": "MB",
+      "lowerIsBetter": true,
+      "rowsLabel": "Table shape",
+      "source": "CIDR '27 Git4Data, Table 1",
+      "cols": [
+        {
+          "id": "git4data",
+          "name": "Git4Data clone",
+          "self": true
+        },
+        {
+          "id": "sql",
+          "name": "INSERT … SELECT"
+        }
+      ],
+      "rows": [
+        {
+          "id": "pk",
+          "name": "With primary key",
+          "values": {
+            "_": {
+              "git4data": {
+                "v": 0.314,
+                "label": "314 KB"
+              },
+              "sql": {
+                "v": 34000,
+                "label": "34 GB"
+              }
+            }
+          }
+        },
+        {
+          "id": "nopk",
+          "name": "No primary key",
+          "values": {
+            "_": {
+              "git4data": {
+                "v": 0.294,
+                "label": "294 KB"
+              },
+              "sql": {
+                "v": 34000,
+                "label": "34 GB"
+              }
+            }
+          }
+        }
+      ],
+      "decimals": 1
+    },
+    {
+      "id": "diff",
+      "name": "Single-branch DIFF",
+      "short": "Micro · diff",
+      "desc": "DATA BRANCH DIFF against the equivalent hand-written SQL, after updating N random rows on a clone of lineitem.",
+      "unit": "s",
+      "lowerIsBetter": true,
+      "rowsLabel": "Rows changed",
+      "source": "CIDR '27 Git4Data, Table 2",
+      "modes": [
+        {
+          "id": "pk",
+          "name": "Primary key"
+        },
+        {
+          "id": "nopk",
+          "name": "No primary key"
+        }
+      ],
+      "cols": [
+        {
+          "id": "git4data",
+          "name": "Git4Data DIFF",
+          "self": true
+        },
+        {
+          "id": "sql",
+          "name": "Equivalent SQL"
+        }
+      ],
+      "rows": [
+        {
+          "id": "c1",
+          "name": "1,000",
+          "values": {
+            "pk": {
+              "git4data": 0.19,
+              "sql": 316.16
+            },
+            "nopk": {
+              "git4data": 0.85,
+              "sql": 378.19
+            }
+          }
+        },
+        {
+          "id": "c2",
+          "name": "10,000",
+          "values": {
+            "pk": {
+              "git4data": 0.38,
+              "sql": 418.19
+            },
+            "nopk": {
+              "git4data": 22.5,
+              "sql": 396.61
+            }
+          }
+        },
+        {
+          "id": "c3",
+          "name": "100,000",
+          "values": {
+            "pk": {
+              "git4data": 1.73,
+              "sql": 428.78
+            },
+            "nopk": {
+              "git4data": 9.04,
+              "sql": 394.13
+            }
+          }
+        },
+        {
+          "id": "c4",
+          "name": "1,000,000",
+          "values": {
+            "pk": {
+              "git4data": 3.27,
+              "sql": 431.5
+            },
+            "nopk": {
+              "git4data": 60.19,
+              "sql": 371.74
+            }
+          }
+        }
+      ],
+      "decimals": 2
+    },
+    {
+      "id": "merge",
+      "name": "Single-branch MERGE",
+      "short": "Micro · merge",
+      "desc": "DATA BRANCH MERGE against the hand-written SQL equivalent — materialise the diff, delete the negatives, insert the positives.",
+      "unit": "s",
+      "lowerIsBetter": true,
+      "rowsLabel": "Rows changed",
+      "source": "CIDR '27 Git4Data, Table 3",
+      "modes": [
+        {
+          "id": "pk",
+          "name": "Primary key"
+        },
+        {
+          "id": "nopk",
+          "name": "No primary key"
+        }
+      ],
+      "cols": [
+        {
+          "id": "git4data",
+          "name": "Git4Data MERGE",
+          "self": true
+        },
+        {
+          "id": "sql",
+          "name": "Equivalent SQL"
+        }
+      ],
+      "rows": [
+        {
+          "id": "c1",
+          "name": "1,000",
+          "values": {
+            "pk": {
+              "git4data": 0.35,
+              "sql": 321.52
+            },
+            "nopk": {
+              "git4data": 0.88,
+              "sql": 393.95
+            }
+          }
+        },
+        {
+          "id": "c2",
+          "name": "10,000",
+          "values": {
+            "pk": {
+              "git4data": 0.97,
+              "sql": 412.89
+            },
+            "nopk": {
+              "git4data": 22.7,
+              "sql": 405.35
+            }
+          }
+        },
+        {
+          "id": "c3",
+          "name": "100,000",
+          "values": {
+            "pk": {
+              "git4data": 7.95,
+              "sql": 442.68
+            },
+            "nopk": {
+              "git4data": 12.09,
+              "sql": 401.59
+            }
+          }
+        },
+        {
+          "id": "c4",
+          "name": "1,000,000",
+          "values": {
+            "pk": {
+              "git4data": 16.13,
+              "sql": 471.16
+            },
+            "nopk": {
+              "git4data": 68.75,
+              "sql": 403.18
+            }
+          }
+        }
+      ],
+      "decimals": 2
+    },
+    {
+      "id": "scaling",
+      "name": "Scaling the data 10×",
+      "short": "Scaling · SF100 → SF1,000",
+      "desc": "The same workflows re-run at ten times the data size. Branch-local work scales with the size of the change, not the size of the table — except where a workflow inherently rewrites everything.",
+      "unit": "s",
+      "lowerIsBetter": true,
+      "rowsLabel": "Workflow",
+      "source": "CIDR '27 Git4Data, Table 5",
+      "relLabel": "Growth",
+      "cols": [
+        {
+          "id": "sf100",
+          "name": "Scale factor 100"
+        },
+        {
+          "id": "sf1000",
+          "name": "Scale factor 1,000"
+        }
+      ],
+      "rows": [
+        {
+          "id": "software_dev",
+          "name": "software_dev",
+          "values": {
+            "_": {
+              "sf100": 127.5,
+              "sf1000": 366.3
+            }
+          }
+        },
+        {
+          "id": "data_cleaning",
+          "name": "data_cleaning",
+          "values": {
+            "_": {
+              "sf100": 99.3,
+              "sf1000": 322.5
+            }
+          }
+        },
+        {
+          "id": "failure_repro",
+          "name": "failure_repro",
+          "values": {
+            "_": {
+              "sf100": 199.0,
+              "sf1000": 2685.7
+            }
+          }
+        }
+      ],
+      "decimals": 1,
+      "noBest": true
+    }
+  ],
+  "capability": {
+    "note": "Whether the system can complete the workflow at all, before performance enters the conversation. Third-party columns are from the BranchBench paper (Table 4); the Git4Data column is from the CIDR '27 paper, Sections 4.2 and its Tables 4–5.",
+    "cols": [
+      {
+        "id": "git4data",
+        "name": "Git4Data",
+        "self": true
+      },
+      {
+        "id": "dolt",
+        "name": "Dolt"
+      },
+      {
+        "id": "neon",
+        "name": "Neon"
+      },
+      {
+        "id": "xata",
+        "name": "Xata"
+      },
+      {
+        "id": "tiger",
+        "name": "TigerData"
+      },
+      {
+        "id": "pg_clone",
+        "name": "PG 18 · file clone"
+      },
+      {
+        "id": "pg_txn",
+        "name": "PG 18 · savepoints"
+      }
+    ],
+    "rows": [
+      {
+        "id": "software_dev",
+        "name": "software_dev",
+        "v": {
+          "git4data": "yes",
+          "dolt": "yes",
+          "neon": "yes",
+          "xata": "no",
+          "tiger": "yes",
+          "pg_clone": "no",
+          "pg_txn": "no"
+        }
+      },
+      {
+        "id": "failure_repro",
+        "name": "failure_repro",
+        "v": {
+          "git4data": "yes",
+          "dolt": "yes",
+          "neon": "yes",
+          "xata": "no",
+          "tiger": "yes",
+          "pg_clone": "yes",
+          "pg_txn": "yes"
+        }
+      },
+      {
+        "id": "data_cleaning",
+        "name": "data_cleaning",
+        "v": {
+          "git4data": "yes",
+          "dolt": "yes",
+          "neon": "yes",
+          "xata": "no",
+          "tiger": "yes",
+          "pg_clone": "no",
+          "pg_txn": "no"
+        }
+      },
+      {
+        "id": "mcts",
+        "name": "mcts",
+        "v": {
+          "git4data": "yes",
+          "dolt": "yes",
+          "neon": "yes",
+          "xata": "no",
+          "tiger": "yes",
+          "pg_clone": "no",
+          "pg_txn": "no"
+        }
+      },
+      {
+        "id": "simulation",
+        "name": "simulation",
+        "v": {
+          "git4data": "yes",
+          "dolt": "no",
+          "neon": "no",
+          "xata": "no",
+          "tiger": "no",
+          "pg_clone": "yes",
+          "pg_txn": "yes"
+        }
+      }
+    ]
+  },
+  "findings": [
+    {
+      "headline": "0.20 s",
+      "text": "Forking a 100 GB TPC-H lineitem table. The branch costs 314 KB of metadata; materialising the same table with INSERT … SELECT takes 114.6 s and 34 GB.",
+      "src": "Table 1",
+      "short": "Forking a 100 GB TPC-H lineitem table"
+    },
+    {
+      "headline": "18.5×",
+      "text": "Largest end-to-end speedup over DoltDB across the four BranchBench workflows (data_cleaning, warm runs). The smallest is still 8.4×.",
+      "src": "Table 4",
+      "short": "Fastest end-to-end speedup over DoltDB"
+    },
+    {
+      "headline": "132×",
+      "text": "Built-in DIFF against the equivalent hand-written SQL on a one-million-row change with a primary key — 3.27 s versus 431.50 s.",
+      "src": "Table 2",
+      "short": "DIFF against the equivalent hand-written SQL"
+    },
+    {
+      "headline": "1,000",
+      "text": "Concurrent branching agents in the simulation workflow. Git4Data finishes in 400 s at scale factor 100; DoltDB does not finish within four hours.",
+      "src": "§4.2",
+      "short": "Concurrently branching agents sustained"
+    },
+    {
+      "headline": "3.2×",
+      "text": "Cost growth for software_dev and data_cleaning when the data grows 10×. Branch-local work scales with the change, not the table.",
+      "src": "Table 5",
+      "short": "Cost growth when the data grows 10×"
+    },
+    {
+      "headline": "13.5×",
+      "text": "The exception: failure_repro rewrites the whole table, so its cost does track data size as the benchmark scales from SF100 to SF1,000.",
+      "src": "Table 5",
+      "short": "The workflow that does track data size"
+    }
+  ]
+}

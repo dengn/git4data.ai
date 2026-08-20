@@ -1,0 +1,14 @@
+{
+  "name": "git4data-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site for git4data.ai",
+  "scripts": {
+    "dev": "wrangler dev",
+    "start": "python3 -m http.server 8080",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}
