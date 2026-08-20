@@ -104,8 +104,8 @@
     'foot.c3': '社区',
     'foot.docs': '官方文档',
     'foot.blog': 'Git4Data 深度解析',
-    'foot.paper': '研究论文',
-    'foot.cmp': '横向对比',
+    'foot.paper': 'BranchBench 论文',
+    'foot.cmp': '性能实测结果',
     'foot.built': '基于 MatrixOne 构建 · Apache 2.0',
 
     /* ── benchmark page ── */
