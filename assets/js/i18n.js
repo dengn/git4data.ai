@@ -16,8 +16,11 @@
     'hero.h1a': '给你的数据',
     'hero.h1b': '装上 Git',
     'hero.lede': '像管理代码一样对数据表打快照、开分支、看 diff、合并与回滚 —— <b>行级</b>粒度、<b>毫秒级</b>响应、<b>零拷贝</b>，全部用标准 SQL 完成。',
-    'hero.cta1': '60 秒跑起来',
-    'hero.cta2': '看看 SQL',
+    'hero.cta1': '看它怎么工作',
+    'hero.cta2': '看实测数据',
+    'ins.1': '启动 MatrixOne',
+    'ins.2': '用你手边任意一个 MySQL 客户端连上去',
+    'ins.note': 'Apache 2.0 · 不用注册、不用账号 · 没有任何要配置的东西。安装到此为止 —— 版本控制本来就在引擎里。',
     'hero.src': '数据实测自 BranchBench —— 查看完整结果 →',
     'copy': '复制',
 
