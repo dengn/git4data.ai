@@ -3,25 +3,32 @@
   "name": "git4data-ai",
   "compatibility_date": "2026-08-20",
 
+  // The playground API. Only /api/* reaches it — see run_worker_first below.
+  "main": "worker/index.js",
+  "compatibility_flags": ["nodejs_compat"],
+
   // Binds both hostnames on every deploy and creates their DNS records, so the
   // site is never one forgotten dashboard click away from being dark.
   //
-  // www serves the same assets rather than 301-ing to the apex. A real redirect
-  // would need a Worker script, and a script forces run_worker_first, which turns
-  // every asset request into a billable invocation — assets-only requests are
-  // free and unlimited, which is what a launch-day traffic spike needs. The
-  // canonical tags already point search engines at the apex; if you want a true
-  // redirect later, add a Cloudflare Redirect Rule (it runs ahead of Workers and
-  // costs no invocations).
+  // www serves the same assets rather than 301-ing to the apex. Routing it
+  // through the Worker would put every page view on the invocation meter, which
+  // is exactly what run_worker_first below is scoped to avoid. The canonical
+  // tags already point search engines at the apex; for a real redirect add a
+  // Cloudflare Redirect Rule — it runs ahead of Workers and costs nothing.
   "routes": [
     { "pattern": "git4data.ai", "custom_domain": true },
     { "pattern": "www.git4data.ai", "custom_domain": true }
   ],
 
-  // Pure static site — no Worker script, just assets served from the repo root.
-  // Files listed in .assetsignore are not uploaded.
+  // The site itself is static, served from the repo root. Files listed in
+  // .assetsignore stay out of the deployed bundle.
   "assets": {
     "directory": "./",
+    "binding": "ASSETS",
+
+    // Scope the Worker to the API. Every other path is served straight from
+    // the asset store: free, unmetered, and immune to a launch-day spike.
+    "run_worker_first": ["/api/*"],
 
     // "auto-trailing-slash" serves /benchmark from benchmark.html,
     // which is what the canonical tags and sitemap.xml assume.

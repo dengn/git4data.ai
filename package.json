@@ -4,11 +4,14 @@
   "private": true,
   "description": "Static site for git4data.ai",
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --port 3000",
     "start": "python3 -m http.server 8080",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
     "wrangler": "^4"
+  },
+  "dependencies": {
+    "mysql2": "^3.23.4"
   }
 }

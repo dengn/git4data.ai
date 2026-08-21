@@ -238,7 +238,7 @@
     });
   }
 
-  fetch('data/branchbench.json?v=3', { cache: 'no-cache' })
+  fetch('data/branchbench.json?v=4', { cache: 'no-cache' })
     .then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
