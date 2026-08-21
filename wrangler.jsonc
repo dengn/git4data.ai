@@ -3,6 +3,12 @@
   "name": "git4data-ai",
   "compatibility_date": "2026-08-20",
 
+  // Binds the apex domain on every deploy and creates the DNS record for it,
+  // so the site is never one forgotten dashboard click away from being dark.
+  "routes": [
+    { "pattern": "git4data.ai", "custom_domain": true }
+  ],
+
   // Pure static site — no Worker script, just assets served from the repo root.
   // Files listed in .assetsignore are not uploaded.
   "assets": {

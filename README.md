@@ -61,9 +61,17 @@ npx wrangler deploy
 
 ### Pointing git4data.ai at it
 
-After the first deploy, open the Worker → **Settings → Domains & Routes → Add custom domain** and
-enter `git4data.ai` (and `www.git4data.ai` if you want it). Because the domain is already in this
-Cloudflare account, the DNS record is created automatically.
+Nothing to click — `wrangler.jsonc` declares the custom domain:
+
+```jsonc
+"routes": [{ "pattern": "git4data.ai", "custom_domain": true }]
+```
+
+Every deploy binds the apex domain and creates its DNS record. Without this the Worker deploys fine
+but `git4data.ai` has no DNS record at all and the site is unreachable, which is easy to mistake for
+a build failure. To also serve `www`, add `{ "pattern": "www.git4data.ai", "custom_domain": true }`
+(a real www → apex *redirect* needs a Cloudflare Redirect Rule; a second custom domain just serves
+the same site at both names).
 
 ### If you use Cloudflare Pages instead
 
