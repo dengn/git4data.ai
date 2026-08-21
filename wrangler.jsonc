@@ -3,10 +3,19 @@
   "name": "git4data-ai",
   "compatibility_date": "2026-08-20",
 
-  // Binds the apex domain on every deploy and creates the DNS record for it,
-  // so the site is never one forgotten dashboard click away from being dark.
+  // Binds both hostnames on every deploy and creates their DNS records, so the
+  // site is never one forgotten dashboard click away from being dark.
+  //
+  // www serves the same assets rather than 301-ing to the apex. A real redirect
+  // would need a Worker script, and a script forces run_worker_first, which turns
+  // every asset request into a billable invocation — assets-only requests are
+  // free and unlimited, which is what a launch-day traffic spike needs. The
+  // canonical tags already point search engines at the apex; if you want a true
+  // redirect later, add a Cloudflare Redirect Rule (it runs ahead of Workers and
+  // costs no invocations).
   "routes": [
-    { "pattern": "git4data.ai", "custom_domain": true }
+    { "pattern": "git4data.ai", "custom_domain": true },
+    { "pattern": "www.git4data.ai", "custom_domain": true }
   ],
 
   // Pure static site — no Worker script, just assets served from the repo root.

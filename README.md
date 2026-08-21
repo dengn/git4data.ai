@@ -67,11 +67,16 @@ Nothing to click — `wrangler.jsonc` declares the custom domain:
 "routes": [{ "pattern": "git4data.ai", "custom_domain": true }]
 ```
 
-Every deploy binds the apex domain and creates its DNS record. Without this the Worker deploys fine
-but `git4data.ai` has no DNS record at all and the site is unreachable, which is easy to mistake for
-a build failure. To also serve `www`, add `{ "pattern": "www.git4data.ai", "custom_domain": true }`
-(a real www → apex *redirect* needs a Cloudflare Redirect Rule; a second custom domain just serves
-the same site at both names).
+Every deploy binds both hostnames and creates their DNS records. Without this the Worker deploys
+fine but `git4data.ai` has no DNS record at all and the site is unreachable, which is easy to
+mistake for a build failure.
+
+`www` serves the same assets rather than redirecting. A real 301 would need a Worker script, and
+adding `main` forces `run_worker_first` so that every asset request becomes a billable Worker
+invocation (100k/day on the free plan) — where an assets-only Worker serves static files free and
+unlimited, which is what a launch-day spike needs. The canonical tags already point search engines
+at the apex. If you want a true redirect, add a Cloudflare **Redirect Rule** in the dashboard: it
+runs ahead of Workers and costs no invocations.
 
 ### If you use Cloudflare Pages instead
 
