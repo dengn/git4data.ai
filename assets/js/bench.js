@@ -8,6 +8,15 @@
   var $ = function (id) { return document.getElementById(id); };
   var T = function (k, f) { return (window.g4dT ? window.g4dT(k, f) : f); };
 
+  /* Pick the Chinese variant of a field when the page is in Chinese.
+     Every translatable key in the dataset has an optional "<key>Zh" sibling;
+     missing ones fall back to English rather than to an empty string. */
+  function L(obj, key) {
+    if (!obj) return '';
+    if (window.G4D_LANG === 'zh' && obj[key + 'Zh'] != null) return obj[key + 'Zh'];
+    return obj[key] == null ? '' : obj[key];
+  }
+
   /* ── number formatting ── */
   function raw(v) { return (v && typeof v === 'object') ? v.v : v; }
   /* Reproduce the precision printed in the source table: each suite declares
@@ -42,7 +51,7 @@
     sel.innerHTML = '';
     D.suites.forEach(function (s) {
       var o = document.createElement('option');
-      o.value = s.id; o.textContent = s.short || s.name;
+      o.value = s.id; o.textContent = L(s, 'short') || L(s, 'name');
       sel.appendChild(o);
     });
     sel.value = suite.id;
@@ -62,7 +71,7 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'seg-b' + (m.id === mode ? ' is-on' : '');
-      b.textContent = m.name;
+      b.textContent = L(m, 'name');
       b.onclick = function () { mode = m.id; buildModes(); render(); };
       seg.appendChild(b);
     });
@@ -76,7 +85,7 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'sys' + (hidden[key] ? ' is-off' : '') + (c.self ? ' is-self' : '');
-      b.innerHTML = '<span class="sys-dot"></span>' + c.name;
+      b.innerHTML = '<span class="sys-dot"></span>' + L(c, 'name');
       b.onclick = function () {
         if (!hidden[key] && activeCols().length <= 1) return;   /* keep at least one */
         hidden[key] = !hidden[key];
@@ -91,17 +100,17 @@
     var cols = activeCols();
     var head = $('benchHead'), body = $('benchBody');
 
-    $('suiteDesc').textContent = suite.desc;
-    $('srcNote').innerHTML = T('bb.src', 'Source') + ': ' + suite.source + ' · ' +
+    $('suiteDesc').textContent = L(suite, 'desc');
+    $('srcNote').innerHTML = T('bb.src', 'Source') + ': ' + L(suite, 'source') + ' · ' +
       (suite.lowerIsBetter ? T('bb.lower', 'lower is better') : T('bb.higher', 'higher is better')) +
       ' · ' + T('bb.unit', 'unit') + ': ' + suite.unit;
 
     /* header */
-    var hr = '<tr><th scope="col" class="c-row">' + (suite.rowsLabel || 'Row') + '</th>';
+    var hr = '<tr><th scope="col" class="c-row">' + (L(suite, 'rowsLabel') || 'Row') + '</th>';
     cols.forEach(function (c) {
-      hr += '<th scope="col" class="c-val' + (c.self ? ' me' : '') + '">' + c.name + '</th>';
+      hr += '<th scope="col" class="c-val' + (c.self ? ' me' : '') + '">' + L(c, 'name') + '</th>';
     });
-    hr += '<th scope="col" class="c-gap">' + (suite.relLabel || T('bb.gap', 'Gap')) + '</th></tr>';
+    hr += '<th scope="col" class="c-gap">' + (L(suite, 'relLabel') || T('bb.gap', 'Gap')) + '</th></tr>';
     head.innerHTML = hr;
 
     /* body */
@@ -114,8 +123,9 @@
       var worst = suite.lowerIsBetter ? Math.max.apply(null, nums) : Math.min.apply(null, nums);
 
       var tr = document.createElement('tr');
-      var html = '<th scope="row" class="c-row">' + r.name +
-        (r.desc ? '<span class="row-desc">' + r.desc + '</span>' : '') + '</th>';
+      var rdesc = L(r, 'desc');
+      var html = '<th scope="row" class="c-row">' + L(r, 'name') +
+        (rdesc ? '<span class="row-desc">' + rdesc + '</span>' : '') + '</th>';
 
       cols.forEach(function (c) {
         var v = vals[c.id], n = raw(v);
@@ -152,7 +162,7 @@
   function renderBigNums() {
     var ul = $('bigNums');
     ul.innerHTML = D.findings.slice(0, 4).map(function (f) {
-      return '<li><b>' + f.headline + '</b><span>' + (f.short || f.text) + '</span></li>';
+      return '<li><b>' + f.headline + '</b><span>' + (L(f, 'short') || L(f, 'text')) + '</span></li>';
     }).join('');
   }
 
@@ -160,7 +170,7 @@
     $('findGrid').innerHTML = D.findings.map(function (f) {
       return '<article class="find">' +
         '<span class="find-n">' + f.headline + '</span>' +
-        '<p>' + f.text + '</p>' +
+        '<p>' + L(f, 'text') + '</p>' +
         '<span class="find-src">' + f.src + '</span>' +
       '</article>';
     }).join('');
@@ -170,11 +180,11 @@
     var c = D.capability;
     var h = '<thead><tr><th scope="col">' + T('bb.workflow', 'Workflow') + '</th>';
     c.cols.forEach(function (col) {
-      h += '<th scope="col"' + (col.self ? ' class="me"' : '') + '>' + col.name + '</th>';
+      h += '<th scope="col"' + (col.self ? ' class="me"' : '') + '>' + L(col, 'name') + '</th>';
     });
     h += '</tr></thead><tbody>';
     c.rows.forEach(function (r) {
-      h += '<tr><th scope="row">' + r.name + '</th>';
+      h += '<tr><th scope="row">' + L(r, 'name') + '</th>';
       c.cols.forEach(function (col) {
         var s = r.v[col.id];
         var cls = s === 'yes' ? 'y' : s === 'no' ? 'n' : 'p';
@@ -185,13 +195,13 @@
     });
     h += '</tbody>';
     $('capTable').innerHTML = h;
-    $('capNote').textContent = c.note;
+    $('capNote').textContent = L(c, 'note');
   }
 
   function renderMeta() {
-    $('mHardware').textContent = D.meta.hardware;
-    $('mSetup').textContent = D.meta.setup;
-    $('mDisclaimer').textContent = D.meta.disclaimer;
+    $('mHardware').textContent = L(D.meta, 'hardware');
+    $('mSetup').textContent = L(D.meta, 'setup');
+    $('mDisclaimer').textContent = L(D.meta, 'disclaimer');
 
     var srcs = [];
     if (D.meta.primarySource) srcs.push(D.meta.primarySource);
@@ -222,10 +232,13 @@
       };
     });
 
-    document.addEventListener('g4d:lang', function () { render(); renderMeta(); renderCapability(); });
+    document.addEventListener('g4d:lang', function () {
+      buildSuiteSelect(); buildModes(); buildCols();
+      renderBigNums(); renderFindings(); renderCapability(); renderMeta(); render();
+    });
   }
 
-  fetch('data/branchbench.json?v=1', { cache: 'no-cache' })
+  fetch('data/branchbench.json?v=2', { cache: 'no-cache' })
     .then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();

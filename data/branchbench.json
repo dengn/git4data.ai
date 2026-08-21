@@ -14,7 +14,10 @@
     },
     "hardware": "Bare-metal CentOS · Intel Xeon Silver, 2.4 GHz, 64 cores · 256 GB RAM · local SSD · MatrixOne deployed on Kubernetes.",
     "setup": "BranchBench at scale factor 100 is roughly 47 million rows. Each macro workflow is driven by five concurrent agents over twenty steps, each agent forking the database and merging or discarding its branch. Collaborative runs overlap on 10% of the primary keys, resolved with ACCEPT. Microbenchmarks use the TPC-H lineitem table at scale factor 100 (100 GB).",
-    "disclaimer": "Every value on this page is transcribed from the tables of the papers named under each suite. Nothing is estimated, interpolated, or read off a chart."
+    "disclaimer": "Every value on this page is transcribed from the tables of the papers named under each suite. Nothing is estimated, interpolated, or read off a chart.",
+    "hardwareZh": "裸金属 CentOS · Intel Xeon Silver，2.4 GHz，64 核 · 256 GB 内存 · 本地 SSD · MatrixOne 部署在 Kubernetes 上。",
+    "setupZh": "BranchBench 在 scale factor 100 下约为 4700 万行。每个宏观工作流由五个并发 Agent 各执行二十步驱动，每个 Agent 都会 fork 一份数据库，然后合并或丢弃自己的分支。协作场景下各分支有 10% 的主键重叠，用 ACCEPT 策略化解。微基准使用 scale factor 100（100 GB）的 TPC-H lineitem 表。",
+    "disclaimerZh": "本页每一个数值都誊自各实验组标注的论文表格。没有任何估算、插值，也没有从图上读数。"
   },
   "suites": [
     {
@@ -29,11 +32,13 @@
       "modes": [
         {
           "id": "warm",
-          "name": "Warm run"
+          "name": "Warm run",
+          "nameZh": "预热后"
         },
         {
           "id": "cold",
-          "name": "Cold run"
+          "name": "Cold run",
+          "nameZh": "冷启动"
         }
       ],
       "cols": [
@@ -61,7 +66,8 @@
               "git4data": 122.1,
               "dolt": 1925.6
             }
-          }
+          },
+          "descZh": "Agent 修改 schema 与代码、回填数据，并在每次尝试后重跑测试。"
         },
         {
           "id": "failure_repro",
@@ -76,7 +82,8 @@
               "git4data": 198.9,
               "dolt": 1677.3
             }
-          }
+          },
+          "descZh": "在事务日志里二分查找，定位究竟是哪一步弄坏了东西。"
         },
         {
           "id": "data_cleaning",
@@ -91,7 +98,8 @@
               "git4data": 58.6,
               "dolt": 1084.2
             }
-          }
+          },
+          "descZh": "多种修复策略并行运行，只有被接受的增量才会被合并。"
         },
         {
           "id": "mcts",
@@ -106,10 +114,15 @@
               "git4data": 39.8,
               "dolt": 410.2
             }
-          }
+          },
+          "descZh": "蒙特卡洛树搜索 —— 又深又窄的探索树，每个节点一个分支。"
         }
       ],
-      "decimals": 1
+      "decimals": 1,
+      "nameZh": "BranchBench 宏观工作流",
+      "shortZh": "宏观 · SF 100",
+      "descZh": "四个 Agent 工作流在 scale factor 100 下的端到端墙钟时间。Cold 为首次运行，Warm 为后续运行的平均值。",
+      "rowsLabelZh": "工作流"
     },
     {
       "id": "clone_time",
@@ -128,7 +141,8 @@
         },
         {
           "id": "sql",
-          "name": "INSERT … SELECT"
+          "name": "INSERT … SELECT",
+          "nameZh": "等价 SQL"
         }
       ],
       "rows": [
@@ -140,7 +154,8 @@
               "git4data": 0.2,
               "sql": 114.6
             }
-          }
+          },
+          "nameZh": "有主键"
         },
         {
           "id": "nopk",
@@ -150,10 +165,16 @@
               "git4data": 0.17,
               "sql": 119.3
             }
-          }
+          },
+          "nameZh": "无主键"
         }
       ],
-      "decimals": 1
+      "decimals": 1,
+      "nameZh": "克隆一张 100 GB 的表",
+      "shortZh": "微基准 · 克隆耗时",
+      "descZh": "从快照创建纯元数据分支，对比用 INSERT INTO T SELECT * FROM lineitem 把同一张表物化出来。",
+      "rowsLabelZh": "表结构",
+      "colsZhOverride": true
     },
     {
       "id": "clone_space",
@@ -172,7 +193,8 @@
         },
         {
           "id": "sql",
-          "name": "INSERT … SELECT"
+          "name": "INSERT … SELECT",
+          "nameZh": "等价 SQL"
         }
       ],
       "rows": [
@@ -190,7 +212,8 @@
                 "label": "34 GB"
               }
             }
-          }
+          },
+          "nameZh": "有主键"
         },
         {
           "id": "nopk",
@@ -206,10 +229,15 @@
                 "label": "34 GB"
               }
             }
-          }
+          },
+          "nameZh": "无主键"
         }
       ],
-      "decimals": 1
+      "decimals": 1,
+      "nameZh": "克隆的存储代价",
+      "shortZh": "微基准 · 克隆空间",
+      "descZh": "fork 同一张 100 GB 表时写入的字节数。Git4Data 的分支复制的是快照的对象目录，而不是对象本身。",
+      "rowsLabelZh": "表结构"
     },
     {
       "id": "diff",
@@ -223,11 +251,13 @@
       "modes": [
         {
           "id": "pk",
-          "name": "Primary key"
+          "name": "Primary key",
+          "nameZh": "有主键"
         },
         {
           "id": "nopk",
-          "name": "No primary key"
+          "name": "No primary key",
+          "nameZh": "无主键"
         }
       ],
       "cols": [
@@ -238,7 +268,8 @@
         },
         {
           "id": "sql",
-          "name": "Equivalent SQL"
+          "name": "Equivalent SQL",
+          "nameZh": "等价 SQL"
         }
       ],
       "rows": [
@@ -299,7 +330,11 @@
           }
         }
       ],
-      "decimals": 2
+      "decimals": 2,
+      "nameZh": "单分支 DIFF",
+      "shortZh": "微基准 · diff",
+      "descZh": "在 lineitem 的克隆体上更新 N 行随机数据后，DATA BRANCH DIFF 与等价手写 SQL 的对比。",
+      "rowsLabelZh": "变更行数"
     },
     {
       "id": "merge",
@@ -313,11 +348,13 @@
       "modes": [
         {
           "id": "pk",
-          "name": "Primary key"
+          "name": "Primary key",
+          "nameZh": "有主键"
         },
         {
           "id": "nopk",
-          "name": "No primary key"
+          "name": "No primary key",
+          "nameZh": "无主键"
         }
       ],
       "cols": [
@@ -328,7 +365,8 @@
         },
         {
           "id": "sql",
-          "name": "Equivalent SQL"
+          "name": "Equivalent SQL",
+          "nameZh": "等价 SQL"
         }
       ],
       "rows": [
@@ -389,7 +427,11 @@
           }
         }
       ],
-      "decimals": 2
+      "decimals": 2,
+      "nameZh": "单分支 MERGE",
+      "shortZh": "微基准 · merge",
+      "descZh": "DATA BRANCH MERGE 与等价手写 SQL 的对比 —— 后者需要物化 diff、删掉负数行、插入正数行。",
+      "rowsLabelZh": "变更行数"
     },
     {
       "id": "scaling",
@@ -404,11 +446,13 @@
       "cols": [
         {
           "id": "sf100",
-          "name": "Scale factor 100"
+          "name": "Scale factor 100",
+          "nameZh": "scale factor 100"
         },
         {
           "id": "sf1000",
-          "name": "Scale factor 1,000"
+          "name": "Scale factor 1,000",
+          "nameZh": "scale factor 1,000"
         }
       ],
       "rows": [
@@ -444,7 +488,12 @@
         }
       ],
       "decimals": 1,
-      "noBest": true
+      "noBest": true,
+      "nameZh": "数据规模放大 10 倍",
+      "shortZh": "扩展性 · SF100 → SF1,000",
+      "descZh": "同样的工作流在十倍数据量下重跑。分支内的工作量取决于改动大小而非表的大小 —— 除非某个工作流本身就要重写整张表。",
+      "rowsLabelZh": "工作流",
+      "relLabelZh": "增长"
     }
   ],
   "capability": {
@@ -546,44 +595,57 @@
           "pg_txn": "yes"
         }
       }
-    ]
+    ],
+    "noteZh": "这里问的是：抛开性能不谈，该系统究竟能不能把这套工作流跑完。第三方各列出自 BranchBench 论文（表 4）；Git4Data 一列出自 CIDR '27 论文 4.2 节及其表 4–5。"
   },
   "findings": [
     {
       "headline": "0.20 s",
       "text": "Forking a 100 GB TPC-H lineitem table. The branch costs 314 KB of metadata; materialising the same table with INSERT … SELECT takes 114.6 s and 34 GB.",
       "src": "Table 1",
-      "short": "Forking a 100 GB TPC-H lineitem table"
+      "short": "Forking a 100 GB TPC-H lineitem table",
+      "shortZh": "fork 一张 100 GB 的 TPC-H lineitem 表",
+      "textZh": "fork 一张 100 GB 的 TPC-H lineitem 表。这个分支只花 314 KB 元数据；而用 INSERT … SELECT 把同一张表物化出来要 114.6 秒、34 GB。"
     },
     {
       "headline": "18.5×",
       "text": "Largest end-to-end speedup over DoltDB across the four BranchBench workflows (data_cleaning, warm runs). The smallest is still 8.4×.",
       "src": "Table 4",
-      "short": "Fastest end-to-end speedup over DoltDB"
+      "short": "Fastest end-to-end speedup over DoltDB",
+      "shortZh": "对 DoltDB 的最大端到端加速比",
+      "textZh": "BranchBench 四个工作流中对 DoltDB 的最大端到端加速比（data_cleaning，warm run）。最小的一个也有 8.4 倍。"
     },
     {
       "headline": "132×",
       "text": "Built-in DIFF against the equivalent hand-written SQL on a one-million-row change with a primary key — 3.27 s versus 431.50 s.",
       "src": "Table 2",
-      "short": "DIFF against the equivalent hand-written SQL"
+      "short": "DIFF against the equivalent hand-written SQL",
+      "shortZh": "内建 DIFF 对比等价手写 SQL",
+      "textZh": "在有主键、百万行改动的场景下，内建 DIFF 与等价手写 SQL 的对比 —— 3.27 秒 对 431.50 秒。"
     },
     {
       "headline": "1,000",
       "text": "Concurrent branching agents in the simulation workflow. Git4Data finishes in 400 s at scale factor 100; DoltDB does not finish within four hours.",
       "src": "§4.2",
-      "short": "Concurrently branching agents sustained"
+      "short": "Concurrently branching agents sustained",
+      "shortZh": "可持续支撑的并发分支 Agent 数",
+      "textZh": "simulation 工作流中的并发分支 Agent 数量。Git4Data 在 scale factor 100 下 400 秒完成；DoltDB 四小时内跑不完。"
     },
     {
       "headline": "3.2×",
       "text": "Cost growth for software_dev and data_cleaning when the data grows 10×. Branch-local work scales with the change, not the table.",
       "src": "Table 5",
-      "short": "Cost growth when the data grows 10×"
+      "short": "Cost growth when the data grows 10×",
+      "shortZh": "数据放大 10 倍时的代价增长",
+      "textZh": "数据量放大十倍时 software_dev 与 data_cleaning 的代价增长。分支内的工作量取决于改动，而不是表。"
     },
     {
       "headline": "13.5×",
       "text": "The exception: failure_repro rewrites the whole table, so its cost does track data size as the benchmark scales from SF100 to SF1,000.",
       "src": "Table 5",
-      "short": "The workflow that does track data size"
+      "short": "The workflow that does track data size",
+      "shortZh": "唯一一个代价确实随数据量走的工作流",
+      "textZh": "例外情况：failure_repro 会重写整张表，所以从 SF100 到 SF1,000，它的代价确实随数据规模增长。"
     }
   ]
 }
