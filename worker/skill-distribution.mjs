@@ -28,7 +28,8 @@ export async function skillDistribution(request, ctx) {
     }});
   }
   // One cache key per release and edge location; ignore arbitrary visitor query strings.
-  const key = new Request(`${url.origin}${statsPath}?release=${skill.tag}`);
+  const key = new Request(`https://git4data.ai${statsPath}?release=${skill.tag}`);
+  const lastGoodKey = new Request(`${key.url}&last-good=1`);
   const cached = await caches.default.match(key);
   if (cached) return request.method === 'HEAD' ? new Response(null, cached) : cached;
   let response;
@@ -37,7 +38,7 @@ export async function skillDistribution(request, ctx) {
       headers: {'accept': 'application/vnd.github+json', 'user-agent': 'git4data-skill-downloads', 'x-github-api-version': '2022-11-28'},
       signal: AbortSignal.timeout(5000),
     });
-    if (!upstream.ok) throw new Error('Release metadata unavailable');
+    if (!upstream.ok) throw new Error(`GitHub public metadata returned ${upstream.status}; remaining=${upstream.headers.get('x-ratelimit-remaining')}`);
     const release = await upstream.json();
     const asset = release.assets?.find(item => item.name === skill.asset && item.state === 'uploaded');
     if (!asset || !Number.isSafeInteger(asset.download_count) || asset.download_count < 0) {
@@ -46,11 +47,17 @@ export async function skillDistribution(request, ctx) {
     response = reply({
       available: true, skill: skill.name, version: skill.version,
       downloads: asset.download_count, metric: 'github_release_asset_downloads',
-      scope: 'this_version', source: releaseUrl, observedAt: new Date().toISOString(),
+      scope: 'this_version', source: releaseUrl, observedAt: new Date().toISOString(), stale: false,
     });
-  } catch {
+    const retained = new Response(response.clone().body, response);
+    retained.headers.set('cache-control', 'public, max-age=86400');
+    ctx.waitUntil(caches.default.put(lastGoodKey, retained).catch(() => {}));
+  } catch (error) {
+    console.warn('Skill download count unavailable:', error.message);
     // Missing/rate-limited data is never presented as zero downloads.
     response = reply({available: false, version: skill.version, downloads: null, source: releaseUrl}, 200, 60);
+    const lastGood = await caches.default.match(lastGoodKey);
+    if (lastGood) response = reply({...await lastGood.json(), stale: true}, 200, 60);
   }
   ctx.waitUntil(caches.default.put(key, response.clone()).catch(() => {}));
   return request.method === 'HEAD' ? new Response(null, response) : response;

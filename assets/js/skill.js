@@ -9,7 +9,7 @@
     if (metrics) {
       count.textContent = metrics.downloads.toLocaleString(zh ? 'zh-CN' : 'en-US');
       var time = new Date(metrics.observedAt).toISOString().slice(0, 16).replace('T', ' ');
-      status.textContent = (zh ? 'GitHub 文件下载 · v' : 'GitHub asset downloads · v') + metrics.version + (zh ? ' · 更新于 ' : ' · updated ') + time + ' UTC';
+      status.textContent = (zh ? 'GitHub 文件下载 · v' : 'GitHub asset downloads · v') + metrics.version + (metrics.stale ? (zh ? ' · 最近可用数据 ' : ' · last available ') : (zh ? ' · 更新于 ' : ' · updated ')) + time + ' UTC';
     } else {
       count.textContent = '—';
       status.textContent = finished

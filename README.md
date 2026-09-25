@@ -251,7 +251,9 @@ redeployments. `/api/skill/download` redirects to the fixed release asset; `/api
 that asset's public `download_count`, cached for 15 minutes at each edge location. These endpoints
 run before any database configuration checks and do not depend on MatrixOne availability. No new
 Cloudflare storage, analytics subscription, or OAuth scope is required. API rate limits/outages
-render an unavailable count, never an invented zero. Downloads continue via the release link.
+reuse a timestamped last-good observation for up to 24 hours when available, or render an unavailable
+count; neither path invents a zero. GitHub can rate-limit shared Cloudflare egress IPs. Downloads
+continue via the release link. The apex and www hostnames share the same per-release cache key.
 
 The current-version count includes repeated requests, bots and our verification downloads. It does
 not deduplicate people or prove installation or use. Source clones, mirrors and copied instructions
