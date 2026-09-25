@@ -6,6 +6,8 @@
   // The playground API. Only /api/* reaches it — see run_worker_first below.
   "main": "worker/index.js",
   "compatibility_flags": ["nodejs_compat"],
+  "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "f6ca605cdbbc4c0399310f4ab536d433" }],
+  "triggers": { "crons": ["*/10 * * * *"] },
 
   // Binds both hostnames on every deploy and creates their DNS records, so the
   // site is never one forgotten dashboard click away from being dark.

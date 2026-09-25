@@ -56,8 +56,8 @@
     <h1 data-i18n="pg.h">Break a real database. It's only your branch.</h1>
     <p class="lede play-lede" data-i18n="pg.sub">
       This is a live MatrixOne instance, not a recording. The moment you opened this page you were given
-      your own branch of the customers table — forked from a snapshot, not copied. Change anything you
-      like; nobody else sees it, and it disappears when you leave.
+      your own branch of 124 sample customer records. Follow the guided SQL workflow to snapshot,
+      branch, repair, review, and merge. Inactive branches are reclaimed automatically.
     </p>
   </header>
 
@@ -76,8 +76,8 @@
       <p class="eyebrow-sm" data-i18n="pg.guide">The four verbs, in order</p>
       <ol id="stepList"></ol>
       <p class="play-hint" data-i18n="pg.hint">
-        Click a step to load it, then run it. Or ignore all of this and type your own SQL —
-        it is your branch.
+        Run the steps in order. You can also use SELECT * or DESCRIBE on customers and customers_fix,
+        and edit the country values in the tutorial update. Other SQL is unavailable in this public demo.
       </p>
     </aside>
 
@@ -94,9 +94,9 @@
         autocomplete="off" rows="5"></textarea>
 
       <div class="con-actions">
-        <button class="btn btn-primary" id="runBtn" type="button" data-i18n="pg.run">Run</button>
+        <button class="btn btn-primary" id="runBtn" type="button" disabled data-i18n="pg.run">Run</button>
         <span class="con-kbd mono">⌘/Ctrl + ↵</span>
-        <button class="btn btn-ghost" id="resetBtn" type="button" data-i18n="pg.reset">Reset my branch</button>
+        <button class="btn btn-ghost" id="resetBtn" type="button" disabled data-i18n="pg.reset">Reset my branch</button>
       </div>
 
       <div class="con-out" id="output">
@@ -108,16 +108,15 @@
   <section class="play-note">
     <h2 data-i18n="pg.howh">How this page scales — and why that's the point</h2>
     <p data-i18n="pg.howp">
-      Every visitor here gets a real, writable, isolated copy of the same table. On any other database that
-      means a container each, or everyone sharing one schema and stepping on each other. Here it is one
-      statement — <code>DATA BRANCH CREATE TABLE</code> — costing metadata rather than a copy, which is why
-      thousands of these fit on a single instance. The architecture of this playground is the claim the
-      rest of the site is making.
+      Each visitor gets a writable branch of the same 124-row sample dataset using
+      <code>DATA BRANCH CREATE TABLE</code>. Follow the steps to snapshot, branch, repair,
+      review the changed rows, and merge into your own table. Your changes stay in your session.
     </p>
     <p class="play-limits" data-i18n="pg.limits">
       Limits, so you know where the edges are: one statement at a time, 5-second timeout, 200 rows returned,
-      80 statements per branch, and the branch is reclaimed after 20 minutes idle. Statements that would
-      reach outside your branch are refused. None of that applies to MatrixOne on your own machine.
+      80 statements per branch. Sessions expire after 20 minutes idle and are periodically reclaimed.
+      Only the guided workflow, supported queries, and country updates are available here.
+      These playground limits do not apply to MatrixOne on your own machine.
     </p>
   </section>
 </main>
@@ -129,8 +128,8 @@
   </div>
 </footer>
 
-<script src="assets/js/i18n.js?v=5" defer></script>
-<script src="assets/js/playground.js?v=4" defer></script>
+<script src="assets/js/i18n.js?v=6" defer></script>
+<script src="assets/js/playground.js?v=6" defer></script>
 <script src="assets/js/main.js?v=5" defer></script>
 </body>
 </html>

@@ -161,6 +161,6 @@ CREATE TABLE _sessions (
 -- The snapshot every visitor branch is forked from. Recreate it if you
 -- ever change the seed data above.
 DROP SNAPSHOT IF EXISTS g4d_base;
-CREATE SNAPSHOT g4d_base FOR TABLE g4d_demo.customers;
+CREATE SNAPSHOT g4d_base FOR TABLE g4d_demo customers;
 
 SELECT COUNT(*) AS seeded_rows FROM customers;

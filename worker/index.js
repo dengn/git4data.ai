@@ -2,76 +2,50 @@
  * git4data.ai — playground API.
  *
  * Every visitor gets their own branch of the same demo table, created with
- * DATA BRANCH CREATE TABLE. That is the whole isolation model: a branch costs
- * metadata rather than a copy, so thousands of sandboxes fit on one instance —
- * the playground's architecture is the product claim.
+ * DATA BRANCH CREATE TABLE. A closed tutorial compiler scopes all visitor
+ * operations to that session, including globally named snapshots.
  *
  * Only /api/* reaches this Worker (see run_worker_first in wrangler.jsonc);
  * every static file is served straight from the asset store, free and
  * unmetered, so a launch-day spike never turns into Worker invocations.
  *
- * Credentials live in secrets, never in this repo:
+ * Production credentials live in Hyperdrive. Direct Node.js connections use
+ * secrets, never credentials committed to this repo:
  *   MO_HOST  MO_PORT  MO_USER  MO_PASSWORD   (wrangler secret put …)
  * They are kept as four separate values on purpose — a MatrixOne Cloud
  * username contains colons, which makes a mysql:// DSN ambiguous to parse.
  */
 
 import mysql from 'mysql2/promise';
+import { compileSql, idOk, dbFor, snapshotsFor } from './playground-sql.mjs';
 
 const BASE_DB = 'g4d_demo';
 const BASE_TABLE = 'customers';
 const BASE_SNAPSHOT = 'g4d_base';
 
-const SESSION_TTL_MS = 20 * 60 * 1000;  // idle time before a branch is reclaimed
+const SESSION_TTL_MS = 20 * 60 * 1000;  // idle time before a session expires
 const QUERY_BUDGET = 80;                // statements per session
 const QUERY_TIMEOUT_MS = 5000;
-const MAX_SQL_LEN = 2000;
 const MAX_ROWS = 200;
 const SWEEP_PER_CALL = 5;               // bound the work one request can do
 
-/* ── statement gate ──────────────────────────────────────────────
-   Allow-list the leading verb, then deny anything that could reach
-   outside the session's own database. Strict by design: a playground
-   that occasionally refuses a legitimate query is fine, one that lets
-   a visitor touch the account is not. */
-const ALLOWED = [
-  /^select\b/i, /^with\b/i, /^show\b/i, /^desc(ribe)?\b/i, /^explain\b/i,
-  /^insert\b/i, /^update\b/i, /^delete\b/i, /^replace\b/i,
-  /^create\s+snapshot\b/i, /^drop\s+snapshot\b/i,
-  /^data\s+branch\b/i, /^restore\s+table\b/i,
-  /^create\s+table\b/i, /^alter\s+table\b/i, /^truncate\b/i, /^drop\s+table\b/i,
-];
-
-const DENIED = [
-  /\bcreate\s+database\b/i, /\bdrop\s+database\b/i, /\bcreate\s+schema\b/i,
-  /\b(create|drop|alter)\s+(user|account|role)\b/i,
-  /\bgrant\b/i, /\brevoke\b/i,
-  /\bload\s+data\b/i, /\binto\s+(outfile|dumpfile)\b/i,
-  /\bmo_catalog\b/i, /\bmysql\s*\.\s*user\b/i,
-  /\bset\s+global\b/i, /\bshutdown\b/i, /\bkill\b/i,
-  /\buse\s+/i,
-];
-
-function checkSql(raw) {
-  if (typeof raw !== 'string') return 'No SQL supplied.';
-  const sql = raw.trim().replace(/;+\s*$/, '');
-  if (!sql) return 'No SQL supplied.';
-  if (sql.length > MAX_SQL_LEN) return `Statement is longer than ${MAX_SQL_LEN} characters.`;
-  if (sql.includes(';')) return 'One statement at a time in the playground.';
-  if (!ALLOWED.some((re) => re.test(sql))) {
-    return 'That statement is not available here. The playground runs queries, DML, and the Git4Data verbs — snapshot, branch, diff, merge, restore.';
-  }
-  const hit = DENIED.find((re) => re.test(sql));
-  if (hit) return 'That statement reaches outside your branch, so the playground blocks it. Run MatrixOne locally to try it — the install command is on the home page.';
-  return null;
-}
-
 /* ── connection ──────────────────────────────────────────────── */
 function missingConfig(env) {
+  if (env.HYPERDRIVE) return [];
   return ['MO_HOST', 'MO_PORT', 'MO_USER', 'MO_PASSWORD'].filter((k) => !env[k]);
 }
 
 async function connect(env, database) {
+  // Hyperdrive owns origin TLS and credentials. Its local socket is private to
+  // this Worker, and all statements use explicit database names below.
+  if (env.HYPERDRIVE) {
+    const h = env.HYPERDRIVE;
+    return mysql.createConnection({
+      host: h.host, port: h.port, user: h.user, password: h.password,
+      database: h.database, disableEval: true, multipleStatements: false,
+      connectTimeout: 8000, decimalNumbers: false,
+    });
+  }
   const opts = {
     host: env.MO_HOST,
     port: Number(env.MO_PORT) || 6001,
@@ -79,13 +53,14 @@ async function connect(env, database) {
     password: env.MO_PASSWORD,
     connectTimeout: 8000,
     multipleStatements: false,
+    disableEval: true,
     // MatrixOne returns DECIMAL as a string; keep it that way so the UI
     // shows what the database actually stores rather than a lossy float.
     decimalNumbers: false,
   };
   if (database) opts.database = database;
   if (String(env.MO_TLS || '').toLowerCase() !== 'off') {
-    opts.ssl = { rejectUnauthorized: String(env.MO_TLS || '').toLowerCase() === 'strict' };
+    opts.ssl = { rejectUnauthorized: true, verifyIdentity: true, ...(env.MO_CA_CERT ? { ca: env.MO_CA_CERT } : {}) };
   }
   return mysql.createConnection(opts);
 }
@@ -110,18 +85,24 @@ function timeout(promise, ms, onTimeout) {
 }
 
 /* ── sessions ────────────────────────────────────────────────── */
-const idOk = (id) => typeof id === 'string' && /^[a-f0-9]{16}$/.test(id);
-const dbFor = (id) => `g4d_s_${id}`;
+async function cleanupSession(conn, id) {
+  for (const name of Object.values(snapshotsFor(id)).reverse()) {
+    await conn.query(`DROP SNAPSHOT IF EXISTS ${name}`);
+  }
+  await conn.query(`DROP DATABASE IF EXISTS ${dbFor(id)}`);
+}
 
-async function sweep(conn) {
+async function sweep(conn, limit = SWEEP_PER_CALL) {
   const cutoff = Date.now() - SESSION_TTL_MS;
   const [stale] = await conn.query(
-    'SELECT id FROM _sessions WHERE last_seen < ? LIMIT ?', [cutoff, SWEEP_PER_CALL]
+    'SELECT id FROM g4d_demo._sessions WHERE last_seen < ? LIMIT ?', [cutoff, limit]
   );
   for (const row of stale) {
     if (!idOk(row.id)) continue;
-    try { await conn.query(`DROP DATABASE IF EXISTS ${dbFor(row.id)}`); } catch { /* keep sweeping */ }
-    try { await conn.query('DELETE FROM _sessions WHERE id = ?', [row.id]); } catch { /* ditto */ }
+    try {
+      await cleanupSession(conn, row.id);
+      await conn.query('DELETE FROM g4d_demo._sessions WHERE id = ?', [row.id]);
+    } catch { /* retain bookkeeping so a later sweep can retry */ }
   }
   return stale.length;
 }
@@ -133,50 +114,56 @@ async function createSession(env) {
 
   return withConn(env, BASE_DB, async (conn) => {
     await sweep(conn);
+    const [[active]] = await conn.query('SELECT COUNT(*) AS n FROM g4d_demo._sessions');
+    if (Number(active.n) >= 30) throw new Error('The playground is busy. Please try again in a few minutes.');
     await conn.query(`CREATE DATABASE ${db}`);
+    try {
+      // The one statement this whole page exists to demonstrate.
+      const t0 = Date.now();
+      await conn.query(
+        `DATA BRANCH CREATE TABLE ${db}.${BASE_TABLE} ` +
+        `FROM ${BASE_DB}.${BASE_TABLE}{snapshot='${BASE_SNAPSHOT}'}`
+      );
+      const branchMs = Date.now() - t0;
 
-    // The one statement this whole page exists to demonstrate.
-    const t0 = Date.now();
-    await conn.query(
-      `DATA BRANCH CREATE TABLE ${db}.${BASE_TABLE} ` +
-      `FROM ${BASE_DB}.${BASE_TABLE}{snapshot='${BASE_SNAPSHOT}'}`
-    );
-    const branchMs = Date.now() - t0;
-
-    await conn.query(
-      'INSERT INTO _sessions (id, created, last_seen, queries) VALUES (?, ?, ?, 0)',
-      [id, now, now]
-    );
-    return { id, database: db, branchMs, expiresIn: SESSION_TTL_MS, budget: QUERY_BUDGET };
+      await conn.query(
+        'INSERT INTO g4d_demo._sessions (id, created, last_seen, queries) VALUES (?, ?, ?, 0)',
+        [id, now, now]
+      );
+      return { id, database: db, snapshots: snapshotsFor(id), branchMs, expiresIn: SESSION_TTL_MS, budget: QUERY_BUDGET };
+    } catch (e) {
+      await cleanupSession(conn, id).catch(() => {});
+      throw e;
+    }
   });
 }
 
 async function resetSession(env, id) {
   const db = dbFor(id);
   return withConn(env, BASE_DB, async (conn) => {
-    const [rows] = await conn.query('SELECT id FROM _sessions WHERE id = ?', [id]);
-    if (!rows.length) return null;
-    await conn.query(`DROP DATABASE IF EXISTS ${db}`);
+    const [rows] = await conn.query('SELECT last_seen FROM g4d_demo._sessions WHERE id = ?', [id]);
+    if (!rows.length || Date.now() - Number(rows[0].last_seen) > SESSION_TTL_MS) return null;
+    await cleanupSession(conn, id);
     await conn.query(`CREATE DATABASE ${db}`);
     const t0 = Date.now();
     await conn.query(
       `DATA BRANCH CREATE TABLE ${db}.${BASE_TABLE} ` +
       `FROM ${BASE_DB}.${BASE_TABLE}{snapshot='${BASE_SNAPSHOT}'}`
     );
-    await conn.query('UPDATE _sessions SET last_seen = ?, queries = 0 WHERE id = ?', [Date.now(), id]);
+    await conn.query('UPDATE g4d_demo._sessions SET last_seen = ?, queries = 0 WHERE id = ?', [Date.now(), id]);
     return { id, database: db, branchMs: Date.now() - t0 };
   });
 }
 
-async function runQuery(env, id, sql) {
+async function runQuery(env, id, statement) {
   const db = dbFor(id);
 
   const gate = await withConn(env, BASE_DB, async (conn) => {
-    const [rows] = await conn.query('SELECT last_seen, queries FROM _sessions WHERE id = ?', [id]);
+    const [rows] = await conn.query('SELECT last_seen, queries FROM g4d_demo._sessions WHERE id = ?', [id]);
     if (!rows.length) return { error: 'expired' };
     if (Date.now() - Number(rows[0].last_seen) > SESSION_TTL_MS) return { error: 'expired' };
     if (Number(rows[0].queries) >= QUERY_BUDGET) return { error: 'budget' };
-    await conn.query('UPDATE _sessions SET last_seen = ?, queries = queries + 1 WHERE id = ?', [Date.now(), id]);
+    await conn.query('UPDATE g4d_demo._sessions SET last_seen = ?, queries = queries + 1 WHERE id = ?', [Date.now(), id]);
     return { queries: Number(rows[0].queries) + 1 };
   });
   if (gate.error) return gate;
@@ -185,7 +172,7 @@ async function runQuery(env, id, sql) {
   const t0 = Date.now();
   try {
     const [result, fields] = await timeout(
-      conn.query({ sql }), QUERY_TIMEOUT_MS, () => { try { conn.destroy(); } catch { /* already down */ } }
+      conn.query(statement.sql, statement.values), QUERY_TIMEOUT_MS, () => { try { conn.destroy(); } catch { /* already down */ } }
     );
     const ms = Date.now() - t0;
 
@@ -219,7 +206,7 @@ async function health(env) {
   try {
     return await withConn(env, null, async (conn) => {
       const [[v]] = await conn.query('SELECT version() AS version');
-      const out = { ok: true, stage: 'connected', version: v.version, host: env.MO_HOST };
+      const out = { ok: true, stage: 'connected', version: v.version };
       try {
         const [[c]] = await conn.query(`SELECT COUNT(*) AS n FROM ${BASE_DB}.${BASE_TABLE}`);
         out.baseRows = Number(c.n);
@@ -238,7 +225,7 @@ async function health(env) {
       return out;
     });
   } catch (e) {
-    return { ok: false, stage: 'connect', error: e.message, host: env.MO_HOST, port: env.MO_PORT };
+    return { ok: false, stage: 'connect', error: 'Database connection failed.' };
   }
 }
 
@@ -249,6 +236,11 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
 });
 
 export default {
+  async scheduled(event, env, ctx) {
+    if (!missingConfig(env).length) {
+      ctx.waitUntil(withConn(env, BASE_DB, (conn) => sweep(conn, 30)));
+    }
+  },
   async fetch(request, env) {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
@@ -276,9 +268,10 @@ export default {
 
       if (url.pathname === '/api/query') {
         if (!idOk(body.session)) return json({ error: 'expired' }, 400);
-        const bad = checkSql(body.sql);
-        if (bad) return json({ error: 'rejected', message: bad }, 400);
-        const out = await runQuery(env, body.session, body.sql.trim().replace(/;+\s*$/, ''));
+        let statement;
+        try { statement = compileSql(body.sql, body.session); }
+        catch (e) { return json({ error: 'rejected', message: e.message }, 400); }
+        const out = await runQuery(env, body.session, statement);
         if (out.error === 'expired') return json({ error: 'expired' }, 410);
         if (out.error === 'budget') {
           return json({ error: 'budget', message: `That is ${QUERY_BUDGET} statements on this branch. Reset it to keep going, or run MatrixOne locally where nothing is capped.` }, 429);

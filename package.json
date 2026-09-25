@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "wrangler dev --port 3000",
     "start": "python3 -m http.server 8080",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "test": "node --test scripts/test-playground.mjs"
   },
   "devDependencies": {
     "wrangler": "^4"
   },
   "dependencies": {
     "mysql2": "^3.23.4"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
