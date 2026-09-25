@@ -1,0 +1,10 @@
+{
+  "agent": "agent-attributes-0",
+  "task": "attributes",
+  "shard": 0,
+  "range": [1, 2500000],
+  "reasoning": "Restore missing attributes from authoritative supplier attributes for the assigned shard and known missing-attributes issue. Only high-confidence source rows are eligible for automatic repair. The UPDATE changes only attributes, leaving price untouched.",
+  "sql": "UPDATE {{branch}} SET attributes = source_attributes WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes) AND source_confidence >= 0.80",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes) AND source_confidence >= 0.80",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

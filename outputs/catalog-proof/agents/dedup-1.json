@@ -1,0 +1,10 @@
+{
+  "agent": "agent-dedup-1",
+  "task": "dedup",
+  "shard": 1,
+  "range": [2500001, 5000000],
+  "reasoning": "Restore canonical SKUs derived from stable product IDs for duplicate-SKU fixture rows in the assigned range. Null-safe comparison limits updates to changed values. Distinct products are retained; only sku is assigned, so price and supplier fields remain untouched. The coordinator must hold low-confidence rows for human review before execution.",
+  "sql": "UPDATE {{branch}} SET sku = CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')) WHERE id BETWEEN 2500001 AND 5000000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 2500001 AND 5000000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

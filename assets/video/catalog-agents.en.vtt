@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00.000 --> 00:08.000
+You have a 10-million-row product catalog with missing attributes, wrong categories, duplicate SKUs, inconsistent brands, and bad descriptions.
+
+00:08.000 --> 00:22.000
+Twenty independent Codex plans run on twenty isolated data branches. Five repair tasks, four shards each. Main stays unchanged.
+
+00:22.000 --> 00:34.000
+4,585,827 rows proposed. 4,552,565 passed validation. 33,248 need review. 14 price violations are blocked from merge.
+
+00:34.000 --> 00:44.000
+The branch changes a price from $100.20 to $99.00. This was deliberately injected to test the policy. Main is unchanged.
+
+00:44.000 --> 00:53.000
+Select approved row keys into an approval branch with DATA BRANCH PICK. Merge that branch with WHEN CONFLICT FAIL.
+
+00:53.000 --> 01:00.000
+4,552,565 approved rows merged. Zero price changes and zero unreviewed changes reached main. Measured results on synthetic data; edited replay.

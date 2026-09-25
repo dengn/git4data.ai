@@ -1,0 +1,10 @@
+{
+  "agent": "agent-category-0",
+  "task": "category",
+  "shard": 0,
+  "range": [1, 2500000],
+  "reasoning": "Replace incorrect Misc categories with authoritative supplier taxonomy values for the assigned issue and ID range. Only category is assigned, so price and all other columns are untouched. Low-confidence proposals require coordinator review before execution.",
+  "sql": "UPDATE {{branch}} SET category = source_category WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 20) = 1 AND category = 'Misc' AND NOT (category <=> source_category)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 20) = 1 AND NOT (category <=> source_category)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

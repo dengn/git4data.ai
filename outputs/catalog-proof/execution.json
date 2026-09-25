@@ -1,0 +1,1686 @@
+{
+  "database": "g4d_catalog_1790349342448",
+  "startedAt": "2026-09-25T15:25:14.289Z",
+  "rows": 10000000,
+  "agents": [
+    {
+      "agent": "agent-attributes-1",
+      "task": "attributes",
+      "shard": 1,
+      "table": "agent_attributes_1",
+      "affected": 500000,
+      "elapsedMs": 35314,
+      "counts": {
+        "changed": 500000,
+        "blocked": 0,
+        "review": 5155,
+        "passed": 494845
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_attributes_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_attributes_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_attributes_1": "500000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_attributes_1 against main": "agent_attributes_1",
+          "flag": "UPDATE",
+          "id": "2500005",
+          "sku": "SKU-0002500005",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500005. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.50",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500005. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_1 against main": "agent_attributes_1",
+          "flag": "UPDATE",
+          "id": "2500010",
+          "sku": "SKU-0002500010",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500010. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.00",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500010. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_1 against main": "agent_attributes_1",
+          "flag": "UPDATE",
+          "id": "2500015",
+          "sku": "SKU-0002500015",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500015. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.50",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500015. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-attributes-0",
+      "task": "attributes",
+      "shard": 0,
+      "table": "agent_attributes_0",
+      "affected": 494846,
+      "elapsedMs": 42683,
+      "counts": {
+        "changed": 494846,
+        "blocked": 0,
+        "review": 0,
+        "passed": 494846
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_attributes_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_attributes_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_attributes_0": "494846",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_attributes_0 against main": "agent_attributes_0",
+          "flag": "UPDATE",
+          "id": "5",
+          "sku": "SKU-0000000005",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.50",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_0 against main": "agent_attributes_0",
+          "flag": "UPDATE",
+          "id": "10",
+          "sku": "SKU-0000000010",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 10. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.00",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 10. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_0 against main": "agent_attributes_0",
+          "flag": "UPDATE",
+          "id": "15",
+          "sku": "SKU-0000000015",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 15. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.50",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 15. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-attributes-2",
+      "task": "attributes",
+      "shard": 2,
+      "table": "agent_attributes_2",
+      "affected": 500000,
+      "elapsedMs": 42946,
+      "counts": {
+        "changed": 500000,
+        "blocked": 0,
+        "review": 5154,
+        "passed": 494846
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_attributes_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_attributes_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_attributes_2": "500000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_attributes_2 against main": "agent_attributes_2",
+          "flag": "UPDATE",
+          "id": "5000005",
+          "sku": "SKU-0005000005",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000005. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.50",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000005. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_2 against main": "agent_attributes_2",
+          "flag": "UPDATE",
+          "id": "5000010",
+          "sku": "SKU-0005000010",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000010. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.00",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000010. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_2 against main": "agent_attributes_2",
+          "flag": "UPDATE",
+          "id": "5000015",
+          "sku": "SKU-0005000015",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000015. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.50",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000015. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-brand-0",
+      "task": "brand",
+      "shard": 0,
+      "table": "agent_brand_0",
+      "affected": 247423,
+      "elapsedMs": 16527,
+      "counts": {
+        "changed": 247423,
+        "blocked": 14,
+        "review": 0,
+        "passed": 247409
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_brand_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_brand_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_brand_0": "247423",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_brand_0 against main": "agent_brand_0",
+          "flag": "UPDATE",
+          "id": "2",
+          "sku": "SKU-0000000002",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2. Stainless steel, silver finish. Care: hand wash.",
+          "price": "99.00",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_0 against main": "agent_brand_0",
+          "flag": "UPDATE",
+          "id": "12",
+          "sku": "SKU-0000000012",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 12. Stainless steel, silver finish. Care: hand wash.",
+          "price": "99.00",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 12. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_0 against main": "agent_brand_0",
+          "flag": "UPDATE",
+          "id": "22",
+          "sku": "SKU-0000000022",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 22. Stainless steel, silver finish. Care: hand wash.",
+          "price": "99.00",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 22. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-brand-1",
+      "task": "brand",
+      "shard": 1,
+      "table": "agent_brand_1",
+      "affected": 250000,
+      "elapsedMs": 24779,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2578,
+        "passed": 247422
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_brand_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_brand_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_brand_1": "250000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_brand_1 against main": "agent_brand_1",
+          "flag": "UPDATE",
+          "id": "2500002",
+          "sku": "SKU-0002500002",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500002. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.20",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500002. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_1 against main": "agent_brand_1",
+          "flag": "UPDATE",
+          "id": "2500012",
+          "sku": "SKU-0002500012",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500012. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.20",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500012. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_1 against main": "agent_brand_1",
+          "flag": "UPDATE",
+          "id": "2500022",
+          "sku": "SKU-0002500022",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500022. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.20",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500022. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-attributes-3",
+      "task": "attributes",
+      "shard": 3,
+      "table": "agent_attributes_3",
+      "affected": 500000,
+      "elapsedMs": 44197,
+      "counts": {
+        "changed": 500000,
+        "blocked": 0,
+        "review": 5155,
+        "passed": 494845
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_attributes_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_attributes_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_attributes_3": "500000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_attributes_3 against main": "agent_attributes_3",
+          "flag": "UPDATE",
+          "id": "7500005",
+          "sku": "SKU-0007500005",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500005. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.50",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500005. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_3 against main": "agent_attributes_3",
+          "flag": "UPDATE",
+          "id": "7500010",
+          "sku": "SKU-0007500010",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500010. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.00",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500010. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_attributes_3 against main": "agent_attributes_3",
+          "flag": "UPDATE",
+          "id": "7500015",
+          "sku": "SKU-0007500015",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500015. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.50",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500015. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-brand-2",
+      "task": "brand",
+      "shard": 2,
+      "table": "agent_brand_2",
+      "affected": 250000,
+      "elapsedMs": 20794,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_brand_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_brand_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_brand_2": "250000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_brand_2 against main": "agent_brand_2",
+          "flag": "UPDATE",
+          "id": "5000002",
+          "sku": "SKU-0005000002",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000002. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.20",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000002. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_2 against main": "agent_brand_2",
+          "flag": "UPDATE",
+          "id": "5000012",
+          "sku": "SKU-0005000012",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000012. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.20",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000012. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_2 against main": "agent_brand_2",
+          "flag": "UPDATE",
+          "id": "5000022",
+          "sku": "SKU-0005000022",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000022. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.20",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000022. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-brand-3",
+      "task": "brand",
+      "shard": 3,
+      "table": "agent_brand_3",
+      "affected": 247423,
+      "elapsedMs": 20100,
+      "counts": {
+        "changed": 247423,
+        "blocked": 0,
+        "review": 0,
+        "passed": 247423
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_brand_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_brand_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_brand_3": "247423",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_brand_3 against main": "agent_brand_3",
+          "flag": "UPDATE",
+          "id": "7500002",
+          "sku": "SKU-0007500002",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500002. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.20",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500002. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_3 against main": "agent_brand_3",
+          "flag": "UPDATE",
+          "id": "7500012",
+          "sku": "SKU-0007500012",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500012. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.20",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500012. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_brand_3 against main": "agent_brand_3",
+          "flag": "UPDATE",
+          "id": "7500022",
+          "sku": "SKU-0007500022",
+          "brand": "Bluebird",
+          "category": "Storage",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500022. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.20",
+          "source_brand": "Bluebird",
+          "source_category": "Storage",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500022. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-category-1",
+      "task": "category",
+      "shard": 1,
+      "table": "agent_category_1",
+      "affected": 123712,
+      "elapsedMs": 13566,
+      "counts": {
+        "changed": 123712,
+        "blocked": 0,
+        "review": 0,
+        "passed": 123712
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_category_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_category_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_category_1": "123712",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_category_1 against main": "agent_category_1",
+          "flag": "UPDATE",
+          "id": "2500001",
+          "sku": "SKU-0002500001",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500001. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500001. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_1 against main": "agent_category_1",
+          "flag": "UPDATE",
+          "id": "2500021",
+          "sku": "SKU-0002500021",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500021. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500021. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_1 against main": "agent_category_1",
+          "flag": "UPDATE",
+          "id": "2500041",
+          "sku": "SKU-0002500041",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500041. Stainless steel, silver finish. Care: hand wash.",
+          "price": "104.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500041. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-category-0",
+      "task": "category",
+      "shard": 0,
+      "table": "agent_category_0",
+      "affected": 125000,
+      "elapsedMs": 15063,
+      "counts": {
+        "changed": 125000,
+        "blocked": 0,
+        "review": 1289,
+        "passed": 123711
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_category_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_category_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_category_0": "125000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_category_0 against main": "agent_category_0",
+          "flag": "UPDATE",
+          "id": "1",
+          "sku": "SKU-0000000001",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 1. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 1. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_0 against main": "agent_category_0",
+          "flag": "UPDATE",
+          "id": "21",
+          "sku": "SKU-0000000021",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 21. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 21. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_0 against main": "agent_category_0",
+          "flag": "UPDATE",
+          "id": "41",
+          "sku": "SKU-0000000041",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 41. Stainless steel, silver finish. Care: hand wash.",
+          "price": "104.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 41. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-dedup-0",
+      "task": "dedup",
+      "shard": 0,
+      "table": "agent_dedup_0",
+      "affected": 25000,
+      "elapsedMs": 2967,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 258,
+        "passed": 24742
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_dedup_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_dedup_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_dedup_0": "25000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_dedup_0 against main": "agent_dedup_0",
+          "flag": "UPDATE",
+          "id": "4",
+          "sku": "SKU-0000000004",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 4. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 4. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_0 against main": "agent_dedup_0",
+          "flag": "UPDATE",
+          "id": "104",
+          "sku": "SKU-0000000104",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 104. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 104. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_0 against main": "agent_dedup_0",
+          "flag": "UPDATE",
+          "id": "204",
+          "sku": "SKU-0000000204",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 204. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 204. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-category-2",
+      "task": "category",
+      "shard": 2,
+      "table": "agent_category_2",
+      "affected": 123711,
+      "elapsedMs": 14525,
+      "counts": {
+        "changed": 123711,
+        "blocked": 0,
+        "review": 0,
+        "passed": 123711
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_category_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_category_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_category_2": "123711",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_category_2 against main": "agent_category_2",
+          "flag": "UPDATE",
+          "id": "5000001",
+          "sku": "SKU-0005000001",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000001. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000001. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_2 against main": "agent_category_2",
+          "flag": "UPDATE",
+          "id": "5000021",
+          "sku": "SKU-0005000021",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000021. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000021. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_2 against main": "agent_category_2",
+          "flag": "UPDATE",
+          "id": "5000041",
+          "sku": "SKU-0005000041",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000041. Stainless steel, silver finish. Care: hand wash.",
+          "price": "104.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000041. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-category-3",
+      "task": "category",
+      "shard": 3,
+      "table": "agent_category_3",
+      "affected": 123712,
+      "elapsedMs": 10743,
+      "counts": {
+        "changed": 123712,
+        "blocked": 0,
+        "review": 0,
+        "passed": 123712
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_category_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_category_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_category_3": "123712",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_category_3 against main": "agent_category_3",
+          "flag": "UPDATE",
+          "id": "7500001",
+          "sku": "SKU-0007500001",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500001. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500001. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_3 against main": "agent_category_3",
+          "flag": "UPDATE",
+          "id": "7500021",
+          "sku": "SKU-0007500021",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500021. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500021. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_category_3 against main": "agent_category_3",
+          "flag": "UPDATE",
+          "id": "7500041",
+          "sku": "SKU-0007500041",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500041. Stainless steel, silver finish. Care: hand wash.",
+          "price": "104.10",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500041. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-dedup-1",
+      "task": "dedup",
+      "shard": 1,
+      "table": "agent_dedup_1",
+      "affected": 25000,
+      "elapsedMs": 10477,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 258,
+        "passed": 24742
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_dedup_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_dedup_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_dedup_1": "25000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_dedup_1 against main": "agent_dedup_1",
+          "flag": "UPDATE",
+          "id": "2500004",
+          "sku": "SKU-0002500004",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500004. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500004. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_1 against main": "agent_dedup_1",
+          "flag": "UPDATE",
+          "id": "2500104",
+          "sku": "SKU-0002500104",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500104. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500104. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_1 against main": "agent_dedup_1",
+          "flag": "UPDATE",
+          "id": "2500204",
+          "sku": "SKU-0002500204",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500204. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500204. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-dedup-2",
+      "task": "dedup",
+      "shard": 2,
+      "table": "agent_dedup_2",
+      "affected": 25000,
+      "elapsedMs": 7457,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 257,
+        "passed": 24743
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_dedup_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_dedup_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_dedup_2": "25000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_dedup_2 against main": "agent_dedup_2",
+          "flag": "UPDATE",
+          "id": "5000004",
+          "sku": "SKU-0005000004",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000004. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000004. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_2 against main": "agent_dedup_2",
+          "flag": "UPDATE",
+          "id": "5000104",
+          "sku": "SKU-0005000104",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000104. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000104. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_2 against main": "agent_dedup_2",
+          "flag": "UPDATE",
+          "id": "5000204",
+          "sku": "SKU-0005000204",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000204. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000204. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-dedup-3",
+      "task": "dedup",
+      "shard": 3,
+      "table": "agent_dedup_3",
+      "affected": 25000,
+      "elapsedMs": 6123,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 258,
+        "passed": 24742
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_dedup_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_dedup_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_dedup_3": "25000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_dedup_3 against main": "agent_dedup_3",
+          "flag": "UPDATE",
+          "id": "7500004",
+          "sku": "SKU-0007500004",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500004. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500004. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_3 against main": "agent_dedup_3",
+          "flag": "UPDATE",
+          "id": "7500104",
+          "sku": "SKU-0007500104",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500104. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500104. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_dedup_3 against main": "agent_dedup_3",
+          "flag": "UPDATE",
+          "id": "7500204",
+          "sku": "SKU-0007500204",
+          "brand": "Acme",
+          "category": "Drinkware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500204. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.40",
+          "source_brand": "Acme",
+          "source_category": "Drinkware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500204. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-description-0",
+      "task": "description",
+      "shard": 0,
+      "table": "agent_description_0",
+      "affected": 250000,
+      "elapsedMs": 7395,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_description_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_description_0": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_description_0": "250000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_description_0 against main": "agent_description_0",
+          "flag": "UPDATE",
+          "id": "3",
+          "sku": "SKU-0000000003",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 3. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 3. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_0 against main": "agent_description_0",
+          "flag": "UPDATE",
+          "id": "13",
+          "sku": "SKU-0000000013",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 13. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.30",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 13. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_0 against main": "agent_description_0",
+          "flag": "UPDATE",
+          "id": "23",
+          "sku": "SKU-0000000023",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 23. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 23. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-description-3",
+      "task": "description",
+      "shard": 3,
+      "table": "agent_description_3",
+      "affected": 250000,
+      "elapsedMs": 12112,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_description_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_description_3": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_description_3": "250000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_description_3 against main": "agent_description_3",
+          "flag": "UPDATE",
+          "id": "7500003",
+          "sku": "SKU-0007500003",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500003. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500003. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_3 against main": "agent_description_3",
+          "flag": "UPDATE",
+          "id": "7500013",
+          "sku": "SKU-0007500013",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500013. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.30",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500013. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_3 against main": "agent_description_3",
+          "flag": "UPDATE",
+          "id": "7500023",
+          "sku": "SKU-0007500023",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 7500023. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 7500023. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-description-1",
+      "task": "description",
+      "shard": 1,
+      "table": "agent_description_1",
+      "affected": 250000,
+      "elapsedMs": 17754,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_description_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_description_1": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_description_1": "250000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_description_1 against main": "agent_description_1",
+          "flag": "UPDATE",
+          "id": "2500003",
+          "sku": "SKU-0002500003",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500003. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500003. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_1 against main": "agent_description_1",
+          "flag": "UPDATE",
+          "id": "2500013",
+          "sku": "SKU-0002500013",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500013. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.30",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500013. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_1 against main": "agent_description_1",
+          "flag": "UPDATE",
+          "id": "2500023",
+          "sku": "SKU-0002500023",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 2500023. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 2500023. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    },
+    {
+      "agent": "agent-description-2",
+      "task": "description",
+      "shard": 2,
+      "table": "agent_description_2",
+      "affected": 250000,
+      "elapsedMs": 17143,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2578,
+        "passed": 247422
+      },
+      "summary": [
+        {
+          "metric": "INSERTED",
+          "g4d_catalog_1790349342448.agent_description_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "DELETED",
+          "g4d_catalog_1790349342448.agent_description_2": "0",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        },
+        {
+          "metric": "UPDATED",
+          "g4d_catalog_1790349342448.agent_description_2": "250000",
+          "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+        }
+      ],
+      "samples": [
+        {
+          "diff agent_description_2 against main": "agent_description_2",
+          "flag": "UPDATE",
+          "id": "5000003",
+          "sku": "SKU-0005000003",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000003. Stainless steel, silver finish. Care: hand wash.",
+          "price": "100.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000003. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_2 against main": "agent_description_2",
+          "flag": "UPDATE",
+          "id": "5000013",
+          "sku": "SKU-0005000013",
+          "brand": "Northstar",
+          "category": "Cookware",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000013. Stainless steel, silver finish. Care: hand wash.",
+          "price": "101.30",
+          "source_brand": "Northstar",
+          "source_category": "Cookware",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000013. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        },
+        {
+          "diff agent_description_2 against main": "agent_description_2",
+          "flag": "UPDATE",
+          "id": "5000023",
+          "sku": "SKU-0005000023",
+          "brand": "Summit",
+          "category": "Utensils",
+          "attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "description": "Supplier item 5000023. Stainless steel, silver finish. Care: hand wash.",
+          "price": "102.30",
+          "source_brand": "Summit",
+          "source_category": "Utensils",
+          "source_attributes": "{\"material\":\"stainless steel\",\"color\":\"silver\"}",
+          "source_description": "Supplier item 5000023. Stainless steel, silver finish. Care: hand wash.",
+          "source_confidence": "0.99"
+        }
+      ]
+    }
+  ],
+  "faultInjection": {
+    "rows": 14,
+    "description": "Coordinator deliberately modifies price on 14 brand-0 rows after agent SQL, to test policy rejection; not spontaneous model behavior."
+  },
+  "state": "merged",
+  "beforeMerge": {
+    "total": "10000000",
+    "missing_attributes": "2000000",
+    "wrong_category": "500000",
+    "inconsistent_brand": "1000000",
+    "bad_description": "1000000",
+    "duplicate_skus": "100000"
+  },
+  "totals": {
+    "changed": 4585827,
+    "blocked": 14,
+    "review": 33248,
+    "passed": 4552565
+  },
+  "approvedDiff": [
+    {
+      "metric": "INSERTED",
+      "g4d_catalog_1790349342448.approved": "0",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    },
+    {
+      "metric": "DELETED",
+      "g4d_catalog_1790349342448.approved": "0",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    },
+    {
+      "metric": "UPDATED",
+      "g4d_catalog_1790349342448.approved": "4552565",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    }
+  ],
+  "afterMerge": {
+    "total": "10000000",
+    "changed_prices": "0",
+    "unreviewed_changes": "0"
+  },
+  "finalDiff": [
+    {
+      "metric": "INSERTED",
+      "g4d_catalog_1790349342448.main": "0",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    },
+    {
+      "metric": "DELETED",
+      "g4d_catalog_1790349342448.main": "0",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    },
+    {
+      "metric": "UPDATED",
+      "g4d_catalog_1790349342448.main": "4552565",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    }
+  ],
+  "finishedAt": "2026-09-25T15:53:45.503Z"
+}

@@ -1,0 +1,21 @@
+{
+  "at": "2026-09-25T15:36:18.120Z",
+  "result": [
+    {
+      "metric": "INSERTED",
+      "g4d_catalog_1790349342448.main": "0",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    },
+    {
+      "metric": "DELETED",
+      "g4d_catalog_1790349342448.main": "0",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    },
+    {
+      "metric": "UPDATED",
+      "g4d_catalog_1790349342448.main": "0",
+      "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+    }
+  ],
+  "unchanged": true
+}

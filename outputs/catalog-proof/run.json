@@ -1,0 +1,20 @@
+{
+  "database": "g4d_catalog_1790349342448",
+  "rows": 10000000,
+  "baselineSnapshot": "g4d_catalog_1790349342448_base",
+  "createdAt": "2026-09-25T15:15:42.448Z",
+  "agentExecution": "20 independent Codex-authored bulk SQL plans; coordinator executes reviewed SQL",
+  "synthetic": true,
+  "concurrency": 3,
+  "state": "seeded",
+  "version": "8.0.30-MatrixOne-v4.2.1",
+  "seededRows": 10000000,
+  "baseline": {
+    "total": "10000000",
+    "missing_attributes": "2000000",
+    "wrong_category": "500000",
+    "inconsistent_brand": "1000000",
+    "bad_description": "1000000",
+    "duplicate_skus": "100000"
+  }
+}

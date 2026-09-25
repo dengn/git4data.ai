@@ -3,7 +3,7 @@
   "name": "git4data-ai",
   "compatibility_date": "2026-08-20",
 
-  // The playground API. Only /api/* reaches it — see run_worker_first below.
+  // Playground and skill distribution APIs. Only /api/* reaches the Worker.
   "main": "worker/index.js",
   "compatibility_flags": ["nodejs_compat"],
   "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "f6ca605cdbbc4c0399310f4ab536d433" }],

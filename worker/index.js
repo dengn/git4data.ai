@@ -1,5 +1,5 @@
 /**
- * git4data.ai — playground API.
+ * git4data.ai — playground API and public skill distribution routes.
  *
  * Every visitor gets their own branch of the same demo table, created with
  * DATA BRANCH CREATE TABLE. A closed tutorial compiler scopes all visitor
@@ -18,6 +18,7 @@
 
 import mysql from 'mysql2/promise';
 import { compileSql, idOk, dbFor, snapshotsFor } from './playground-sql.mjs';
+import { skillDistribution } from './skill-distribution.mjs';
 
 const BASE_DB = 'g4d_demo';
 const BASE_TABLE = 'customers';
@@ -241,9 +242,10 @@ export default {
       ctx.waitUntil(withConn(env, BASE_DB, (conn) => sweep(conn, 30)));
     }
   },
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
+    if (url.pathname.startsWith('/api/skill/')) return skillDistribution(request, ctx);
 
     try {
       if (url.pathname === '/api/health') return json(await health(env));

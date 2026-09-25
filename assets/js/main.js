@@ -153,3 +153,11 @@
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = String(new Date().getFullYear());
 })();
+
+// The homepage film starts only after an explicit click.
+document.querySelectorAll('[data-play-catalog]').forEach(function (link) {
+  link.addEventListener('click', function () {
+    var video = document.getElementById('catalogVideo');
+    if (video) video.play().catch(function () { /* native controls remain available */ });
+  });
+});

@@ -1,0 +1,11 @@
+{
+  "name": "matrixone-safe-data-changes",
+  "version": "0.1.0",
+  "repository": "dengn/git4data.ai",
+  "tag": "skill-v0.1.0",
+  "asset": "matrixone-safe-data-changes-v0.1.0.zip",
+  "license": "MIT",
+  "sha256": "b1749da28093c1b18ff7dd9e690607f80ba000aab8fa26ccee4d42fca8b19696",
+  "bytes": 11409,
+  "files": 6
+}

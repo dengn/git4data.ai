@@ -1,0 +1,369 @@
+{
+  "mainUnchangedBeforeMerge": {
+    "at": "2026-09-25T15:36:18.120Z",
+    "result": [
+      {
+        "metric": "INSERTED",
+        "g4d_catalog_1790349342448.main": "0",
+        "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+      },
+      {
+        "metric": "DELETED",
+        "g4d_catalog_1790349342448.main": "0",
+        "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+      },
+      {
+        "metric": "UPDATED",
+        "g4d_catalog_1790349342448.main": "0",
+        "g4d_catalog_1790349342448.main{snapshot = 'g4d_catalog_1790349342448_base'}": "0"
+      }
+    ],
+    "unchanged": true
+  },
+  "title": "10 Million Products + 20 Codex Agents",
+  "date": "2026-09-25",
+  "databaseVersion": "8.0.30-MatrixOne-v4.2.1",
+  "syntheticData": true,
+  "catalogRows": 10000000,
+  "agentCount": 20,
+  "maxConcurrentAgents": 3,
+  "maxConcurrentSqlWorkers": 3,
+  "modelWork": "20 independent Codex tasks authored bounded repair SQL; coordinator reviewed and executed plans",
+  "baseline": {
+    "total": "10000000",
+    "missing_attributes": "2000000",
+    "wrong_category": "500000",
+    "inconsistent_brand": "1000000",
+    "bad_description": "1000000",
+    "duplicate_skus": "100000"
+  },
+  "totals": {
+    "changed": 4585827,
+    "blocked": 14,
+    "review": 33248,
+    "passed": 4552565
+  },
+  "afterMerge": {
+    "total": "10000000",
+    "changed_prices": "0",
+    "unreviewed_changes": "0"
+  },
+  "faultInjection": {
+    "rows": 14,
+    "description": "Coordinator deliberately modifies price on 14 brand-0 rows after agent SQL, to test policy rejection; not spontaneous model behavior."
+  },
+  "limits": [
+    "Issue predicates are disjoint; conflict rejection tested separately on a small fixture.",
+    "Source confidence is synthetic; application validation and approval are implemented by the harness.",
+    "Unproposed low-confidence rows remain unchanged in addition to the review queue.",
+    "Single run on a shared free-tier instance; timings are observations, not general performance promises.",
+    "Video is an edited replay of measured results, not an uncut screen recording."
+  ],
+  "timings": {
+    "agent-attributes-0:branch": 48,
+    "agent-attributes-1:branch": 40,
+    "agent-attributes-2:branch": 42,
+    "agent-attributes-3:branch": 51,
+    "agent-brand-0:branch": 48,
+    "agent-brand-1:branch": 44,
+    "agent-brand-2:branch": 42,
+    "agent-brand-3:branch": 45,
+    "agent-category-0:branch": 46,
+    "agent-category-1:branch": 45,
+    "agent-category-2:branch": 43,
+    "agent-category-3:branch": 46,
+    "agent-dedup-0:branch": 47,
+    "agent-dedup-1:branch": 42,
+    "agent-dedup-2:branch": 46,
+    "agent-dedup-3:branch": 44,
+    "agent-description-0:branch": 43,
+    "agent-description-1:branch": 42,
+    "agent-description-2:branch": 47,
+    "agent-description-3:branch": 45,
+    "agent-attributes-0:approve_pick": 58214,
+    "agent-attributes-1:approve_pick": 61415,
+    "agent-attributes-2:approve_pick": 64148,
+    "agent-attributes-3:approve_pick": 63453,
+    "agent-brand-0:approve_pick": 38043,
+    "agent-brand-1:approve_pick": 35588,
+    "agent-brand-2:approve_pick": 34428,
+    "agent-brand-3:approve_pick": 35002,
+    "agent-category-0:approve_pick": 19373,
+    "agent-category-1:approve_pick": 19395,
+    "agent-category-2:approve_pick": 18508,
+    "agent-category-3:approve_pick": 20956,
+    "agent-dedup-0:approve_pick": 7117,
+    "agent-dedup-1:approve_pick": 7636,
+    "agent-dedup-2:approve_pick": 7243,
+    "agent-dedup-3:approve_pick": 6615,
+    "agent-description-0:approve_pick": 35872,
+    "agent-description-1:approve_pick": 38292,
+    "agent-description-2:approve_pick": 37049,
+    "agent-description-3:approve_pick": 35044,
+    "approved_diff": 45148,
+    "merge_approved": 840808,
+    "final_diff": 48845
+  },
+  "agents": [
+    {
+      "agent": "agent-attributes-1",
+      "task": "attributes",
+      "shard": 1,
+      "affected": 500000,
+      "elapsedMs": 35314,
+      "counts": {
+        "changed": 500000,
+        "blocked": 0,
+        "review": 5155,
+        "passed": 494845
+      }
+    },
+    {
+      "agent": "agent-attributes-0",
+      "task": "attributes",
+      "shard": 0,
+      "affected": 494846,
+      "elapsedMs": 42683,
+      "counts": {
+        "changed": 494846,
+        "blocked": 0,
+        "review": 0,
+        "passed": 494846
+      }
+    },
+    {
+      "agent": "agent-attributes-2",
+      "task": "attributes",
+      "shard": 2,
+      "affected": 500000,
+      "elapsedMs": 42946,
+      "counts": {
+        "changed": 500000,
+        "blocked": 0,
+        "review": 5154,
+        "passed": 494846
+      }
+    },
+    {
+      "agent": "agent-brand-0",
+      "task": "brand",
+      "shard": 0,
+      "affected": 247423,
+      "elapsedMs": 16527,
+      "counts": {
+        "changed": 247423,
+        "blocked": 14,
+        "review": 0,
+        "passed": 247409
+      }
+    },
+    {
+      "agent": "agent-brand-1",
+      "task": "brand",
+      "shard": 1,
+      "affected": 250000,
+      "elapsedMs": 24779,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2578,
+        "passed": 247422
+      }
+    },
+    {
+      "agent": "agent-attributes-3",
+      "task": "attributes",
+      "shard": 3,
+      "affected": 500000,
+      "elapsedMs": 44197,
+      "counts": {
+        "changed": 500000,
+        "blocked": 0,
+        "review": 5155,
+        "passed": 494845
+      }
+    },
+    {
+      "agent": "agent-brand-2",
+      "task": "brand",
+      "shard": 2,
+      "affected": 250000,
+      "elapsedMs": 20794,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      }
+    },
+    {
+      "agent": "agent-brand-3",
+      "task": "brand",
+      "shard": 3,
+      "affected": 247423,
+      "elapsedMs": 20100,
+      "counts": {
+        "changed": 247423,
+        "blocked": 0,
+        "review": 0,
+        "passed": 247423
+      }
+    },
+    {
+      "agent": "agent-category-1",
+      "task": "category",
+      "shard": 1,
+      "affected": 123712,
+      "elapsedMs": 13566,
+      "counts": {
+        "changed": 123712,
+        "blocked": 0,
+        "review": 0,
+        "passed": 123712
+      }
+    },
+    {
+      "agent": "agent-category-0",
+      "task": "category",
+      "shard": 0,
+      "affected": 125000,
+      "elapsedMs": 15063,
+      "counts": {
+        "changed": 125000,
+        "blocked": 0,
+        "review": 1289,
+        "passed": 123711
+      }
+    },
+    {
+      "agent": "agent-dedup-0",
+      "task": "dedup",
+      "shard": 0,
+      "affected": 25000,
+      "elapsedMs": 2967,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 258,
+        "passed": 24742
+      }
+    },
+    {
+      "agent": "agent-category-2",
+      "task": "category",
+      "shard": 2,
+      "affected": 123711,
+      "elapsedMs": 14525,
+      "counts": {
+        "changed": 123711,
+        "blocked": 0,
+        "review": 0,
+        "passed": 123711
+      }
+    },
+    {
+      "agent": "agent-category-3",
+      "task": "category",
+      "shard": 3,
+      "affected": 123712,
+      "elapsedMs": 10743,
+      "counts": {
+        "changed": 123712,
+        "blocked": 0,
+        "review": 0,
+        "passed": 123712
+      }
+    },
+    {
+      "agent": "agent-dedup-1",
+      "task": "dedup",
+      "shard": 1,
+      "affected": 25000,
+      "elapsedMs": 10477,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 258,
+        "passed": 24742
+      }
+    },
+    {
+      "agent": "agent-dedup-2",
+      "task": "dedup",
+      "shard": 2,
+      "affected": 25000,
+      "elapsedMs": 7457,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 257,
+        "passed": 24743
+      }
+    },
+    {
+      "agent": "agent-dedup-3",
+      "task": "dedup",
+      "shard": 3,
+      "affected": 25000,
+      "elapsedMs": 6123,
+      "counts": {
+        "changed": 25000,
+        "blocked": 0,
+        "review": 258,
+        "passed": 24742
+      }
+    },
+    {
+      "agent": "agent-description-0",
+      "task": "description",
+      "shard": 0,
+      "affected": 250000,
+      "elapsedMs": 7395,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      }
+    },
+    {
+      "agent": "agent-description-3",
+      "task": "description",
+      "shard": 3,
+      "affected": 250000,
+      "elapsedMs": 12112,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      }
+    },
+    {
+      "agent": "agent-description-1",
+      "task": "description",
+      "shard": 1,
+      "affected": 250000,
+      "elapsedMs": 17754,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2577,
+        "passed": 247423
+      }
+    },
+    {
+      "agent": "agent-description-2",
+      "task": "description",
+      "shard": 2,
+      "affected": 250000,
+      "elapsedMs": 17143,
+      "counts": {
+        "changed": 250000,
+        "blocked": 0,
+        "review": 2578,
+        "passed": 247422
+      }
+    }
+  ]
+}

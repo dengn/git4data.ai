@@ -1,0 +1,10 @@
+{
+  "agent": "agent-dedup-3",
+  "task": "dedup",
+  "shard": 3,
+  "range": [7500001, 10000000],
+  "reasoning": "Restore the canonical SKU derived from each stable product ID only for duplicate-SKU fixture rows in this shard whose SKU differs under null-safe comparison. Distinct products retain their rows and IDs. Only sku is assigned, so price and every other field remain untouched.",
+  "sql": "UPDATE {{branch}} SET sku = CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')) WHERE id BETWEEN 7500001 AND 10000000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 7500001 AND 10000000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

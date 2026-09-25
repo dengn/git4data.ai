@@ -13,3 +13,8 @@ worker
 .wrangler
 .dev.vars*
 .env*
+
+outputs
+
+skills
+.github

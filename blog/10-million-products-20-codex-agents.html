@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10 Million Products, 20 Codex Agents: From Repair Plans to a Verified Merge | Git4Data Blog</title><meta name="description" content="Inside the measured MatrixOne run: a synthetic 10M-row catalog, 20 Codex repair plans, native diffs, approval selection, and 4,552,565 merged rows.">
+<link rel="canonical" href="https://git4data.ai/blog/10-million-products-20-codex-agents">
+<link rel="alternate" hreflang="en" href="https://git4data.ai/blog/10-million-products-20-codex-agents"><link rel="alternate" hreflang="zh-Hans" href="https://git4data.ai/blog/10-million-products-20-codex-agents-zh"><link rel="alternate" hreflang="x-default" href="https://git4data.ai/blog/10-million-products-20-codex-agents">
+<meta property="og:type" content="article"><meta property="og:title" content="10 Million Products, 20 Codex Agents: From Repair Plans to a Verified Merge"><meta property="og:description" content="Inside the measured MatrixOne run: a synthetic 10M-row catalog, 20 Codex repair plans, native diffs, approval selection, and 4,552,565 merged rows."><meta property="og:url" content="https://git4data.ai/blog/10-million-products-20-codex-agents"><meta property="og:image" content="https://git4data.ai/assets/video/catalog-agents-poster.jpg?v=1"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/img/favicon.svg?v=4"><link rel="stylesheet" href="/assets/css/style.css?v=8">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "10 Million Products, 20 Codex Agents: From Repair Plans to a Verified Merge", "description": "Inside the measured MatrixOne run: a synthetic 10M-row catalog, 20 Codex repair plans, native diffs, approval selection, and 4,552,565 merged rows.", "datePublished": "2026-09-26", "dateModified": "2026-09-26", "inLanguage": "en", "author": {"@type": "Organization", "name": "Git4Data"}, "publisher": {"@type": "Organization", "name": "Git4Data"}, "mainEntityOfPage": "https://git4data.ai/blog/10-million-products-20-codex-agents", "image": "https://git4data.ai/assets/video/catalog-agents-poster.jpg?v=1"}</script>
+</head><body>
+<div class="bg-grid" aria-hidden="true"></div><div class="bg-glow" aria-hidden="true"></div>
+<header class="nav article-nav"><div class="wrap nav-in"><a class="brand" href="/">git4data</a><nav class="article-nav-links" aria-label="Article navigation"><a href="/blog">Blog</a><a href="/agent-skill">Agent Skill</a></nav><a class="btn btn-ghost" href="/blog/10-million-products-20-codex-agents-zh" lang="zh-Hans" hreflang="zh-Hans">中文</a></div></header>
+<main class="wrap article-shell">
+<header class="article-header"><a class="article-back" href="/blog">← All articles</a><p class="kick">ENGINEERING NOTES · MATRIXONE × CODEX</p><h1>10 Million Products, 20 Codex Agents: From Repair Plans to a Verified Merge</h1><p class="article-meta">Git4Data · <time datetime="2026-09-26">2026-09-26</time> · Experiment: September 25, 2026</p></header>
+<div class="article-layout"><article class="article-body"><p class="article-lead">A catalog of ten million products. Twenty Codex agents proposing repairs on separate data branches. One measured merge of 4,552,565 approved rows. This is the database run behind the 60-second film on our homepage.</p>
+<p>The completed run held 33,248 proposed rows for review and excluded 14 deliberately injected price violations. Here is how we built the fixture, assigned the work, checked the proposals, assembled an approval branch, and turned the final evidence into a video.</p>
+<div class="article-note"><strong>The experiment's scope</strong><p>We generated a synthetic catalog in a dedicated experiment database on a real MatrixOne instance. Twenty independent Codex tasks authored actual repair plans, which a coordinator reviewed and executed. The video reconstructs the completed script-driven workflow; <code>DATA PULL REQUEST #42</code> is an illustrative identifier.</p></div>
+<figure class="article-video"><video controls playsinline preload="none" poster="/assets/video/catalog-agents-poster.jpg?v=1"><source src="/assets/video/catalog-agents.mp4?v=1" type="video/mp4"><track kind="captions" src="/assets/video/catalog-agents.en.vtt?v=1" srclang="en" label="English"></video><figcaption>A 60-second replay. The actual final MERGE took approximately 14 minutes.</figcaption></figure>
+<h2 id="contract">1. Define the change contract</h2>
+<p>The scenario began with: <em>“You have a 10-million-row product catalog.”</em> To make it executable, we specified which fields an agent could repair and what had to remain unchanged.</p>
+<p>The allowed repairs covered brands, categories, attributes, descriptions and SKUs. Price was protected. Every product had a stable <code>id</code> primary key and supplier-source columns such as <code>source_brand</code> and <code>source_description</code>. These gave each repair a factual reference within the fixture.</p>
+<p>The supplier values and confidence scores were synthetic too. Most rows had <code>source_confidence = 0.99</code>; rows where <code>id % 97 = 0</code> had 0.60. The coordinator held proposed changes below 0.80 for review, giving us a deterministic way to check the selection policy.</p>
+<h2 id="fixture">2. Build a deliberately imperfect catalog</h2>
+<div class="article-table"><table><thead><tr><th>Issue</th><th>Initial rows</th><th>How it was introduced</th></tr></thead><tbody><tr><td>Missing attributes</td><td>2,000,000 (20%)</td><td>Set attributes to NULL</td></tr><tr><td>Wrong category</td><td>500,000 (5%)</td><td>Replace the category with Misc</td></tr><tr><td>Inconsistent brand</td><td>1,000,000 (10%)</td><td>Lowercase it and add a trailing space</td></tr><tr><td>Poor description</td><td>1,000,000 (10%)</td><td>Use the same generic sales sentence</td></tr><tr><td>Duplicate SKU</td><td>100,000 (1%)</td><td>Copy the preceding product's SKU</td></tr></tbody></table></div>
+<p>The issue predicates deliberately selected disjoint primary-key sets. That made each task's effect easy to inspect. The SKU task restored canonical identifiers for distinct product IDs, preserving every product row.</p>
+<p>The seed script inserted 200,000 rows per batch, for 50 batches. Their combined client-observed insertion time was <strong>36.865 seconds</strong>, excluding table creation, initial validation and snapshot creation. We then recorded the baseline issue counts and created a named snapshot.</p>
+<pre><code>CREATE SNAPSHOT run_base FOR TABLE catalog main;
+
+DATA BRANCH CREATE TABLE catalog.agent_brand_0
+  FROM catalog.main{snapshot='run_base'};</code></pre>
+<p class="article-caption">SQL in this article uses shortened database and snapshot names for readability. The logs retain the exact run identifiers and executed statements. In the snapshot statement, the database and table names are separated by a space.</p>
+<h2 id="agents">3. Give each Codex task a bounded repair</h2>
+<p>We split each of the five repair types into four ID shards of 2,500,000 IDs. This produced <strong>5 × 4 = 20 independent Codex tasks</strong>, each assigned to a task branch. Each branch had the full logical ten-million-row baseline; the task's writes were limited to its assigned ID range.</p>
+<pre class="article-tree"><code>main · 10,000,000 rows
+│
+├── attributes-0 … attributes-3
+├── brand-0      … brand-3
+├── category-0   … category-3
+├── description-0 … description-3
+└── dedup-0      … dedup-3
+
+20 task branches → approved branch → main</code></pre>
+<p>Every task received the schema, issue predicates, allowed field, ID range and an output contract. It returned one JSON file containing its reasoning, a repair <code>UPDATE</code>, a validation query and a review note. Database credentials remained with the coordinator, which inspected the plans before executing them.</p>
+<p>The first brand task produced this repair:</p>
+<pre><code>UPDATE {{branch}}
+SET brand = source_brand
+WHERE id BETWEEN 1 AND 2500000
+  AND MOD(id, 10) = 2
+  AND source_confidence &gt;= 0.80
+  AND NOT (brand &lt;=&gt; source_brand);</code></pre>
+<p>The <code>&lt;=&gt;</code> comparison handles NULL values. The coordinator replaces <code>{{branch}}</code> with the task's fully qualified table name. Each statement processes its eligible rows in bulk, so the model's role is to turn a bounded repair task into an executable plan.</p>
+<p>Codex tasks ran in waves of <strong>at most three concurrent tasks</strong>. Database execution also used at most three worker connections. The film's twenty branches reflect actual created branches; execution concurrency was separately limited.</p>
+<h2 id="validation">4. Execute on branches and inspect the full change set</h2>
+<p>The executor checked task types, shard bounds and basic SQL shape, then ran each plan and its validation query on the assigned branch. These checks handled reviewed experiment inputs. A production deployment needs database permissions or a constrained execution service to enforce access.</p>
+<p>For every branch, we collected SQL counts alongside native MatrixOne diff results:</p>
+<pre><code>DATA BRANCH DIFF catalog.agent_brand_0
+  AGAINST catalog.main{snapshot='run_base'}
+  OUTPUT SUMMARY;
+
+DATA BRANCH DIFF catalog.agent_brand_0
+  AGAINST catalog.main{snapshot='run_base'}
+  OUTPUT LIMIT 3;</code></pre>
+<p>The summary provided complete scope counts, while the small sample illustrated individual changes. Native diff counts reconciled with the corresponding SQL counts. We also checked main again: its original issue counts were unchanged, and native DIFF against the baseline reported <strong>zero inserted, deleted and updated rows</strong>.</p>
+<p>At this point, the task branches contained millions of proposed changes while main still matched its baseline.</p>
+<h2 id="fault">5. Inject fourteen changes that should be rejected</h2>
+<p>After the brand repair ran, the coordinator deliberately set the price to 99 on fourteen rows in that branch. The product shown in the video originally cost 100.20; its proposed branch value became 99.00.</p>
+<p>This fault injection exercised a concrete rejection path: a row could contain a valid brand repair and a forbidden price edit at the same time.</p>
+<p><strong>PICK selects row changes, so every changed field on a selected row matters.</strong> We excluded the entire violating row. Approving a field name in a report cannot remove a different, forbidden field change from the source row being picked.</p>
+<h2 id="report">6. Build a traceable data change report</h2>
+<p>Combining the twenty branch results produced these measured counts:</p>
+<div class="article-table"><table><thead><tr><th>Measurement</th><th>Rows</th></tr></thead><tbody><tr><td>Unique rows with proposals</td><td>4,585,827</td></tr><tr><td>Passed and eventually merged</td><td><strong>4,552,565</strong></td></tr><tr><td>Proposed rows held for review</td><td>33,248</td></tr><tr><td>Injected price violations excluded</td><td>14</td></tr></tbody></table></div>
+<p>The final three categories are exclusive and sum to the proposed-row count. The price violations occurred on rows that already had brand proposals, so per-field change counts overlap.</p>
+<p>The initial fixture contained 4,600,000 problem rows. Some Codex plans proactively skipped low-confidence rows, leaving <strong>14,173 problem rows without a proposal</strong>. Those rows stayed unchanged and are additional to the 33,248 proposed rows held for review. Keeping those categories distinct makes the report auditable.</p>
+<h2 id="merge">7. Assemble approved rows, then merge once</h2>
+<p>We created an <code>approved</code> branch from the same baseline. For each task branch, the coordinator picked keys within that task's ID range and issue predicate, with a changed target field, source confidence of at least 0.80, and a price equal to main.</p>
+<pre><code>DATA BRANCH PICK catalog.agent_brand_0
+INTO catalog.approved
+KEYS (
+  SELECT b.id
+  FROM catalog.agent_brand_0 b
+  JOIN catalog.main m ON b.id = m.id
+  WHERE b.id BETWEEN 1 AND 2500000
+    AND MOD(b.id, 10) = 2
+    AND NOT (b.brand &lt;=&gt; m.brand)
+    AND b.source_confidence &gt;= 0.80
+    AND b.price = m.price
+)
+WHEN CONFLICT FAIL;</code></pre>
+<p>This price comparison fits the fixture's known non-NULL prices. An adaptation needs NULL handling and checks for every protected field, inserts, deletes, key scope and cross-row business constraints.</p>
+<p>Approval in this experiment meant the coordinator applying the predefined selection policy within the user-authorized run. The video's Approve button visualizes that stage. A team deployment would add its own independent approval record and interface.</p>
+<p>After assembling the approval branch, we executed the final operation:</p>
+<pre><code>DATA BRANCH MERGE catalog.approved
+INTO catalog.main
+WHEN CONFLICT FAIL;</code></pre>
+<p>The twenty sequential PICK statements took <strong>643.391 seconds</strong> in total. The final MERGE took <strong>840.808 seconds, approximately fourteen minutes</strong>. The execution script took about 28 minutes and 31 seconds from branch creation through final verification, excluding earlier data seeding and Codex plan generation.</p>
+<p>After the statement completed, we checked the actual target:</p>
+<ul><li>Main still contained 10,000,000 rows.</li><li>Native final DIFF reported 4,552,565 updated rows, with zero inserted or deleted rows.</li><li>Price changes in main: zero.</li><li>Low-confidence, unreviewed repairs reaching main under the experiment's checks: zero.</li></ul>
+<p>These timings are client-observed measurements from one run on a shared instance. They describe this experiment's execution.</p>
+<h2 id="lessons">8. Three problems we encountered</h2>
+<h3>An aggregate needed different syntax</h3>
+<p>The first baseline query attempted to sum Boolean expressions, which this instance rejected. All ten million rows had already been inserted. We preserved the data, changed the aggregates to <code>SUM(CASE WHEN ... THEN 1 ELSE 0 END)</code>, resumed the baseline checks and created the snapshot.</p>
+<h3>Re-merging an original source after PICK can conflict</h3>
+<p>A separate small probe verified safe row selection and conflict rejection. It also observed a conflict when merging an original source after a previous PICK on this instance. The measured catalog workflow therefore assembled one approval branch and merged it once. After a timeout or lost connection, reconcile operation state and target diff before deciding whether to retry.</p>
+<h3>Data isolation still needs a resource plan</h3>
+<p>A later Playground check received a busy-compute-node error, mentioning possibly excessive active transactions; a direct connection received the same response. That observation did not establish the error's root cause. It highlighted a deployment concern: branches on a shared instance can still compete for resources. Production use needs workload budgets, concurrency limits and, when appropriate, a separate workspace instance.</p>
+<h2 id="film">9. Render the film from the completed evidence</h2>
+<p>The video renderer reads the actual <code>execution.json</code> report. Before rendering the final film, it requires the recorded state to be <code>merged</code>. The proposed, review, blocked and merged counts on screen come from that report.</p>
+<div class="article-table"><table><thead><tr><th>Video time</th><th>Stage</th></tr></thead><tbody><tr><td>0–8 seconds</td><td>Catalog size and five data-quality problems</td></tr><tr><td>8–22 seconds</td><td>Twenty task branches</td></tr><tr><td>22–34 seconds</td><td>Data pull request and changed-field summary</td></tr><tr><td>34–44 seconds</td><td>The price violation's row-level diff</td></tr><tr><td>44–53 seconds</td><td>PICK to the approval branch, then MERGE</td></tr><tr><td>53–60 seconds</td><td>Verified main-table outcome</td></tr></tbody></table></div>
+<p>We drew the frames with Pillow and encoded them with FFmpeg into a 1280 × 720, 20 fps H.264 video, with English captions. Long database operations became short sequences. The labels “Synthetic catalog” and “Edited replay” remain visible to explain how the film relates to the measured run.</p>
+<h2 id="takeaway">Bring the workflow to your own project</h2>
+<p>The experiment demonstrates a concrete path: agents prepare bulk repairs on branches; a review process identifies the exact acceptable changes; native database operations apply those approved rows.</p>
+<p>Production use also needs restricted proposal credentials, independently held merge credentials, approvals tied to frozen source versions, complete business validation, resource limits and a recovery policy. This synthetic run exercised the database workflow; each deployment must establish its own production authorization boundary.</p>
+<p>We packaged the workflow and those boundaries into an open-source Agent Skill. Use it with Codex and an existing MySQL client, start with a small dataset, and adapt the validation rules to your own business.</p>
+
+<section class="article-cta"><h2>Download the skill and use the workflow</h2><p>Open-source instructions, SQL guidance, production boundaries and a review-report template. Bring your own MatrixOne.</p><div class="hero-cta"><a class="btn btn-primary" href="/agent-skill">Get the Agent Skill</a><a class="btn btn-ghost" href="/catalog-run">Read the measured results</a></div></section>
+<section class="article-sources" id="sources"><h2>Source code and original evidence</h2><p>These links are pinned to the completed experiment commit. The public Playground is a separate 124-row SQL tutorial.</p><ul><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/AGENT_TASK.md">Codex task contract</a></li><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/agents/brand-0.json">Original brand repair plan</a></li><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/seed.mjs">Dataset seeding script</a></li><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/execute.mjs">Execution, validation, PICK and MERGE</a></li><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/events.jsonl">Original SQL and client timings</a></li><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/execution.json">Complete execution report</a></li><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/merge-capabilities-v2.json">Small capability and conflict probe</a></li><li><a href="https://github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/render-video.py">Video renderer</a></li><li><a href="/data/catalog-run.json">Public summary JSON</a></li></ul></section>
+</article><aside class="article-toc"><p>IN THIS ARTICLE</p><a href="#contract">01 · Define the contract</a><a href="#fixture">02 · Build the catalog</a><a href="#agents">03 · Assign 20 tasks</a><a href="#validation">04 · Execute and validate</a><a href="#fault">05 · Inject a violation</a><a href="#report">06 · Report the changes</a><a href="#merge">07 · Approve and merge</a><a href="#lessons">08 · What went wrong</a><a href="#film">09 · Render the film</a><a href="#takeaway">10 · Use the workflow</a><a href="#sources">Source and evidence</a></aside></div>
+</main><footer class="wrap skill-footer"><a href="/">git4data.ai</a><a href="/blog">More from the blog</a></footer></body></html>

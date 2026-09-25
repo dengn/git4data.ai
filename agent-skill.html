@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MatrixOne Agent Skill — Branch, Review, Merge | Git4Data</title>
+<meta name="description" content="Download an open-source Agent Skill for reviewed data changes in MatrixOne. Isolated branches, full validation, separate merge authorization. No runtime telemetry.">
+<link rel="canonical" href="https://git4data.ai/agent-skill">
+<meta property="og:title" content="Give your agent a data change workflow — Git4Data">
+<meta property="og:description" content="An open-source skill for proposing, reviewing, and merging MatrixOne data changes.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://git4data.ai/agent-skill">
+<meta property="og:image" content="https://git4data.ai/assets/img/og.png?v=4">
+<link rel="icon" href="assets/img/favicon.svg?v=4"><link rel="stylesheet" href="assets/css/style.css?v=8">
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div><div class="bg-glow" aria-hidden="true"></div>
+<header class="nav"><div class="wrap nav-in">
+<a class="brand" href="/">git<span class="brand-accent">4</span>data</a>
+<nav class="nav-links" aria-label="Primary"><a href="/" data-i18n="skill.navHome">Home</a><a href="blog.html" data-i18n="nav.blog">Blog</a><a href="playground.html" data-i18n="nav.play">Live demo</a></nav>
+<div class="nav-actions"><button class="lang" id="langBtn" type="button" aria-label="Switch language"><span class="lang-on">EN</span><span class="lang-sep">/</span><span class="lang-off">中文</span></button><a class="btn btn-primary" href="/api/skill/download" data-i18n="skill.download">Download skill</a></div>
+<button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+</div></header>
+<main class="wrap skill-page">
+<section class="skill-hero">
+<div>
+<p class="kick" data-i18n="skill.kicker">OPEN-SOURCE AGENT SKILL · v0.1.0</p>
+<h1 data-i18n="skill.title">Let your agent propose.<br><span class="grad">Decide what reaches production.</span></h1>
+<p class="sub" data-i18n="skill.intro">Give Codex a repeatable MatrixOne workflow: branch the data, make changes, inspect the diff, validate every changed row, and promote only an approved proposal.</p>
+<div class="hero-cta"><a class="btn btn-primary btn-lg" href="/api/skill/download" data-i18n="skill.downloadZip">Download skill ZIP</a><a class="btn btn-ghost btn-lg" href="#install" data-i18n="skill.installLink">Install in your project</a></div>
+<p class="skill-meta" data-i18n="skill.meta">MIT license · Markdown + SQL guidance · No custom MCP required · No runtime telemetry</p>
+</div>
+<aside class="skill-package" aria-label="Skill package contents">
+<div class="pr-eyebrow">MATRIXONE-SAFE-DATA-CHANGES</div>
+<h2 data-i18n="skill.packageTitle">A workflow your agent can follow.</h2>
+<ul class="skill-files"><li><code>SKILL.md</code><span data-i18n="skill.file1">The decision path and stop conditions</span></li><li><code>sql-workflow.md</code><span data-i18n="skill.file2">Snapshot, branch, diff, PICK and MERGE</span></li><li><code>production-gates.md</code><span data-i18n="skill.file3">Permissions, approval and resource limits</span></li><li><code>review-report.md</code><span data-i18n="skill.file4">A report tied to the exact proposal</span></li></ul>
+<a class="text-link" href="https://github.com/dengn/git4data.ai/tree/skill-v0.1.0/skills/matrixone-safe-data-changes" data-i18n="skill.readSource">Read every instruction before installing →</a>
+</aside>
+</section>
+<section class="skill-boundary"><h2 data-i18n="skill.boundaryTitle">Instructions guide the agent. Permissions enforce the boundary.</h2><p data-i18n="skill.boundary">The proposal agent should only be able to write its own branch. Keep production and merge credentials with a separate operator or service. Branches isolate data changes; heavy work still needs resource limits or a separate workspace instance.</p></section>
+<section class="skill-section" id="install">
+<p class="kick" data-i18n="skill.installKick">START WITH YOUR EXISTING TOOLS</p><h2 data-i18n="skill.installTitle">Install once. Bring your own MatrixOne.</h2>
+<ol class="skill-install">
+<li><h3 data-i18n="skill.step1Title">Download and inspect</h3><p data-i18n="skill.step1">Unzip the package and read its instructions. It contains no executable installer, database password, or automatic connection.</p><p class="skill-meta">ZIP · <span id="skillPackageSize">11.1 KB</span> · SHA-256 <code class="skill-hash">b1749da28093c1b18ff7dd9e690607f80ba000aab8fa26ccee4d42fca8b19696</code></p><a class="text-link" href="https://github.com/dengn/git4data.ai/releases/download/skill-v0.1.0/SHA256SUMS">SHA256SUMS</a></li>
+<li><h3 data-i18n="skill.step2Title">Add it to your project</h3><p data-i18n="skill.step2">For Codex, place the extracted folder here, then open the project. If the skill does not appear, restart Codex. For other agents, use their supported skill directory.</p><pre class="skill-code"><code>your-project/
+└── .agents/skills/
+    └── matrixone-safe-data-changes/
+        ├── SKILL.md
+        ├── agents/openai.yaml
+        └── references/</code></pre><a class="text-link" href="https://learn.chatgpt.com/docs/build-skills" data-i18n="skill.installDocs">Official Codex skill installation guide →</a></li>
+<li><h3 data-i18n="skill.step3Title">Ask for a reviewed proposal</h3><p data-i18n="skill.step3">Use your existing MySQL client or database tool with branch-scoped credentials. Start on a small disposable dataset to check the installed MatrixOne version.</p><div class="term term-sm"><div class="term-bar"><span class="term-title">Codex prompt</span><button class="copy" data-copy="#skillPrompt" type="button" data-i18n="copy">Copy</button></div><pre class="term-body"><code id="skillPrompt">Use $matrixone-safe-data-changes to normalize brands
+in my product catalog. Change only brand;
+protect price, SKU, and every other field.
+Prepare the branch and review report.
+Do not merge until I approve the exact proposal.</code></pre></div></li>
+</ol></section>
+<section class="skill-section"><p class="kick" data-i18n="skill.toolsKick">SKILL + YOUR CLIENT TODAY</p><h2 data-i18n="skill.toolsTitle">When do you need another tool?</h2><div class="grid skill-options">
+<article class="card"><h3 data-i18n="skill.localTitle">Operator-led workflow</h3><p data-i18n="skill.local">Use this skill with a MySQL client. An operator provisions restricted branch access and promotes reviewed changes in a separate session. No dedicated MCP server is required.</p><span class="pill" data-i18n="skill.available">Available in this download</span></article>
+<article class="card"><h3 data-i18n="skill.serviceTitle">Unattended or multi-user workflow</h3><p data-i18n="skill.service">Add a local CLI or service that owns credentials and enforces workspace scope, immutable proposals, approvals, resource limits, and merge recovery. MCP is one optional interface. That service is not included in this release.</p><span class="pill" data-i18n="skill.future">Build when your workflow needs it</span></article>
+</div></section>
+<section class="skill-section skill-impact" id="impact">
+<div><p class="kick" data-i18n="skill.impactKick">OPEN DISTRIBUTION</p><h2 data-i18n="skill.impactTitle">Downloads you can inspect.</h2><p data-i18n="skill.impactText">This counter comes from the GitHub release asset for v0.1.0. Repeat downloads, bots and verification requests can count. It does not measure unique people, installs, successful runs or active users.</p><p data-i18n="skill.privacy">The installed skill sends no telemetry. GitHub serves the download; This page reads only its public aggregate count, requesting it directly from GitHub without cookies if the website cache is unavailable. Counts may be delayed or temporarily unavailable.</p><a class="text-link" href="https://github.com/dengn/git4data.ai/releases/tag/skill-v0.1.0" data-i18n="skill.releaseLink">View the release →</a></div>
+<div class="skill-counter" aria-live="polite"><strong id="skillDownloadCount">—</strong><span data-i18n="skill.downloadMetric">downloads of this version</span><small id="skillDownloadStatus">Loading GitHub count…</small></div>
+</section>
+<section class="skill-section skill-feedback"><h2 data-i18n="skill.feedbackTitle">Tried it on your own data?</h2><p data-i18n="skill.feedbackText">Share an optional, public experience report: your workload, MatrixOne version, whether branch → review → merge worked, and what got in the way. Include no credentials, private data or customer details.</p><div class="hero-cta"><a class="btn btn-primary" href="https://github.com/dengn/git4data.ai/issues/new?title=Skill%20experience&amp;body=MatrixOne%20version%3A%0AWorkload%20%28no%20private%20data%29%3A%0ADid%20branch%20%E2%86%92%20review%20%E2%86%92%20merge%20work%3F%0AWhat%20got%20in%20the%20way%3F%0ASkill%20version%3A%200.1.0" data-i18n="skill.feedbackLink">Share your experience</a><a class="btn btn-ghost" href="catalog-run.html" data-i18n="skill.proofLink">See the 10M-row experiment</a></div><p class="skill-meta" data-i18n="skill.proofNote">The published experiment used synthetic data and 20 Codex-authored SQL plans. It demonstrated the database workflow, not a complete production permission boundary.</p></section>
+</main>
+<footer class="wrap skill-footer"><a href="/">git4data.ai</a><span data-i18n="skill.footer">Branch freely. Review completely. Merge deliberately.</span></footer>
+<script src="assets/js/i18n.js?v=10" defer></script><script src="assets/js/main.js?v=6" defer></script><script src="assets/js/skill.js?v=3" defer></script>
+</body></html>

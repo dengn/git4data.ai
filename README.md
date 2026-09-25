@@ -4,9 +4,10 @@ The marketing site for **Git4Data** — a database-native workspace for proposed
 Agents can work on an isolated table branch; teams can inspect row-level diffs and merge with an explicit
 conflict policy. Git4Data is implemented in [MatrixOne](https://github.com/matrixorigin/matrixone).
 
-The homepage's Data Pull Request panel is a clearly labeled illustrative preview. The linked playground
-is the live product experience: a per-visitor MatrixOne SQL branch, subject to the limits described on
-the playground page.
+The homepage film replays a measured 10-million-row catalog run with 20 independent Codex tasks.
+`catalog-run.html` and `data/catalog-run.json` document actual results, synthetic data, deliberately
+injected price violations, and execution limits. The public Playground is a separate 124-row live
+SQL tutorial with a branch per visitor.
 
 Static frontend with a MySQL-backed Cloudflare Worker API. Deployment requires Node.js 22 or later.
 
@@ -14,7 +15,7 @@ Static frontend with a MySQL-backed Cloudflare Worker API. Deployment requires N
 index.html            landing page
 playground.html       live SQL sandbox — one branch per visitor
 benchmark.html        BranchBench results, jsonbench-style
-worker/index.js       playground API (the only thing that runs server-side)
+worker/index.js       playground API and public skill download/statistics routes
 scripts/seed-playground.sql   one-time dataset setup for the playground
 data/branchbench.json every number shown on the benchmark page
 assets/css/style.css  the whole design system
@@ -234,3 +235,85 @@ When you change a file under `assets/`, bump `N` in **every** HTML file (`index.
 `assets/js/bench.js` when the dataset changes — otherwise returning visitors keep the old copy.
 Bump it *after* you finish editing, not before: republishing different content under a version
 number a browser has already cached is the same as not bumping at all.
+
+## Catalog film
+
+See `scripts/catalog-proof/README.md` for the measured experiment and `outputs/catalog-proof/` for
+its retained task plans, query log and results. After a successful run, `publish-results.py` creates
+the public evidence and `render-video.py` renders the captioned 60-second replay. The renderer uses
+Pillow, FFmpeg and macOS system fonts. The film contains no audio and starts only on user action.
+
+## Downloadable Agent Skill and impact measurement
+
+`/agent-skill` provides the bilingual installation guide for `skills/matrixone-safe-data-changes/`.
+The versioned ZIP is hosted as a **GitHub Release asset** so its download count survives Worker
+redeployments. `/api/skill/download` redirects to the fixed release asset; `/api/skill/stats` reads
+that asset's public `download_count`, cached for 15 minutes at each edge location. These endpoints
+run before any database configuration checks and do not depend on MatrixOne availability. No new
+Cloudflare storage, analytics subscription, or OAuth scope is required. API rate limits/outages
+reuse a timestamped last-good observation for up to 24 hours when available, or render an unavailable
+count; neither path invents a zero. GitHub can rate-limit shared Cloudflare egress IPs. Downloads
+continue via the release link. The apex and www hostnames share the same per-release cache key. The browser falls back to
+GitHub's public release API without cookies or a referrer if that cache is unavailable; this
+third-party metadata request is disclosed on the download page and allowed by CSP.
+
+The current-version count includes repeated requests, bots and our verification downloads. It does
+not deduplicate people or prove installation or use. Source clones, mirrors and copied instructions
+are not counted. The installed package contains no telemetry. GitHub handles asset downloads under
+its own policies; we do not collect identity, database credentials, SQL or runtime events for metrics.
+
+### Publish a version
+
+1. Update `metadata.version` in the skill and the version/tag/asset in `data/agent-skill.json`.
+2. Run `python3 scripts/package-agent-skill.py`; it writes a deterministic ZIP and `SHA256SUMS` to
+   `outputs/skill-release/`, and the hash/size to the public manifest. Update the download page's version,
+   release/source links, size, checksum, and translations from that manifest when releasing a new version.
+3. Commit the source and manifest, push, and create a release at that exact commit with both artifacts:
+   `gh release create skill-v0.1.0 outputs/skill-release/* --target <commit> --title "MatrixOne Agent Skill v0.1.0" --notes-file <notes-file>`.
+   Substitute the new version for future releases. Upload before deploying website links. Never replace
+   an existing version's ZIP: create a new version to preserve integrity and historical counts.
+4. Deploy the website. Read-only verification downloads count as downloads; report them as such.
+
+### Measure influence without tracking installations
+
+Run `node scripts/skill-metrics.mjs` to obtain current and historical release-asset download counts,
+plus repository stars/forks. It reads only public GitHub metadata; optional `GH_TOKEN` raises API limits.
+Save periodic JSON snapshots outside the deployed assets to calculate weekly changes. This is an
+on-demand command; no background scheduler is installed.
+
+Keep these signals separate:
+
+| Stage | Signal | Interpretation |
+| --- | --- | --- |
+| Awareness | Website analytics, if configured separately | Visits, not adoption; this change adds no browser analytics beacon |
+| Distribution | Release ZIP downloads by version | Requests, not unique users or installations |
+| Interest | Repository stars/forks | Covers the whole site repository, not only this skill |
+| Activation | Voluntary GitHub experience reports | Self-reported successful branch → review → merge |
+| Adoption | Consented case studies / repeat reports | Qualitative evidence of sustained use |
+
+The website invites voluntary public GitHub reports without asking for confidential data. Do not
+call downloads MAU, paid conversion, or production adoption. Add opt-in aggregate usage events only
+if users explicitly choose them in a future executable tool; a documentation skill should stay offline.
+
+### Tool roadmap
+
+This release ships instructions, SQL guidance, permission/approval design and a review-report template.
+An operator can use an existing MySQL client and separate branch/merge credentials. A custom CLI/API/MCP
+becomes useful for unattended or multi-user execution: it must enforce workspace scope, immutable
+proposals, policy, approvals, target-version checks, resource limits and durable operation state. MCP
+is an interface option, not an access-control guarantee. Self-hosting supports either approach.
+
+
+## Blog
+
+`blog.html` lists engineering articles. The first case study lives at
+`blog/10-million-products-20-codex-agents.html` (English) and
+`blog/10-million-products-20-codex-agents-zh.html` (Chinese). Both are static HTML
+with canonical URLs, reciprocal language links, article metadata, video, SQL excerpts,
+and links pinned to the completed experiment commit. The article distinguishes measured
+execution, policy-based approval, injected faults and the reconstructed video interface.
+
+Edit the two article files together when changing facts. Their evidence comes from the
+retained catalog run, not from another database execution. Add new article URLs to the
+blog index and sitemap. Shared editorial styles live in `assets/css/style.css`; bump its
+cache version in all HTML pages, including nested blog pages, whenever it changes.
