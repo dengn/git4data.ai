@@ -26,20 +26,20 @@
       tZh: '动手之前先打快照',
       d: 'Names the state you can always come back to. Metadata only — nothing is copied.',
       dZh: '给「随时可以退回来」的那个状态命名。只是元数据，没有复制任何数据。',
-      sql: "CREATE SNAPSHOT before_fix FOR TABLE customers;"
+      sql: "CREATE SNAPSHOT {{before_fix}} FOR TABLE {{database}} customers;"
     },
     {
       t: 'Fork a working branch',
       tZh: 'Fork 一个工作分支',
       d: 'customers_fix starts identical, then diverges. Writes on one stop touching the other.',
       dZh: 'customers_fix 一开始完全相同，然后各自演进。任何一侧的写入都不再影响对方。',
-      sql: "DATA BRANCH CREATE TABLE customers_fix\n  FROM customers{snapshot='before_fix'};"
+      sql: "DATA BRANCH CREATE TABLE customers_fix\n  FROM customers{snapshot='{{before_fix}}'};"
     },
     {
       t: 'Do the risky repair — on the branch',
       tZh: '在分支上做那个有风险的修复',
-      d: 'Normalise every spelling of France, Germany and the Netherlands. customers is untouched.',
-      dZh: '把法国、德国、荷兰的各种写法统一掉。customers 原表毫发无损。',
+      d: 'Normalize fr and France to FR on customers_fix. The customers table is untouched.',
+      dZh: '在 customers_fix 上把 fr 和 France 统一成 FR。customers 原表保持不变。',
       sql: "UPDATE customers_fix SET country = 'FR' WHERE country IN ('fr','France');\n"
     },
     {
@@ -47,30 +47,37 @@
       tZh: '给分支的当前状态命名',
       d: 'A diff compares two named states, so give this one a name too.',
       dZh: 'diff 比较的是两个具名状态，所以给分支这一头也起个名字。',
-      sql: "CREATE SNAPSHOT after_fix FOR TABLE customers_fix;"
+      sql: "CREATE SNAPSHOT {{after_fix}} FOR TABLE {{database}} customers_fix;"
     },
     {
       t: 'Review the blast radius',
       tZh: '看清楚改动的范围',
       d: 'The rows on which the two versions disagree — read only from the deltas, never the base table.',
       dZh: '两个版本存在分歧的行。只读增量，永远不碰基表。',
-      sql: "DATA BRANCH DIFF customers{snapshot='before_fix'}\n  AGAINST customers_fix{snapshot='after_fix'};"
+      sql: "DATA BRANCH DIFF customers_fix{snapshot='{{after_fix}}'}\n  AGAINST customers{snapshot='{{before_fix}}'};"
     },
     {
       t: 'Merge it back',
       tZh: '合并回去',
       d: 'Three-way, row by row, and it stops dead on a genuine conflict rather than guessing.',
       dZh: '逐行三方合并。遇到真冲突直接中止，而不是替你猜。',
-      sql: "DATA BRANCH MERGE customers_fix{snapshot='after_fix'}\n  INTO customers WHEN CONFLICT FAIL;"
+      sql: "DATA BRANCH MERGE customers_fix{snapshot='{{after_fix}}'}\n  INTO customers WHEN CONFLICT FAIL;"
     },
     {
       t: 'Confirm',
       tZh: '验收',
-      d: 'Same query as step one. Five spellings became one, and you can still see how it happened.',
-      dZh: '和第一步同一条查询。五种写法收敛成一种，而且整个过程仍然可追溯。',
+      d: 'Same query as step one. fr and France are now FR in your customers table.',
+      dZh: '与第一步相同的查询：你的 customers 表中的 fr 和 France 已统一为 FR。',
       sql: "SELECT country, COUNT(*) AS rows_with_it\n  FROM customers\n GROUP BY country\n ORDER BY rows_with_it DESC;"
     }
   ];
+
+  function stepSql(step) {
+    return step.sql.replace(/\{\{(database|before_fix|after_fix)\}\}/g, function (_, key) {
+      if (!session) return '<your_' + key + '>';
+      return key === 'database' ? session.database : session.snapshots[key];
+    }).trim();
+  }
 
   function isZh() { return window.G4D_LANG === 'zh'; }
 
@@ -89,8 +96,9 @@
             '<span class="ps-d">' + (isZh() ? s.dZh : s.d) + '</span>' +
           '</span>' +
         '</button>';
+      li.querySelector('button').disabled = !live;
       li.querySelector('button').addEventListener('click', function () {
-        $('sqlBox').value = s.sql.trim();
+        $('sqlBox').value = stepSql(s);
         $('sqlBox').focus();
         ol.querySelectorAll('.pstep').forEach(function (x) { x.classList.remove('is-on'); });
         li.classList.add('is-on');
@@ -207,6 +215,9 @@
       session = res.body;
       expiresAt = Date.now() + session.expiresIn;
       live = true;
+      renderSteps();
+      $('runBtn').disabled = false;
+      $('resetBtn').disabled = false;
       budget(0);
       tick();
       setInterval(tick, 1000);

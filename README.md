@@ -8,7 +8,7 @@ The homepage's Data Pull Request panel is a clearly labeled illustrative preview
 is the live product experience: a per-visitor MatrixOne SQL branch, subject to the limits described on
 the playground page.
 
-Static, dependency-free, deployed on Cloudflare.
+Static frontend with a MySQL-backed Cloudflare Worker API. Deployment requires Node.js 22 or later.
 
 ```
 index.html            landing page
@@ -79,17 +79,13 @@ Every deploy binds both hostnames and creates their DNS records. Without this th
 fine but `git4data.ai` has no DNS record at all and the site is unreachable, which is easy to
 mistake for a build failure.
 
-`www` serves the same assets rather than redirecting. A real 301 would need a Worker script, and
-adding `main` forces `run_worker_first` so that every asset request becomes a billable Worker
-invocation (100k/day on the free plan) — where an assets-only Worker serves static files free and
-unlimited, which is what a launch-day spike needs. The canonical tags already point search engines
-at the apex. If you want a true redirect, add a Cloudflare **Redirect Rule** in the dashboard: it
-runs ahead of Workers and costs no invocations.
+`www` serves the same assets rather than redirecting. The canonical tags point to the apex.
+For a true redirect, configure a Cloudflare Redirect Rule in the dashboard.
 
 ### If you use Cloudflare Pages instead
 
-Pages also works with no changes — framework preset **None**, empty build command, build output
-directory `/`. In that case `wrangler.jsonc` and `package.json` are simply ignored.
+Pages can serve the static frontend (framework **None**, build output `/`), but the live playground
+requires the Worker API and its secrets. Use the Workers configuration above for the complete site.
 
 ## The playground
 
@@ -100,8 +96,16 @@ DATA BRANCH CREATE TABLE g4d_s_<id>.customers
   FROM g4d_demo.customers{snapshot='g4d_base'};
 ```
 
-That is the entire isolation model — a branch costs metadata rather than a copy, so thousands of
-sandboxes fit on one instance. Sessions are reclaimed after 20 minutes idle.
+The public console accepts a bounded tutorial dialect compiled by `worker/playground-sql.mjs`.
+Visitor SQL is never forwarded directly: the server constructs each supported statement with a
+session-scoped database and snapshot names, and parameterizes country values. Supported operations
+are the eight guided steps, `SELECT *`, `SELECT COUNT(*)`, and `DESCRIBE` on the two demo tables.
+Other SQL, including access to other sessions or the seed, is rejected.
+
+Sessions expire after 20 minutes idle. New sessions reclaim up to five expired sessions; a scheduled
+job runs every ten minutes to reclaim up to 30, including their snapshots. Admission pauses when
+30 session records already exist (this is a load guard, not an atomic concurrency limit).
+Queries have a five-second timeout, a 200-row result cap, and an 80-statement session budget.
 
 Only `/api/*` reaches the Worker (`run_worker_first` in `wrangler.jsonc`); every other path is served
 straight from the asset store, so page views never become Worker invocations.
@@ -109,27 +113,32 @@ straight from the asset store, so page views never become Worker invocations.
 ### Pointing it at a database
 
 **1 — seed the instance, once.** This creates `g4d_demo.customers`, the `_sessions` bookkeeping table,
-and the `g4d_base` snapshot every visitor branches from:
+and the `g4d_base` snapshot every visitor branches from. The seed script replaces the sample table;
+run it only for initial setup on a dedicated demo instance:
 
 ```bash
-mysql -h <host> -P 6001 -u <user> -p<password> < scripts/seed-playground.sql
+mysql -h <host> -P 6001 -u <user> -p < scripts/seed-playground.sql
 ```
 
-**2 — give the Worker its credentials.** Four separate secrets, not a DSN: a MatrixOne Cloud username
-contains colons, which makes a `mysql://` URL ambiguous to parse.
+**2 — configure the production Hyperdrive binding.** The deployed Worker uses `HYPERDRIVE` for
+its database connection; origin credentials are stored in Cloudflare, never in this repository.
+Disable Hyperdrive query caching so snapshots, session bookkeeping and reads after writes are current.
+Use `g4d_demo` as the origin database. The Worker uses fully qualified names because Hyperdrive does
+not support changing the connection database with `USE`.
 
-```bash
-npx wrangler secret put MO_HOST
-npx wrangler secret put MO_PORT
-npx wrangler secret put MO_USER
-npx wrangler secret put MO_PASSWORD
-```
+The current demo connection uses Hyperdrive's `REQUIRED` TLS mode. The instance presents a
+self-signed server certificate with `CA:FALSE`, which Cloudflare rejects as an uploaded CA.
+This configuration provides encryption but does not provide the explicit certificate/hostname
+verification of `VERIFY_IDENTITY`. For that mode, obtain a compatible CA-signed certificate chain
+from the instance operator, upload its CA, and update the Hyperdrive TLS configuration.
 
-Each command prompts for the value and stores it encrypted on Cloudflare. Nothing is written to this
-repo — the repo is public, and a connection string committed here would be scraped within minutes.
+For a different Cloudflare account, create your own Hyperdrive and replace its ID in `wrangler.jsonc`.
+Direct MySQL TLS from Workers is not supported by this driver/runtime combination; use Hyperdrive.
 
-Optional: `MO_TLS=off` for a plain connection (local MatrixOne), `MO_TLS=strict` to verify the
-server certificate. The default attempts TLS without certificate verification.
+For a Node.js backend or direct local development, the API also supports `MO_HOST`, `MO_PORT`,
+`MO_USER`, and `MO_PASSWORD`, plus `MO_CA_CERT` for a trusted PEM certificate. This path verifies
+certificates and hostnames by default; `MO_TLS=off` is only for local plain connections. Production
+prefers the Hyperdrive binding when both configurations are present.
 
 **3 — check it.** `/api/health` reports exactly which step is failing:
 
@@ -140,11 +149,13 @@ curl https://git4data.ai/api/health
 `stage: "config"` means a secret is missing, `"connect"` means the host is unreachable, `"seed"` means
 the dataset is not there, and `"snapshot"` means the seed ran but the snapshot did not.
 
-### Use a least-privilege account
+### Database permissions
 
-The playground should not connect as `accountadmin`. Give it an account that can read `g4d_demo`,
-create and drop its own `g4d_s_*` databases, and nothing else. Even with the statement filter in
-`worker/index.js`, the database account is the boundary that actually matters.
+Use a dedicated demo instance/account with no business data. The service needs to create and drop
+session databases and snapshots, branch from the seed snapshot, and run diff/merge. Snapshot
+permissions depend on the MatrixOne release and may require an administrative role. Keep that
+credential server-side in Cloudflare secrets; the public compiler is the application access boundary.
+Do not expose arbitrary SQL through the provisioning connection.
 
 ### Local development
 
@@ -153,8 +164,14 @@ playground renders its offline state — a notice with the Docker command instea
 is also what visitors see if the instance goes down.
 
 ```bash
+npm ci
 npm run dev
 ```
+
+For local Hyperdrive, set its `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE`
+environment variable as described in Cloudflare documentation. To use direct `MO_*` values in an
+ignored `.dev.vars`, remove the Hyperdrive binding from a separate local Wrangler configuration. Run `npm test` for the tutorial compiler
+checks, including cross-session access rejection.
 
 ## Editing the benchmark data
 
