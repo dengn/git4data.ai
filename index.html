@@ -3,26 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>git4data — Git for your data. Branch, diff, merge and roll back at row level.</title>
-<meta name="description" content="git4data brings Git-style version control into the database kernel. Zero-copy snapshots in milliseconds, row-level branch, diff, merge and cherry-pick, instant rollback and PITR — all in plain SQL. Powered by MatrixOne.">
+<title>Git4Data — Safe data mutations for AI agents</title>
+<meta name="description" content="Give AI agents an isolated data branch. Review row-level changes, validate the result, then merge approved changes with Git4Data, built into MatrixOne.">
 <meta name="theme-color" content="#05070e">
 <link rel="canonical" href="https://git4data.ai/">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://git4data.ai/">
-<meta property="og:title" content="git4data — Git for your data">
-<meta property="og:description" content="Zero-copy snapshots in milliseconds. Row-level branch, diff, merge, cherry-pick. Instant rollback. All in plain SQL.">
+<meta property="og:title" content="Git4Data — Safe data mutations for AI agents">
+<meta property="og:description" content="Give AI agents an isolated data branch. Review row-level changes, validate the result, then merge approved changes.">
 <meta property="og:image" content="https://git4data.ai/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="git4data — Git for your data">
-<meta name="twitter:description" content="Zero-copy snapshots in milliseconds. Row-level branch, diff, merge, cherry-pick. Instant rollback. All in plain SQL.">
+<meta name="twitter:title" content="Git4Data — Safe data mutations for AI agents">
+<meta name="twitter:description" content="Give AI agents an isolated data branch. Review row-level changes, validate the result, then merge approved changes.">
 <meta name="twitter:image" content="https://git4data.ai/assets/img/og.png">
 
 <link rel="icon" href="assets/img/favicon.svg?v=4" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 </head>
 <body>
 
@@ -42,23 +42,22 @@
     </a>
 
     <nav class="nav-links" aria-label="Primary">
-      <a href="#features" data-i18n="nav.features">Capabilities</a>
-      <a href="#how" data-i18n="nav.how">How it works</a>
-      <a href="#compare" data-i18n="nav.compare">Compare</a>
+      <a href="#product" data-i18n="nav.features">Product</a>
+      <a href="playground.html" data-i18n="nav.play">Live demo</a>
       <a href="#usecases" data-i18n="nav.usecases">Use cases</a>
-      <a href="playground.html" data-i18n="nav.play">Playground</a>
-      <a href="benchmark.html" data-i18n="nav.bench">Benchmark</a>
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="https://docs.matrixorigin.cn/" target="_blank" rel="noopener" data-i18n="nav.docs">Docs</a>
     </nav>
 
     <div class="nav-actions">
       <button class="lang" id="langBtn" type="button" aria-label="Switch language">
         <span class="lang-on">EN</span><span class="lang-sep">/</span><span class="lang-off">中文</span>
       </button>
-      <a class="btn btn-ghost" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener">
+      <a class="btn btn-ghost" href="https://github.com/dengn/git4data.ai" target="_blank" rel="noopener">
         <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.49c-2.01.36-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
         <span>GitHub</span>
       </a>
-      <a class="btn btn-primary" href="#start" data-i18n="nav.cta">Get started</a>
+      <a class="btn btn-primary" href="playground.html" data-i18n="nav.cta">Try the demo</a>
     </div>
 
     <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false">
@@ -70,114 +69,108 @@
 <main id="top">
 
 <!-- ─────────── hero ─────────── -->
-<section class="hero wrap">
-  <a class="pill reveal" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener">
-    <span class="pill-dot"></span>
-    <span data-i18n="hero.pill">Powered by the MatrixOne kernel</span>
-    <span class="pill-arrow">→</span>
-  </a>
-
-  <h1 class="reveal" data-d="1">
-    <span data-i18n="hero.h1a">Git for your</span>
-    <span class="grad" data-i18n="hero.h1b">data</span><span class="caret" aria-hidden="true"></span>
-  </h1>
-
-  <p class="lede reveal" data-d="2" data-i18n="hero.lede">
-    Snapshot, branch, diff, merge and roll back your tables the way you already do with code —
-    at <b>row level</b>, in <b>milliseconds</b>, with <b>zero copies</b>, using plain SQL.
-  </p>
-
-  <div class="hero-cta reveal" data-d="3">
-    <a class="btn btn-primary btn-lg" href="playground.html" data-i18n="hero.cta1">Try it in your browser</a>
-    <a class="btn btn-ghost btn-lg" href="#how" data-i18n="hero.cta2">See how it works</a>
-  </div>
-
-  <!-- install: two commands, before any SQL -->
-  <div class="install reveal" data-d="4">
-    <ol class="ins-steps">
-      <li>
-        <span class="ins-n">1</span>
-        <div class="ins-body">
-          <p class="ins-t" data-i18n="ins.1">Run MatrixOne</p>
-          <div class="cmd">
-            <code id="cmdRun">docker run -d -p 6001:6001 --name matrixone matrixorigin/matrixone:latest</code>
-            <button class="copy" data-copy="#cmdRun" type="button" data-i18n="copy">Copy</button>
-          </div>
-        </div>
-      </li>
-      <li>
-        <span class="ins-n">2</span>
-        <div class="ins-body">
-          <p class="ins-t" data-i18n="ins.2">Connect with a MySQL client you already have</p>
-          <div class="cmd">
-            <code id="cmdConn">mysql -h 127.0.0.1 -P 6001 -u root -p111</code>
-            <button class="copy" data-copy="#cmdConn" type="button" data-i18n="copy">Copy</button>
-          </div>
-        </div>
-      </li>
-    </ol>
-    <p class="ins-note" data-i18n="ins.note">
-      Apache 2.0 · no account, no signup · nothing to configure. That is the whole install —
-      version control is already in the engine.
-    </p>
-  </div>
-
-  <!-- terminal -->
-  <div class="term reveal" data-d="5">
-    <div class="term-bar">
-      <span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span>
-      <span class="term-title"><span class="term-step">3</span> mysql — git4data@matrixone</span>
-      <button class="copy" data-copy="#termCode" type="button" data-i18n="copy">Copy</button>
+<section class="hero hero-product wrap" id="product">
+  <div class="hero-copy">
+    <a class="pill reveal" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener">
+      <span class="pill-dot"></span>
+      <span data-i18n="hero.pill">Database-native branches in MatrixOne</span>
+      <span class="pill-arrow">→</span>
+    </a>
+    <h1 class="reveal" data-d="1"><span data-i18n="hero.h1a">Let AI agents change millions of rows</span><br><span class="grad" data-i18n="hero.h1b">without touching production.</span></h1>
+    <p class="lede reveal" data-d="2" data-i18n="hero.lede">Give every agent an isolated data branch. Review row-level changes, validate the result, then merge approved changes when you’re ready.</p>
+    <div class="hero-cta reveal" data-d="3">
+      <a class="btn btn-primary btn-lg" href="playground.html" data-i18n="hero.cta1">Try the live SQL playground</a>
+      <a class="btn btn-ghost btn-lg" href="#start" data-i18n="hero.cta2">Build with Git4Data</a>
     </div>
-    <pre class="term-body"><code id="termCode"><span class="c-cmt">-- name the state you are about to fork from</span>
-<span class="c-kw">CREATE SNAPSHOT</span> sn1 <span class="c-kw">FOR TABLE</span> orders;
-
-<span class="c-cmt">-- fork it. metadata only: a 100 GB table clones in 0.20 s / 314 KB</span>
-<span class="c-kw">DATA BRANCH CREATE TABLE</span> orders_fix <span class="c-kw">FROM</span> orders{<span class="c-kw">snapshot</span>=<span class="c-str">'sn1'</span>};
-
-<span class="c-cmt">-- an agent runs its repair on the branch. production never sees it.</span>
-<span class="c-kw">UPDATE</span> orders_fix <span class="c-kw">SET</span> region = <span class="c-str">'EMEA'</span> <span class="c-kw">WHERE</span> country <span class="c-kw">IN</span> (<span class="c-str">'FR'</span>,<span class="c-str">'DE'</span>);
-<span class="c-kw">CREATE SNAPSHOT</span> sn3 <span class="c-kw">FOR TABLE</span> orders_fix;
-
-<span class="c-cmt">-- diff reads only the deltas, never the base table</span>
-<span class="c-kw">DATA BRANCH DIFF</span> orders{<span class="c-kw">snapshot</span>=<span class="c-str">'sn2'</span>} <span class="c-kw">AGAINST</span> orders_fix{<span class="c-kw">snapshot</span>=<span class="c-str">'sn3'</span>};
-<span class="c-out">1000 rows in set (0.19 sec)</span>
-
-<span class="c-cmt">-- fold the accepted rows back: three-way, conflicts stop the world</span>
-<span class="c-kw">DATA BRANCH MERGE</span> orders_fix{<span class="c-kw">snapshot</span>=<span class="c-str">'sn3'</span>} <span class="c-kw">INTO</span> orders <span class="c-kw">WHEN CONFLICT FAIL</span>;
-<span class="c-ok">Query OK, 1000 rows affected (0.35 sec)</span></code></pre>
+    <p class="hero-support reveal" data-d="4" data-i18n="hero.support">Git for your data, built into the database. Powered by MatrixOne.</p>
   </div>
 
-  <!-- stat strip -->
-  <ul class="stats reveal" data-d="5">
-    <li><b>0.20s</b><span data-i18n="stat.1">to fork a 100 GB table</span></li>
-    <li><b>18.5&times;</b><span data-i18n="stat.2">faster than DoltDB on BranchBench</span></li>
-    <li><b>1,000</b><span data-i18n="stat.3">concurrently branching agents</span></li>
-    <li><b>MySQL</b><span data-i18n="stat.4">wire protocol, no rewrite</span></li>
-  </ul>
-  <p class="hero-src reveal" data-d="5"><a href="benchmark.html" data-i18n="hero.src">Measured on BranchBench &mdash; see the full results &rarr;</a></p>
+  <div class="pr-preview reveal" data-d="3" aria-label="Illustrative data pull request preview">
+    <div class="pr-top">
+      <div><span class="pr-eyebrow" data-i18n="demo.eyebrow">DATA PULL REQUEST · SAMPLE</span><h2 data-i18n="demo.title">Catalog enrichment</h2></div>
+      <span class="pr-state"><i></i><span data-i18n="demo.state">Needs review</span></span>
+    </div>
+    <p class="pr-agent" data-i18n="demo.agent">Agent run <code>catalog-enrichment-07</code> · sample data</p>
+    <div class="pr-metrics">
+      <div><b>1,284</b><span data-i18n="demo.rows">rows changed</span></div>
+      <div><b>3</b><span data-i18n="demo.fields">fields updated</span></div>
+      <div class="pr-flag"><b>2</b><span data-i18n="demo.flagged">policy flags</span></div>
+    </div>
+    <div class="pr-changes">
+      <div class="pr-change-head"><span data-i18n="demo.field">Field</span><span data-i18n="demo.changes">Changes</span><span data-i18n="demo.result">Review</span></div>
+      <div class="pr-change"><span data-i18n="demo.descField">Description</span><span>+ 842</span><span class="pr-ok" data-i18n="demo.ok">Within policy</span></div>
+      <div class="pr-change"><span data-i18n="demo.categoryField">Category</span><span>~ 319</span><span class="pr-ok" data-i18n="demo.ok">Within policy</span></div>
+      <div class="pr-change"><span data-i18n="demo.brandField">Brand</span><span>~ 123</span><span class="pr-ok" data-i18n="demo.ok">Within policy</span></div>
+      <div class="pr-change is-flag"><span data-i18n="demo.priceField">Price</span><span>~ 2</span><span class="pr-warn" data-i18n="demo.review">Review required</span></div>
+    </div>
+    <div class="pr-policy"><span class="pr-policy-icon">!</span><span data-i18n="demo.policy">Policy check: this agent run is not allowed to change price.</span></div>
+    <div class="pr-sample-controls">
+      <button class="pr-action" type="button" data-pr-toggle="sampleDiff" aria-controls="sampleDiff" aria-expanded="false" data-i18n="demo.diffButton">View sample row diff</button>
+      <button class="pr-action" type="button" data-pr-toggle="sampleValidation" aria-controls="sampleValidation" aria-expanded="false" data-i18n="demo.validationButton">Show sample validation</button>
+    </div>
+    <div class="pr-detail" id="sampleDiff" hidden>
+      <div class="pr-detail-head"><b data-i18n="demo.diffTitle">Sample row diff</b><span>SKU-218-AX</span></div>
+      <div class="pr-diff-row"><span data-i18n="demo.descField">Description</span><del data-i18n="demo.descBefore">Stainless travel mug</del><ins data-i18n="demo.descAfter">Leakproof 18 oz stainless mug</ins></div>
+      <div class="pr-diff-row"><span data-i18n="demo.categoryField">Category</span><del data-i18n="demo.categoryBefore">Kitchen</del><ins data-i18n="demo.categoryAfter">Drinkware</ins></div>
+      <div class="pr-diff-row is-flag"><span data-i18n="demo.priceField">Price</span><del>$29.00</del><ins>$24.00</ins></div>
+      <p class="pr-detail-note" data-i18n="demo.diffNote">Example values only. The price change is flagged by the sample policy above.</p>
+    </div>
+    <div class="pr-detail" id="sampleValidation" hidden>
+      <div class="pr-detail-head"><b data-i18n="demo.validationTitle">Sample policy validation</b><span class="pr-validation-state" data-i18n="demo.validationState">2 flagged</span></div>
+      <p class="pr-validation-line"><i class="is-pass">✓</i><span data-i18n="demo.validationPass">Description and category fields passed the sample checks.</span></p>
+      <p class="pr-validation-line"><i class="is-fail">!</i><span data-i18n="demo.validationFail">Two price changes need review because this agent is not allowed to change price.</span></p>
+      <p class="pr-detail-note" data-i18n="demo.validationNote">Illustrative result only; no live validation was run.</p>
+    </div>
+    <div class="pr-preview-actions">
+      <a class="btn btn-primary" href="playground.html" data-i18n="demo.cta">Explore the live playground</a>
+      <span data-i18n="demo.disclaimer">Illustrative preview · sample values · not a live agent run</span>
+    </div>
+  </div>
 </section>
 
-<!-- ─────────── problem ─────────── -->
 <section class="wrap band">
   <div class="band-in reveal">
-    <p class="band-kick" data-i18n="prob.kick">Why now</p>
-    <h2 class="band-h" data-i18n="prob.h">One engineer works on one snapshot. A fleet of agents works on hundreds.</h2>
-    <p class="band-p" data-i18n="prob.p">
-      LLM agents are starting to act as data engineers: they read relational data, propose transformations, evaluate the
-      SQL, and iterate. Each agent must fork the data before it speculates, inspect a row-level diff, merge only what was
-      validated, and roll back the paths that failed — <b>without copying the base table</b>. Version control stopped being a
-      convenience the moment the number of concurrent candidate states went from one to a thousand.
-    </p>
+    <p class="band-kick" data-i18n="prob.kick">The workflow</p>
+    <h2 class="band-h" data-i18n="prob.h">Give agents room to work. Keep people in control of what ships.</h2>
+    <p class="band-p" data-i18n="prob.p">When an agent can rewrite thousands of records, a prompt and a production connection are not a review process. Git4Data gives each task an isolated branch, makes changed rows visible, and lets your team validate the result before merging. Keep your existing system of record; use MatrixOne as a workspace for proposed changes.</p>
   </div>
 </section>
+
+<!-- ─────────── use cases ─────────── -->
+<section class="wrap sec" id="usecases">
+  <header class="sec-head reveal">
+    <p class="kick" data-i18n="uc.kick">Where it pays off</p>
+    <h2 data-i18n="uc.h">Start with product catalog enrichment.</h2>
+    <p class="sub" data-i18n="uc.sub">A concrete workflow for teams building agents that fill in, standardize, and repair structured product data. Other use cases are adjacent hypotheses to validate with real workloads.</p>
+  </header>
+
+  <div class="grid usecase-grid">
+    <article class="uc reveal">
+      <span class="uc-n" data-i18n="u1.tag">PRIMARY WORKFLOW</span>
+      <h3 data-i18n="u1.h">Product catalog enrichment</h3>
+      <p data-i18n="u1.p">Standardize brands and categories, fill in descriptions and attributes, and resolve supplier inconsistencies. Review field-level changes before they return to your catalog.</p>
+    </article>
+    <article class="uc reveal">
+      <span class="uc-n" data-i18n="u2.tag">ADJACENT TO VALIDATE</span>
+      <h3 data-i18n="u2.h">CRM and master data cleanup</h3>
+      <p data-i18n="u2.p">Deduplicate records and normalize company, contact, or account fields while keeping proposed changes reviewable.</p>
+    </article>
+    <article class="uc reveal">
+      <span class="uc-n" data-i18n="u3.tag">ADJACENT TO VALIDATE</span>
+      <h3 data-i18n="u3.h">Business record repair</h3>
+      <p data-i18n="u3.p">Generate or correct structured records where teams can define clear validation rules and an approval step.</p>
+    </article>
+  </div>
+  <p class="foot-note reveal" data-i18n="uc.note">Git4Data is a data-mutation workspace alongside your current system of record. Data sync, access controls, export paths, and latency need to be validated for each deployment.</p>
+</section>
+
 
 <!-- ─────────── features ─────────── -->
 <section class="wrap sec" id="features">
   <header class="sec-head reveal">
     <p class="kick" data-i18n="feat.kick">Capabilities</p>
     <h2 data-i18n="feat.h">Four verbs. Everything else is a workflow.</h2>
-    <p class="sub" data-i18n="feat.sub">Git4Data maps Git's vocabulary onto a relational engine: the database is the repository, each table is a versioned object. Because the storage is append-only and MVCC-governed, a version is just lightweight metadata — so every operation costs in proportion to the change, not to the size of the data.</p>
+    <p class="sub" data-i18n="feat.sub">Git4Data brings database-native snapshots, table branches, row-level diffs, and merge into MatrixOne. Agents can work with familiar SQL while your team reviews the proposed changes before merge.</p>
   </header>
 
   <div class="grid">
@@ -198,14 +191,14 @@
     <article class="card reveal">
       <div class="ico i-gr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10"></path><path d="M4 12h7"></path><path d="M4 17h12"></path><path d="M17 5v6"></path><path d="M20 8h-6"></path></svg></div>
       <h3 data-i18n="f3.h">Diff</h3>
-      <p data-i18n="f3.p">Report the rows on which two versions disagree. Each version is an unordered multiset of records, so the diff reads only the deltas written since they split — never the base table.</p>
+      <p data-i18n="f3.p">Compare two table versions and inspect the rows that changed. Use the diff to understand an agent run before deciding what to do next.</p>
       <code class="chip">DATA BRANCH DIFF T{snapshot='sn2'} AGAINST TClone{snapshot='sn3'};</code>
     </article>
 
     <article class="card reveal">
       <div class="ico i-am"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v6a5 5 0 0 0 5 5h5"></path><path d="M17 4v6"></path><circle cx="7" cy="19" r="2"></circle><path d="M14 12l3 3-3 3"></path></svg></div>
       <h3 data-i18n="f4.h">Merge</h3>
-      <p data-i18n="f4.p">Fold accepted changes back into the live table. Git4Data infers the common base revision and performs a genuine three-way merge, so non-overlapping work from several agents survives instead of being overwritten.</p>
+      <p data-i18n="f4.p">Merge a branch back with an explicit conflict policy. Review and validation around that operation are part of your application workflow.</p>
       <code class="chip">DATA BRANCH MERGE TClone{snapshot='sn3'} INTO T;</code>
     </article>
 
@@ -218,13 +211,13 @@
 
     <article class="card reveal">
       <div class="ico i-rd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M3 12h12"></path><path d="M3 18h6"></path></svg></div>
-      <h3 data-i18n="f6.h">Cost tracks the change, not the table</h3>
-      <p data-i18n="f6.p">Immutable objects mean two versions differ only in what was written after they diverged. Cloning a 100 GB table takes 0.20 s and 314 KB of metadata, where materialising it costs 114.6 s and 34 GB.</p>
-      <code class="chip">100 GB clone → 0.20 s · 314 KB</code>
+      <h3 data-i18n="f6.h">Branch without full copies</h3>
+      <p data-i18n="f6.p">Database-native branching avoids materializing a full copy for each candidate state. See the benchmark page for the measured environment, workload, and limits behind published results.</p>
+      <a class="chip" href="benchmark.html" data-i18n="feat.benchmarkLink">100 GB table branch · 0.20 s · 314 KB — benchmark method →</a>
     </article>
   </div>
 
-  <p class="foot-note reveal" data-i18n="feat.note">Conflict resolution is currently at row granularity: a conflict is flagged only when both branches independently modify the same key. The <code>WHEN CONFLICT</code> clause decides what happens then — <code>FAIL</code> aborts, <code>SKIP</code> keeps the target's row, <code>ACCEPT</code> keeps the source's.</p>
+  <p class="foot-note reveal" data-i18n="feat.note">Git4Data provides branching and merge primitives. Add the validation rules, approvals, permissions, audit, and rollback procedures your workload requires; branching alone is not a complete safety system.</p>
 </section>
 
 <!-- ─────────── how it works ─────────── -->
@@ -255,7 +248,7 @@
         <span class="step-n">03</span>
         <div>
           <h3 data-i18n="s3.h">Diff</h3>
-          <p data-i18n="s3.p">Report the rows where the two versions disagree. Because it scans only the deltas, it beats the equivalent SQL by orders of magnitude.</p>
+      <p data-i18n="s3.p">Compare two versions and inspect the rows that changed. Use the diff to understand a proposed agent run before deciding what happens next.</p>
         </div>
       </li>
       <li class="step reveal" data-step="3">
@@ -276,7 +269,7 @@
         </div>
         <pre class="term-body"><code id="stepCode"></code></pre>
       </div>
-      <p class="flow-note" data-i18n="how.note">Every statement runs as a transaction inside the database, over the MySQL wire protocol. Version control inherits the transactions, authentication and access control you already rely on — no sidecar service, no object-store mount, no second catalog to keep in sync.</p>
+      <p class="flow-note" data-i18n="how.note">These operations run as SQL in MatrixOne. How data is connected, permissions and validations are configured, changes are approved, and results are returned to an existing system depends on your deployment and application workflow.</p>
     </div>
   </div>
 </section>
@@ -313,104 +306,28 @@
 <!-- ─────────── compare ─────────── -->
 <section class="wrap sec" id="compare">
   <header class="sec-head reveal">
-    <p class="kick" data-i18n="cmp.kick">Landscape</p>
-    <h2 data-i18n="cmp.h">Everyone has branches. Almost nobody has merge.</h2>
-    <p class="sub" data-i18n="cmp.sub">Zero-copy clones are common. What is missing elsewhere is the way back: comparing two versions at the row level and reintegrating one into the other. In most systems divergence is one-way.</p>
+    <p class="kick" data-i18n="cmp.kick">Why database-native</p>
+    <h2 data-i18n="cmp.h">Branch and merge where the data already lives.</h2>
+    <p class="sub" data-i18n="cmp.sub">Git4Data puts table snapshots, branches, diffs, and merge inside MatrixOne. It is a workspace for proposed data changes and can complement the permissions and governance around your existing systems.</p>
   </header>
-
-  <div class="table-wrap reveal">
-    <table class="cmp">
-      <thead>
-        <tr>
-          <th scope="col" data-i18n="cmp.cap">Capability</th>
-          <th scope="col" class="me">Git4Data</th>
-          <th scope="col">DoltDB</th>
-          <th scope="col">Neon</th>
-          <th scope="col">lakeFS</th>
-          <th scope="col">DVC</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row" data-i18n="cmp.r1">Unit of diff identity</th>
-          <td class="me"><b data-i18n="cmp.r1a">Row</b></td><td data-i18n="cmp.r1b">Row</td><td data-i18n="cmp.r1c">Page / branch</td><td data-i18n="cmp.r1d">Object or table</td><td data-i18n="cmp.r1e">File</td>
-        </tr>
-        <tr>
-          <th scope="row" data-i18n="cmp.r2">Smallest thing you can branch</th>
-          <td class="me"><b data-i18n="cmp.r2a">One table</b></td><td data-i18n="cmp.r2b">One table</td><td data-i18n="cmp.r2c">Whole database</td><td data-i18n="cmp.r2d">A namespace</td><td data-i18n="cmp.r2e">A file tree</td>
-        </tr>
-        <tr>
-          <th scope="row" data-i18n="cmp.r3">Zero-copy branch</th>
-          <td class="me y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td>
-        </tr>
-        <tr>
-          <th scope="row" data-i18n="cmp.r4">Compare two live branches</th>
-          <td class="me y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="p" data-i18n="cmp.obj">object-level</td><td class="n">✗</td>
-        </tr>
-        <tr>
-          <th scope="row" data-i18n="cmp.r5">Merge a branch back</th>
-          <td class="me y"><b data-i18n="cmp.r5a">three-way, per row</b></td><td class="y">✓</td><td class="n" data-i18n="cmp.oneway">one-way</td><td class="p" data-i18n="cmp.obj2">object-level</td><td class="n">✗</td>
-        </tr>
-        <tr>
-          <th scope="row" data-i18n="cmp.r6">Explicit conflict policy</th>
-          <td class="me y"><b>FAIL / SKIP / ACCEPT</b></td><td class="p" data-i18n="cmp.partial">partial</td><td class="n">✗</td><td class="n">✗</td><td class="n">✗</td>
-        </tr>
-        <tr>
-          <th scope="row" data-i18n="cmp.r7">Lives inside an OLTP engine</th>
-          <td class="me y">✓</td><td class="y">✓</td><td class="p" data-i18n="cmp.storage">storage layer</td><td class="n">✗</td><td class="n">✗</td>
-        </tr>
-        <tr>
-          <th scope="row" data-i18n="cmp.r8">Wire protocol</th>
-          <td class="me"><b>MySQL</b></td><td>MySQL</td><td>Postgres</td><td data-i18n="cmp.r8d">S3 API</td><td data-i18n="cmp.r8e">CLI</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="grid grid-3">
+    <article class="card reveal"><div class="ico i-vi">01</div><h3 data-i18n="cmp.card1h">Isolate a task</h3><p data-i18n="cmp.card1p">Create a writable table branch from a snapshot so an agent can work against its own candidate state.</p></article>
+    <article class="card reveal"><div class="ico i-gr">02</div><h3 data-i18n="cmp.card2h">Inspect changed rows</h3><p data-i18n="cmp.card2p">Compare versions at row level and make the proposed changes visible to your application or review process.</p></article>
+    <article class="card reveal"><div class="ico i-am">03</div><h3 data-i18n="cmp.card3h">Choose what happens next</h3><p data-i18n="cmp.card3p">Merge a branch with an explicit conflict policy, or discard the branch. Your checks and approval gates stay in your control.</p></article>
   </div>
-  <p class="foot-note reveal" data-i18n="cmp.note">Positioning follows the related-work analysis in the Git4Data paper. Third-party projects move fast — check their current documentation before you standardise on one.</p>
-</section>
-
-<!-- ─────────── use cases ─────────── -->
-<section class="wrap sec" id="usecases">
-  <header class="sec-head reveal">
-    <p class="kick" data-i18n="uc.kick">Where it pays off</p>
-    <h2 data-i18n="uc.h">The shapes agentic work actually takes.</h2>
-    <p class="sub" data-i18n="uc.sub">These are the four workflows BranchBench models — and the reason it models them is that this is what agents do to a database.</p>
-  </header>
-
-  <div class="grid grid-4">
-    <article class="uc reveal">
-      <span class="uc-n">software_dev</span>
-      <h3 data-i18n="u1.h">Schema change with a rehearsal</h3>
-      <p data-i18n="u1.p">An agent edits schema and code, backfills, and re-runs the tests on each attempt. The rehearsal and the release are the same statement.</p>
-    </article>
-    <article class="uc reveal">
-      <span class="uc-n">failure_repro</span>
-      <h3 data-i18n="u2.h">Bisecting a bad change</h3>
-      <p data-i18n="u2.p">Binary search through the transaction log to isolate what broke. Each probe needs its own writable state, not a read-only copy.</p>
-    </article>
-    <article class="uc reveal">
-      <span class="uc-n">data_cleaning</span>
-      <h3 data-i18n="u3.h">Competing repair strategies</h3>
-      <p data-i18n="u3.p">Normalisation, fuzzy dedup and semantic fixes each repair a different subset. No branch wins outright, so you merge the accepted deltas instead of picking one.</p>
-    </article>
-    <article class="uc reveal">
-      <span class="uc-n">mcts</span>
-      <h3 data-i18n="u4.h">Search over a data plan</h3>
-      <p data-i18n="u4.p">Tree search expands a deep, narrow frontier — one branch per node, most of them discarded. Branch creation has to be free, or the search never gets deep.</p>
-    </article>
-  </div>
+  <p class="foot-note reveal" data-i18n="cmp.note">Branching and diff do not replace IAM, row-level security, audit systems, backups, or human approval. Confirm the exact semantics and data path for your MatrixOne version and deployment.</p>
 </section>
 
 <!-- ─────────── start / CTA ─────────── -->
 <section class="wrap sec" id="start">
   <div class="cta reveal">
     <div class="cta-txt">
-      <p class="kick" data-i18n="cta.kick">Get started</p>
-      <h2 data-i18n="cta.h">Pull the image. Break something on purpose.</h2>
-      <p class="sub" data-i18n="cta.sub">MatrixOne is open source under Apache 2.0. Bring a MySQL client you already have.</p>
+      <p class="kick" data-i18n="cta.kick">Build with Git4Data</p>
+      <h2 data-i18n="cta.h">Try a branch. Inspect a diff. Then bring your workload.</h2>
+      <p class="sub" data-i18n="cta.sub">Start with the live SQL playground, then run MatrixOne locally and follow the documented branch, diff, and merge workflow.</p>
       <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener" data-i18n="cta.b1">Open source on GitHub</a>
-        <a class="btn btn-ghost btn-lg" href="https://docs.matrixorigin.cn/" target="_blank" rel="noopener" data-i18n="cta.b2">Read the docs</a>
+        <a class="btn btn-primary btn-lg" href="playground.html" data-i18n="cta.b1">Try the live playground</a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener" data-i18n="cta.b2">Open MatrixOne on GitHub</a>
       </div>
     </div>
     <div class="term term-sm cta-term">
@@ -474,7 +391,7 @@ mysql -h 127.0.0.1 -P 6001 -u root -p111
 </footer>
 
 <script src="assets/js/dag.js?v=4" defer></script>
-<script src="assets/js/i18n.js?v=4" defer></script>
-<script src="assets/js/main.js?v=4" defer></script>
+<script src="assets/js/i18n.js?v=5" defer></script>
+<script src="assets/js/main.js?v=5" defer></script>
 </body>
 </html>
