@@ -253,7 +253,9 @@ run before any database configuration checks and do not depend on MatrixOne avai
 Cloudflare storage, analytics subscription, or OAuth scope is required. API rate limits/outages
 reuse a timestamped last-good observation for up to 24 hours when available, or render an unavailable
 count; neither path invents a zero. GitHub can rate-limit shared Cloudflare egress IPs. Downloads
-continue via the release link. The apex and www hostnames share the same per-release cache key.
+continue via the release link. The apex and www hostnames share the same per-release cache key. The browser falls back to
+GitHub's public release API without cookies or a referrer if that cache is unavailable; this
+third-party metadata request is disclosed on the download page and allowed by CSP.
 
 The current-version count includes repeated requests, bots and our verification downloads. It does
 not deduplicate people or prove installation or use. Source clones, mirrors and copied instructions

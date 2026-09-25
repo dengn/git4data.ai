@@ -47,7 +47,7 @@
     "skill.impactKick": "公开分发统计",
     "skill.impactTitle": "可核查的下载次数。",
     "skill.impactText": "计数来自 GitHub 上 v0.1.0 的 Release 文件。重复下载、机器人和验证请求可能计入；它不代表独立用户、安装数、成功运行次数或活跃用户数。",
-    "skill.privacy": "已安装的 Skill 不发送遥测。GitHub 提供下载，Git4Data 只读取公开汇总次数。计数可能延迟或暂时不可用。",
+    "skill.privacy": "已安装的 Skill 不发送遥测。GitHub 提供下载；本页只读取公开汇总次数，网站缓存不可用时会由浏览器直接向 GitHub 请求，且不发送 Cookie。计数可能延迟或暂时不可用。",
     "skill.releaseLink": "查看 Release →",
     "skill.downloadMetric": "本版本下载次数",
     "skill.feedbackTitle": "在你自己的数据上试过了吗？",
