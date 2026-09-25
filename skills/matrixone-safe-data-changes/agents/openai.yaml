@@ -1,0 +1,4 @@
+interface:
+  display_name: "MatrixOne Data Change Review"
+  short_description: "Branch, review, and approve agent data changes"
+  default_prompt: "Use $matrixone-safe-data-changes to prepare and validate a data repair on an isolated MatrixOne branch."

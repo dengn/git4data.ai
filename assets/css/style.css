@@ -741,3 +741,47 @@ code,pre{font-family:var(--mono)}
 .run-evidence table{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px}
 .run-evidence td,.run-evidence th{text-align:left;padding:13px;border-bottom:1px solid var(--line)}
 .run-evidence video{width:100%;border-radius:14px;margin:24px 0}
+
+/* Downloadable agent skill */
+.skill-page{padding-top:70px;padding-bottom:64px}
+.skill-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+.skill-hero h1{font-size:clamp(38px,4.7vw,60px);line-height:1.06;margin:18px 0 24px;letter-spacing:-.045em}
+.skill-hero .sub{margin:0;font-size:18px;text-align:left}
+.skill-page .hero-cta{justify-content:flex-start;margin-top:24px}
+.skill-meta{font-size:12px;color:var(--dim);margin-top:18px;line-height:1.8}
+.skill-package{border:1px solid var(--line-2);padding:28px;border-radius:20px;background:linear-gradient(145deg,rgba(34,211,238,.055),rgba(139,92,246,.05))}
+.skill-package h2{font-size:27px;margin:16px 0}
+.skill-files{list-style:none;padding:0;margin:24px 0}
+.skill-files li{display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--line);padding:13px 0}
+.skill-files code{color:var(--cyan);font-size:13px;overflow-wrap:anywhere}
+.skill-files span{font-size:13px;color:var(--muted)}
+.text-link{color:var(--cyan);font-size:13px;display:inline-block;margin-top:12px}
+.text-link:hover{text-decoration:underline}
+.skill-boundary{margin-top:44px;border-left:3px solid var(--cyan);background:rgba(34,211,238,.035);padding:22px 26px}
+.skill-boundary h2{font-size:20px;margin-bottom:10px}
+.skill-boundary p,.skill-section p{color:var(--muted);line-height:1.8}
+.skill-section{padding-top:72px;scroll-margin-top:80px}
+.skill-section>h2,.skill-impact h2{font-size:clamp(27px,3.2vw,38px);margin:12px 0 24px}
+.skill-install{list-style:decimal-leading-zero;margin:30px 0 0;padding-left:36px;display:grid;gap:34px;max-width:870px}
+.skill-install li{padding-left:12px;min-width:0}
+.skill-install li::marker{color:var(--cyan);font-family:var(--mono)}
+.skill-install h3{font-size:21px;margin-bottom:12px}
+.skill-code{padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:auto;font-size:13px;line-height:1.8}
+.skill-hash{overflow-wrap:anywhere;font-size:11px}
+.skill-install .term{margin-top:18px}
+.skill-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+.skill-options .pill{font-size:11px;margin-top:20px;white-space:normal}
+.skill-impact{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:40px;align-items:center}
+.skill-impact p+p{margin-top:12px}
+.skill-counter{display:flex;flex-direction:column;padding:30px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.skill-counter strong{font-size:60px;font-family:var(--mono);color:var(--cyan);line-height:1.2}
+.skill-counter span{font-size:14px;color:var(--muted);margin-top:12px}
+.skill-counter small{font-size:11px;color:var(--dim);margin-top:14px;line-height:1.7}
+.skill-feedback{max-width:850px}
+.skill-footer{display:flex;justify-content:space-between;gap:20px;padding-top:25px;padding-bottom:30px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+.skill-home{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:28px 32px;margin-top:32px;border:1px solid rgba(34,211,238,.2);border-radius:16px;background:rgba(34,211,238,.035)}
+.skill-home h2{font-size:24px;margin:8px 0}
+.skill-home p{font-size:14px;color:var(--muted);max-width:680px}
+.skill-home .btn{flex-shrink:0}
+@media(max-width:900px){.skill-hero,.skill-impact{grid-template-columns:minmax(0,1fr);gap:30px}.skill-page{padding-top:42px}.skill-package{max-width:none}}
+@media(max-width:600px){.skill-options{grid-template-columns:minmax(0,1fr)}.skill-home{flex-direction:column;align-items:flex-start;padding:24px}.skill-package{padding:22px}.skill-install{padding-left:24px}.skill-install li{padding-left:5px}.skill-footer{flex-direction:column;gap:8px}.skill-boundary{padding:20px}.skill-page .hero-cta .btn{white-space:normal;height:auto;min-height:46px;text-align:center}}

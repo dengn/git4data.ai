@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=6">
+<link rel="stylesheet" href="assets/css/style.css?v=7">
 </head>
 <body>
 
@@ -44,7 +44,7 @@
     <nav class="nav-links" aria-label="Primary">
       <a href="#product" data-i18n="nav.features">Product</a>
       <a href="playground.html" data-i18n="nav.play">Live demo</a>
-      <a href="#usecases" data-i18n="nav.usecases">Use cases</a>
+      <a href="agent-skill.html" data-i18n="nav.skill">Agent skill</a>
       <a href="#how" data-i18n="nav.how">How it works</a>
       <a href="https://docs.matrixorigin.cn/" target="_blank" rel="noopener" data-i18n="nav.docs">Docs</a>
     </nav>
@@ -102,6 +102,14 @@
       <a class="btn btn-primary" href="playground.html" data-i18n="film.try">Try branch, diff &amp; merge</a>
       <a class="film-evidence" href="catalog-run.html" data-i18n="film.evidence">Run results &amp; method →</a>
     </div>
+  </div>
+</section>
+
+
+<section class="wrap" aria-label="Download the agent skill">
+  <div class="skill-home">
+    <div><p class="kick" data-i18n="skill.homeKick">TAKE THE WORKFLOW WITH YOU</p><h2 data-i18n="skill.homeTitle">Give your agent a reviewed path to production.</h2><p data-i18n="skill.homeText">Download the open-source MatrixOne skill: isolated branches, complete validation, and separately authorized merges. Use your own database and existing SQL tools.</p></div>
+    <a class="btn btn-primary" href="agent-skill.html" data-i18n="skill.homeLink">Get the agent skill →</a>
   </div>
 </section>
 
@@ -321,7 +329,7 @@ docker run -d -p 6001:6001 --name matrixone \
 mysql -h 127.0.0.1 -P 6001 -u root -p111
 
 <span class="c-cmt"># 3 · your first versioned table</span>
-<span class="c-kw">CREATE SNAPSHOT</span> s0 <span class="c-kw">FOR TABLE</span> demo.t;</code></pre>
+<span class="c-kw">CREATE SNAPSHOT</span> s0 <span class="c-kw">FOR TABLE</span> demo t;</code></pre>
     </div>
   </div>
 </section>
@@ -350,6 +358,7 @@ mysql -h 127.0.0.1 -P 6001 -u root -p111
       </div>
       <div>
         <h4 data-i18n="foot.c2">Learn</h4>
+        <a href="agent-skill.html" data-i18n="nav.skill">Agent skill</a>
         <a href="https://www.matrixorigin.io/blog/git4data-part4-landscape" target="_blank" rel="noopener" data-i18n="foot.blog">Git4Data deep dive</a>
         <a href="https://arxiv.org/abs/2604.03927" target="_blank" rel="noopener" data-i18n="foot.paper">Research paper</a>
         <a href="benchmark.html" data-i18n="foot.cmp">Benchmark results</a>
@@ -368,7 +377,7 @@ mysql -h 127.0.0.1 -P 6001 -u root -p111
 </footer>
 
 <script src="assets/js/dag.js?v=4" defer></script>
-<script src="assets/js/i18n.js?v=7" defer></script>
+<script src="assets/js/i18n.js?v=8" defer></script>
 <script src="assets/js/main.js?v=6" defer></script>
 </body>
 </html>
