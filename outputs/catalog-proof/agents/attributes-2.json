@@ -1,0 +1,10 @@
+{
+  "agent": "agent-attributes-2",
+  "task": "attributes",
+  "shard": 2,
+  "range": [5000001, 7500000],
+  "reasoning": "Restore missing attributes from the authoritative supplier attributes for the assigned ID range and deterministic attributes issue. Null-safe comparison selects only changed values. Only attributes is assigned; price and all other columns are untouched. The coordinator must hold low-confidence proposals for human review.",
+  "sql": "UPDATE {{branch}} SET attributes = source_attributes WHERE id BETWEEN 5000001 AND 7500000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 5000001 AND 7500000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

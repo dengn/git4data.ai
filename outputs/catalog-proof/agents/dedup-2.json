@@ -1,0 +1,10 @@
+{
+  "agent": "agent-dedup-2",
+  "task": "dedup",
+  "shard": 2,
+  "range": [5000001, 7500000],
+  "reasoning": "Restore each affected product's canonical SKU from its stable ID while preserving the distinct product rows. Only sku is assigned; price and all other columns remain untouched.",
+  "sql": "UPDATE {{branch}} SET sku = CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')) WHERE id BETWEEN 5000001 AND 7500000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 5000001 AND 7500000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

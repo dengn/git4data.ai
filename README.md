@@ -4,9 +4,10 @@ The marketing site for **Git4Data** — a database-native workspace for proposed
 Agents can work on an isolated table branch; teams can inspect row-level diffs and merge with an explicit
 conflict policy. Git4Data is implemented in [MatrixOne](https://github.com/matrixorigin/matrixone).
 
-The homepage's Data Pull Request panel is a clearly labeled illustrative preview. The linked playground
-is the live product experience: a per-visitor MatrixOne SQL branch, subject to the limits described on
-the playground page.
+The homepage film replays a measured 10-million-row catalog run with 20 independent Codex tasks.
+`catalog-run.html` and `data/catalog-run.json` document actual results, synthetic data, deliberately
+injected price violations, and execution limits. The public Playground is a separate 124-row live
+SQL tutorial with a branch per visitor.
 
 Static frontend with a MySQL-backed Cloudflare Worker API. Deployment requires Node.js 22 or later.
 
@@ -234,3 +235,10 @@ When you change a file under `assets/`, bump `N` in **every** HTML file (`index.
 `assets/js/bench.js` when the dataset changes — otherwise returning visitors keep the old copy.
 Bump it *after* you finish editing, not before: republishing different content under a version
 number a browser has already cached is the same as not bumping at all.
+
+## Catalog film
+
+See `scripts/catalog-proof/README.md` for the measured experiment and `outputs/catalog-proof/` for
+its retained task plans, query log and results. After a successful run, `publish-results.py` creates
+the public evidence and `render-video.py` renders the captioned 60-second replay. The renderer uses
+Pillow, FFmpeg and macOS system fonts. The film contains no audio and starts only on user action.

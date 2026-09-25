@@ -1,0 +1,10 @@
+{
+  "agent": "agent-attributes-1",
+  "task": "attributes",
+  "shard": 1,
+  "range": [2500001, 5000000],
+  "reasoning": "Restore missing attributes from authoritative supplier attributes for the assigned issue and inclusive ID range. Only attributes is updated, so price and all other columns are untouched. The coordinator holds proposals with source confidence below 0.80 for human review.",
+  "sql": "UPDATE {{branch}} SET attributes = source_attributes WHERE id BETWEEN 2500001 AND 5000000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 2500001 AND 5000000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

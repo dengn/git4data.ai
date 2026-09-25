@@ -13,3 +13,5 @@ worker
 .wrangler
 .dev.vars*
 .env*
+
+outputs

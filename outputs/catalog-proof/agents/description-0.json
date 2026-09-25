@@ -1,0 +1,10 @@
+{
+  "agent": "agent-description-0",
+  "task": "description",
+  "shard": 0,
+  "range": [1, 2500000],
+  "reasoning": "Replace the fixture's promotional descriptions with authoritative factual supplier descriptions for the assigned IDs, selecting only differing values with a null-safe comparison. Only description is assigned, so price is untouched. The coordinator must hold low-confidence proposals for human review.",
+  "sql": "UPDATE {{branch}} SET description = source_description WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 10) = 3 AND NOT (description <=> source_description)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 10) = 3 AND NOT (description <=> source_description)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

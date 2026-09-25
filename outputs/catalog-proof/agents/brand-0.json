@@ -1,0 +1,10 @@
+{
+  "agent": "agent-brand-0",
+  "task": "brand",
+  "shard": 0,
+  "range": [1, 2500000],
+  "reasoning": "Restore canonical supplier brands for the assigned brand issue and ID range using null-safe comparison. Only brand is assigned, so price and all other columns are untouched. Low-confidence rows remain for human review.",
+  "sql": "UPDATE {{branch}} SET brand = source_brand WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 10) = 2 AND source_confidence >= 0.80 AND NOT (brand <=> source_brand)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 10) = 2 AND source_confidence >= 0.80 AND NOT (brand <=> source_brand)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

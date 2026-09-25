@@ -1,0 +1,10 @@
+{
+  "agent": "agent-attributes-3",
+  "task": "attributes",
+  "shard": 3,
+  "range": [7500001, 10000000],
+  "reasoning": "Restore missing attributes from authoritative supplier attributes only for the assigned shard and the explicit attributes issue. A null-safe comparison excludes unchanged values. Only attributes is assigned, so price and every other column are untouched. The coordinator holds low-confidence proposals for human review.",
+  "sql": "UPDATE {{branch}} SET attributes = source_attributes WHERE id BETWEEN 7500001 AND 10000000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 7500001 AND 10000000 AND MOD(id, 5) = 0 AND attributes IS NULL AND NOT (attributes <=> source_attributes)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

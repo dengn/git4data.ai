@@ -1,0 +1,85 @@
+{
+  "execution": "Codex native independent agents; maximum 3 concurrently, tasks scheduled in waves",
+  "tasks": [
+    {
+      "task": "/root/catalog_brand_0",
+      "plan": "brand-0.json"
+    },
+    {
+      "task": "/root/catalog_category_0",
+      "plan": "category-0.json"
+    },
+    {
+      "task": "/root/catalog_attributes_0",
+      "plan": "attributes-0.json"
+    },
+    {
+      "task": "/root/catalog_description_0",
+      "plan": "description-0.json"
+    },
+    {
+      "task": "/root/catalog_dedup_0",
+      "plan": "dedup-0.json"
+    },
+    {
+      "task": "/root/catalog_brand_1",
+      "plan": "brand-1.json"
+    },
+    {
+      "task": "/root/catalog_category_1",
+      "plan": "category-1.json"
+    },
+    {
+      "task": "/root/catalog_attributes_1",
+      "plan": "attributes-1.json"
+    },
+    {
+      "task": "/root/catalog_description_1",
+      "plan": "description-1.json"
+    },
+    {
+      "task": "/root/catalog_dedup_1",
+      "plan": "dedup-1.json"
+    },
+    {
+      "task": "/root/catalog_brand_2",
+      "plan": "brand-2.json"
+    },
+    {
+      "task": "/root/catalog_category_2",
+      "plan": "category-2.json"
+    },
+    {
+      "task": "/root/catalog_attributes_2",
+      "plan": "attributes-2.json"
+    },
+    {
+      "task": "/root/catalog_description_2",
+      "plan": "description-2.json"
+    },
+    {
+      "task": "/root/catalog_dedup_2",
+      "plan": "dedup-2.json"
+    },
+    {
+      "task": "/root/catalog_brand_3",
+      "plan": "brand-3.json"
+    },
+    {
+      "task": "/root/catalog_category_3",
+      "plan": "category-3.json"
+    },
+    {
+      "task": "/root/catalog_attributes_3",
+      "plan": "attributes-3.json"
+    },
+    {
+      "task": "/root/catalog_description_3",
+      "plan": "description-3.json"
+    },
+    {
+      "task": "/root/catalog_dedup_3",
+      "plan": "dedup-3.json"
+    }
+  ]
+}

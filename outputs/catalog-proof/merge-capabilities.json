@@ -1,0 +1,184 @@
+[
+  {
+    "sql": "CREATE DATABASE probe",
+    "ms": 25,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 1,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "CREATE TABLE probe.main (id INT PRIMARY KEY, brand VARCHAR(32), price INT)",
+    "ms": 26,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 0,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "INSERT INTO probe.main VALUES (1,'acme',129),(2,'acme',129),(3,'acme',129)",
+    "ms": 36,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 3,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "DATA BRANCH CREATE TABLE probe.a FROM probe.main",
+    "ms": 67,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 0,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "DATA BRANCH CREATE TABLE probe.b FROM probe.main",
+    "ms": 63,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 0,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "UPDATE probe.a SET brand='ACME' WHERE id=1",
+    "ms": 37,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 1,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "UPDATE probe.a SET price=99 WHERE id=2",
+    "ms": 27,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 1,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "DATA BRANCH PICK probe.a INTO probe.main KEYS (1) WHEN CONFLICT FAIL",
+    "ms": 109,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 0,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "SELECT * FROM probe.main ORDER BY id",
+    "ms": 22,
+    "rows": [
+      {
+        "id": 1,
+        "brand": "ACME",
+        "price": 129
+      },
+      {
+        "id": 2,
+        "brand": "acme",
+        "price": 129
+      },
+      {
+        "id": 3,
+        "brand": "acme",
+        "price": 129
+      }
+    ]
+  },
+  {
+    "sql": "UPDATE probe.b SET brand='Other' WHERE id=1",
+    "ms": 42,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 1,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "DATA BRANCH MERGE probe.b INTO probe.main WHEN CONFLICT FAIL",
+    "ms": 56,
+    "error": "internal error: conflict: b DELETE and main DELETE on pk(1) with different values"
+  },
+  {
+    "sql": "SELECT * FROM probe.main ORDER BY id",
+    "ms": 19,
+    "rows": [
+      {
+        "id": 1,
+        "brand": "ACME",
+        "price": 129
+      },
+      {
+        "id": 2,
+        "brand": "acme",
+        "price": 129
+      },
+      {
+        "id": 3,
+        "brand": "acme",
+        "price": 129
+      }
+    ]
+  },
+  {
+    "sql": "UPDATE probe.a SET price=129 WHERE id=2",
+    "ms": 21,
+    "rows": {
+      "fieldCount": 0,
+      "affectedRows": 1,
+      "insertId": 0,
+      "info": "\u0000",
+      "serverStatus": 2066,
+      "warningStatus": 0,
+      "changedRows": 0
+    }
+  },
+  {
+    "sql": "DATA BRANCH MERGE probe.a INTO probe.main WHEN CONFLICT FAIL",
+    "ms": 61,
+    "error": "internal error: conflict: a DELETE and main DELETE on pk(1) with different values"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "agent": "agent-dedup-0",
+  "task": "dedup",
+  "shard": 0,
+  "range": [1, 2500000],
+  "reasoning": "Restore each affected distinct product's canonical SKU from its stable ID, using a null-safe comparison to select only changed values. The update is limited to the assigned range and duplicate-SKU fixture predicate; it changes only sku, so price and all other fields are untouched.",
+  "sql": "UPDATE {{branch}} SET sku = CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')) WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 1 AND 2500000 AND MOD(id, 100) = 4 AND NOT (sku <=> CONCAT('SKU-', LPAD(CAST(id AS CHAR), 10, '0')))",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

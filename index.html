@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/style.css?v=6">
 </head>
 <body>
 
@@ -79,51 +79,28 @@
     <h1 class="reveal" data-d="1"><span data-i18n="hero.h1a">Let AI agents change millions of rows</span><br><span class="grad" data-i18n="hero.h1b">without touching production.</span></h1>
     <p class="lede reveal" data-d="2" data-i18n="hero.lede">Give every agent an isolated data branch. Review row-level changes, validate the result, then merge approved changes when you’re ready.</p>
     <div class="hero-cta reveal" data-d="3">
-      <a class="btn btn-primary btn-lg" href="playground.html" data-i18n="hero.cta1">Try the live SQL playground</a>
+      <a class="btn btn-primary btn-lg" href="#catalog-film" data-play-catalog data-i18n="hero.cta1">Watch the 60-second run</a>
       <a class="btn btn-ghost btn-lg" href="#start" data-i18n="hero.cta2">Build with Git4Data</a>
     </div>
     <p class="hero-support reveal" data-d="4" data-i18n="hero.support">Git for your data, built into the database. Powered by MatrixOne.</p>
   </div>
 
-  <div class="pr-preview reveal" data-d="3" aria-label="Illustrative data pull request preview">
+  <div class="pr-preview catalog-film reveal" data-d="3" id="catalog-film" aria-label="Measured catalog agent workflow video">
     <div class="pr-top">
-      <div><span class="pr-eyebrow" data-i18n="demo.eyebrow">DATA PULL REQUEST · SAMPLE</span><h2 data-i18n="demo.title">Catalog enrichment</h2></div>
-      <span class="pr-state"><i></i><span data-i18n="demo.state">Needs review</span></span>
+      <div><span class="pr-eyebrow" data-i18n="film.eyebrow">REAL DATABASE RUN</span><h2 data-i18n="film.title">10 Million Products.<br>20 Codex Agents.</h2></div>
+      <span class="pr-state"><i></i><span data-i18n="film.length">60 sec</span></span>
     </div>
-    <p class="pr-agent" data-i18n="demo.agent">Agent run <code>catalog-enrichment-07</code> · sample data</p>
-    <div class="pr-metrics">
-      <div><b>1,284</b><span data-i18n="demo.rows">rows changed</span></div>
-      <div><b>3</b><span data-i18n="demo.fields">fields updated</span></div>
-      <div class="pr-flag"><b>2</b><span data-i18n="demo.flagged">policy flags</span></div>
-    </div>
-    <div class="pr-changes">
-      <div class="pr-change-head"><span data-i18n="demo.field">Field</span><span data-i18n="demo.changes">Changes</span><span data-i18n="demo.result">Review</span></div>
-      <div class="pr-change"><span data-i18n="demo.descField">Description</span><span>+ 842</span><span class="pr-ok" data-i18n="demo.ok">Within policy</span></div>
-      <div class="pr-change"><span data-i18n="demo.categoryField">Category</span><span>~ 319</span><span class="pr-ok" data-i18n="demo.ok">Within policy</span></div>
-      <div class="pr-change"><span data-i18n="demo.brandField">Brand</span><span>~ 123</span><span class="pr-ok" data-i18n="demo.ok">Within policy</span></div>
-      <div class="pr-change is-flag"><span data-i18n="demo.priceField">Price</span><span>~ 2</span><span class="pr-warn" data-i18n="demo.review">Review required</span></div>
-    </div>
-    <div class="pr-policy"><span class="pr-policy-icon">!</span><span data-i18n="demo.policy">Policy check: this agent run is not allowed to change price.</span></div>
-    <div class="pr-sample-controls">
-      <button class="pr-action" type="button" data-pr-toggle="sampleDiff" aria-controls="sampleDiff" aria-expanded="false" data-i18n="demo.diffButton">View sample row diff</button>
-      <button class="pr-action" type="button" data-pr-toggle="sampleValidation" aria-controls="sampleValidation" aria-expanded="false" data-i18n="demo.validationButton">Show sample validation</button>
-    </div>
-    <div class="pr-detail" id="sampleDiff" hidden>
-      <div class="pr-detail-head"><b data-i18n="demo.diffTitle">Sample row diff</b><span>SKU-218-AX</span></div>
-      <div class="pr-diff-row"><span data-i18n="demo.descField">Description</span><del data-i18n="demo.descBefore">Stainless travel mug</del><ins data-i18n="demo.descAfter">Leakproof 18 oz stainless mug</ins></div>
-      <div class="pr-diff-row"><span data-i18n="demo.categoryField">Category</span><del data-i18n="demo.categoryBefore">Kitchen</del><ins data-i18n="demo.categoryAfter">Drinkware</ins></div>
-      <div class="pr-diff-row is-flag"><span data-i18n="demo.priceField">Price</span><del>$29.00</del><ins>$24.00</ins></div>
-      <p class="pr-detail-note" data-i18n="demo.diffNote">Example values only. The price change is flagged by the sample policy above.</p>
-    </div>
-    <div class="pr-detail" id="sampleValidation" hidden>
-      <div class="pr-detail-head"><b data-i18n="demo.validationTitle">Sample policy validation</b><span class="pr-validation-state" data-i18n="demo.validationState">2 flagged</span></div>
-      <p class="pr-validation-line"><i class="is-pass">✓</i><span data-i18n="demo.validationPass">Description and category fields passed the sample checks.</span></p>
-      <p class="pr-validation-line"><i class="is-fail">!</i><span data-i18n="demo.validationFail">Two price changes need review because this agent is not allowed to change price.</span></p>
-      <p class="pr-detail-note" data-i18n="demo.validationNote">Illustrative result only; no live validation was run.</p>
-    </div>
+    <video id="catalogVideo" controls playsinline preload="none" poster="assets/video/catalog-agents-poster.jpg?v=1" aria-label="10 Million Products and 20 Codex Agents: a measured database workflow replay" aria-describedby="catalogFilmNote">
+      <source src="assets/video/catalog-agents.mp4?v=1" type="video/mp4">
+      <track kind="captions" src="assets/video/catalog-agents.en.vtt?v=1" srclang="en" label="English">
+      <a href="assets/video/catalog-agents.mp4?v=1" data-i18n="film.download">Download the walkthrough</a>
+    </video>
+    <div class="film-result"><span data-i18n="film.resultLabel">Approved rows merged</span><strong id="filmMergedCount">4,552,565</strong></div>
+    <p class="film-promise" data-i18n="film.promise">0 price changes. 0 unreviewed changes in main.</p>
+    <p class="film-note" id="catalogFilmNote" data-i18n="film.note">Measured-run replay on synthetic data. Twenty Codex-authored SQL plans; execution limited to three workers at a time. Price violations were deliberately injected to test the approval policy.</p>
     <div class="pr-preview-actions">
-      <a class="btn btn-primary" href="playground.html" data-i18n="demo.cta">Explore the live playground</a>
-      <span data-i18n="demo.disclaimer">Illustrative preview · sample values · not a live agent run</span>
+      <a class="btn btn-primary" href="playground.html" data-i18n="film.try">Try branch, diff &amp; merge</a>
+      <a class="film-evidence" href="catalog-run.html" data-i18n="film.evidence">Run results &amp; method →</a>
     </div>
   </div>
 </section>
@@ -178,7 +155,7 @@
       <div class="ico i-cy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"></path><circle cx="12" cy="12" r="7"></circle><path d="M12 9v3l2 2"></path></svg></div>
       <h3 data-i18n="f1.h">Snapshot</h3>
       <p data-i18n="f1.p">Freeze a table at an instant and give that state a name — the analogue of a commit or a tag. Nothing is copied; the snapshot is the object directory as it stood.</p>
-      <code class="chip">CREATE SNAPSHOT sn1 FOR TABLE T;</code>
+      <code class="chip">CREATE SNAPSHOT sn1 FOR TABLE mydb T;</code>
     </article>
 
     <article class="card reveal">
@@ -391,7 +368,7 @@ mysql -h 127.0.0.1 -P 6001 -u root -p111
 </footer>
 
 <script src="assets/js/dag.js?v=4" defer></script>
-<script src="assets/js/i18n.js?v=6" defer></script>
-<script src="assets/js/main.js?v=5" defer></script>
+<script src="assets/js/i18n.js?v=7" defer></script>
+<script src="assets/js/main.js?v=6" defer></script>
 </body>
 </html>

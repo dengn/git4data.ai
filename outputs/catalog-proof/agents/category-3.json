@@ -1,0 +1,10 @@
+{
+  "agent": "agent-category-3",
+  "task": "category",
+  "shard": 3,
+  "range": [7500001, 10000000],
+  "reasoning": "Replace Misc categories with the authoritative supplier category only for the assigned issue and ID range, using a null-safe comparison to skip unchanged values. Only category is updated, so price and all other fields are untouched. Low-confidence rows are excluded pending human review.",
+  "sql": "UPDATE {{branch}} SET category = source_category WHERE id BETWEEN 7500001 AND 10000000 AND MOD(id, 20) = 1 AND category = 'Misc' AND source_confidence >= 0.80 AND NOT (category <=> source_category)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 7500001 AND 10000000 AND MOD(id, 20) = 1 AND source_confidence >= 0.80 AND NOT (category <=> source_category)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}

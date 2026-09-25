@@ -1,0 +1,10 @@
+{
+  "agent": "agent-category-2",
+  "task": "category",
+  "shard": 2,
+  "range": [5000001, 7500000],
+  "reasoning": "Restore the authoritative supplier category for the assigned shard's Misc category issue where confidence is at least 0.80 and the value differs using a null-safe comparison. Only category is assigned, so price and all other columns are untouched. Low-confidence rows remain for human review.",
+  "sql": "UPDATE {{branch}} SET category = source_category WHERE id BETWEEN 5000001 AND 7500000 AND MOD(id, 20) = 1 AND category = 'Misc' AND source_confidence >= 0.80 AND NOT (category <=> source_category)",
+  "validation_sql": "SELECT COUNT(*) AS remaining FROM {{branch}} WHERE id BETWEEN 5000001 AND 7500000 AND MOD(id, 20) = 1 AND source_confidence >= 0.80 AND NOT (category <=> source_category)",
+  "review_note": "Rows with source_confidence < 0.80 require human review"
+}
