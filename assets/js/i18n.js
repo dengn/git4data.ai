@@ -5,6 +5,15 @@
   'use strict';
 
   var ZH = {
+    "nav.blog": "博客",
+    "blog.kick": "实验与工程实录",
+    "blog.title": "从 Agent 提案，<br>到经过审核的数据修改。",
+    "blog.intro": "我们如何使用 MatrixOne 构建、测量和改进数据工作流。记录过程、保留证据，也分享遇到的问题。",
+    "blog.postTitle": "1,000 万商品、20 个 Codex Agent：一次可审核的数据修复与合并实测",
+    "blog.postIntro": "还原首页视频背后的过程：有意制造的问题目录、20 份有边界的 SQL 方案、原生 Diff、耗时 14 分钟的合并，以及生成视频所用的真实证据。",
+    "blog.postNote": "真实数据库操作 · 合成数据 · 可复现的证据",
+    "blog.skillLink": "把工作流带到你的项目：下载 Skill →",
+    "blog.filmLink": "视频背后的完整过程：阅读实验实录 →",
     "nav.skill": "Agent Skill",
     "skill.homeKick": "把工作流带到你的项目",
     "skill.homeTitle": "让 Agent 的数据修改经过审核再进入生产。",

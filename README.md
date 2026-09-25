@@ -302,3 +302,18 @@ An operator can use an existing MySQL client and separate branch/merge credentia
 becomes useful for unattended or multi-user execution: it must enforce workspace scope, immutable
 proposals, policy, approvals, target-version checks, resource limits and durable operation state. MCP
 is an interface option, not an access-control guarantee. Self-hosting supports either approach.
+
+
+## Blog
+
+`blog.html` lists engineering articles. The first case study lives at
+`blog/10-million-products-20-codex-agents.html` (English) and
+`blog/10-million-products-20-codex-agents-zh.html` (Chinese). Both are static HTML
+with canonical URLs, reciprocal language links, article metadata, video, SQL excerpts,
+and links pinned to the completed experiment commit. The article distinguishes measured
+execution, policy-based approval, injected faults and the reconstructed video interface.
+
+Edit the two article files together when changing facts. Their evidence comes from the
+retained catalog run, not from another database execution. Add new article URLs to the
+blog index and sitemap. Shared editorial styles live in `assets/css/style.css`; bump its
+cache version in all HTML pages, including nested blog pages, whenever it changes.
