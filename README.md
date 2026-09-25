@@ -1,7 +1,12 @@
 # git4data.ai
 
-The marketing site for **Git4Data** — database-native version control for AI agents, implemented in
-[MatrixOne](https://github.com/matrixorigin/matrixone).
+The marketing site for **Git4Data** — a database-native workspace for proposed data changes from AI agents.
+Agents can work on an isolated table branch; teams can inspect row-level diffs and merge with an explicit
+conflict policy. Git4Data is implemented in [MatrixOne](https://github.com/matrixorigin/matrixone).
+
+The homepage's Data Pull Request panel is a clearly labeled illustrative preview. The linked playground
+is the live product experience: a per-visitor MatrixOne SQL branch, subject to the limits described on
+the playground page.
 
 Static, dependency-free, deployed on Cloudflare.
 

@@ -61,6 +61,22 @@
     });
   });
 
+  /* ── clearly illustrative Data Pull Request preview ── */
+  document.querySelectorAll('[data-pr-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var panel = document.getElementById(btn.dataset.prToggle);
+      if (!panel) return;
+      var open = panel.hidden;
+      document.querySelectorAll('[data-pr-toggle]').forEach(function (control) {
+        var other = document.getElementById(control.dataset.prToggle);
+        if (other) other.hidden = true;
+        control.setAttribute('aria-expanded', 'false');
+      });
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+
   /* ── "how it works" step switcher ── */
   var STEP_SQL = [
     { title: '01 · Snapshot', code:
