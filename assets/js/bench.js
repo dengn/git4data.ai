@@ -70,6 +70,7 @@
     suite.modes.forEach(function (m) {
       var b = document.createElement('button');
       b.type = 'button';
+      b.setAttribute('data-analytics-id', 'bench-run');
       b.className = 'seg-b' + (m.id === mode ? ' is-on' : '');
       b.textContent = L(m, 'name');
       b.onclick = function () { mode = m.id; buildModes(); render(); };
@@ -84,6 +85,7 @@
       var key = suite.id + ':' + c.id;
       var b = document.createElement('button');
       b.type = 'button';
+      b.setAttribute('data-analytics-id', 'bench-system');
       b.className = 'sys' + (hidden[key] ? ' is-off' : '') + (c.self ? ' is-self' : '');
       b.innerHTML = '<span class="sys-dot"></span>' + L(c, 'name');
       b.onclick = function () {
