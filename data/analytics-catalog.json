@@ -1,0 +1,810 @@
+{
+  "pages": [
+    {
+      "path": "/404",
+      "title": "404 — git4data",
+      "targets": {
+        "click-001": {
+          "label": "git 4 data",
+          "destination": "/"
+        },
+        "click-002": {
+          "label": "Back to git4data",
+          "destination": "/"
+        },
+        "click-003": {
+          "label": "See the benchmark",
+          "destination": "/benchmark"
+        },
+        "click-004": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        }
+      },
+      "videos": []
+    },
+    {
+      "path": "/agent-skill",
+      "title": "MatrixOne Agent Skill — Branch, Review, Merge | Git4Data",
+      "targets": {
+        "click-001": {
+          "label": "git 4 data",
+          "destination": "/"
+        },
+        "click-002": {
+          "label": "Home",
+          "destination": "/"
+        },
+        "click-003": {
+          "label": "Blog",
+          "destination": "blog.html"
+        },
+        "click-004": {
+          "label": "Live demo",
+          "destination": "playground.html"
+        },
+        "click-005": {
+          "label": "Switch language",
+          "destination": ""
+        },
+        "click-006": {
+          "label": "Download skill",
+          "destination": "/api/skill/download"
+        },
+        "click-007": {
+          "label": "Menu",
+          "destination": ""
+        },
+        "click-008": {
+          "label": "Download skill ZIP",
+          "destination": "/api/skill/download"
+        },
+        "click-009": {
+          "label": "Install in your project",
+          "destination": "#install"
+        },
+        "click-010": {
+          "label": "Read every instruction before installing →",
+          "destination": "github.com/dengn/git4data.ai/tree/skill-v0.1.0/skills/matrixone-safe-data-changes"
+        },
+        "click-011": {
+          "label": "SHA256SUMS",
+          "destination": "github.com/dengn/git4data.ai/releases/download/skill-v0.1.0/SHA256SUMS"
+        },
+        "click-012": {
+          "label": "Official Codex skill installation guide →",
+          "destination": "learn.chatgpt.com/docs/build-skills"
+        },
+        "click-013": {
+          "label": "Copy",
+          "destination": ""
+        },
+        "click-014": {
+          "label": "View the release →",
+          "destination": "github.com/dengn/git4data.ai/releases/tag/skill-v0.1.0"
+        },
+        "click-015": {
+          "label": "Share your experience",
+          "destination": "github.com/dengn/git4data.ai/issues/new"
+        },
+        "click-016": {
+          "label": "See the 10M-row experiment",
+          "destination": "catalog-run.html"
+        },
+        "click-017": {
+          "label": "git4data.ai",
+          "destination": "/"
+        },
+        "click-018": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        }
+      },
+      "videos": []
+    },
+    {
+      "path": "/benchmark",
+      "title": "BranchBench results — git4data",
+      "targets": {
+        "click-001": {
+          "label": "git4data home",
+          "destination": "index.html"
+        },
+        "click-002": {
+          "label": "Capabilities",
+          "destination": "index.html#features"
+        },
+        "click-003": {
+          "label": "Agent skill",
+          "destination": "agent-skill.html"
+        },
+        "click-004": {
+          "label": "Compare",
+          "destination": "index.html#compare"
+        },
+        "click-005": {
+          "label": "Playground",
+          "destination": "playground.html"
+        },
+        "click-006": {
+          "label": "Benchmark",
+          "destination": "benchmark.html"
+        },
+        "click-007": {
+          "label": "Switch language",
+          "destination": ""
+        },
+        "click-008": {
+          "label": "GitHub",
+          "destination": "github.com/matrixorigin/matrixone"
+        },
+        "click-009": {
+          "label": "Get started",
+          "destination": "index.html#start"
+        },
+        "click-010": {
+          "label": "Menu",
+          "destination": ""
+        },
+        "click-011": {
+          "label": "Key findings",
+          "destination": "#findings"
+        },
+        "click-012": {
+          "label": "Methodology",
+          "destination": "#methodology"
+        },
+        "click-013": {
+          "label": "Reproduce",
+          "destination": "#reproduce"
+        },
+        "click-014": {
+          "label": "BranchBench paper ↗",
+          "destination": "arxiv.org/abs/2604.17180"
+        },
+        "click-015": {
+          "label": "Absolute",
+          "destination": ""
+        },
+        "click-016": {
+          "label": "Relative",
+          "destination": ""
+        },
+        "click-017": {
+          "label": "Run MatrixOne",
+          "destination": "github.com/matrixorigin/matrixone"
+        },
+        "click-018": {
+          "label": "Edit the dataset",
+          "destination": "github.com/dengn/git4data.ai/blob/main/data/branchbench.json"
+        },
+        "click-019": {
+          "label": "Copy",
+          "destination": ""
+        },
+        "click-020": {
+          "label": "← Back to git4data",
+          "destination": "index.html"
+        },
+        "click-021": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        },
+        "bench-run": {
+          "label": "Choose benchmark run",
+          "destination": "benchmark run selector"
+        },
+        "bench-system": {
+          "label": "Toggle benchmark system",
+          "destination": "benchmark columns"
+        }
+      },
+      "videos": []
+    },
+    {
+      "path": "/blog",
+      "title": "Blog — Agent Data Workflows | Git4Data",
+      "targets": {
+        "click-001": {
+          "label": "git4data",
+          "destination": "/"
+        },
+        "click-002": {
+          "label": "Home",
+          "destination": "/"
+        },
+        "click-003": {
+          "label": "Agent skill",
+          "destination": "agent-skill.html"
+        },
+        "click-004": {
+          "label": "Live demo",
+          "destination": "playground.html"
+        },
+        "click-005": {
+          "label": "Switch language",
+          "destination": ""
+        },
+        "click-006": {
+          "label": "Menu",
+          "destination": ""
+        },
+        "click-007": {
+          "label": "Read the 10M catalog case study",
+          "destination": "blog/10-million-products-20-codex-agents"
+        },
+        "click-008": {
+          "label": "Read in English →",
+          "destination": "blog/10-million-products-20-codex-agents"
+        },
+        "click-009": {
+          "label": "阅读中文版 →",
+          "destination": "blog/10-million-products-20-codex-agents-zh"
+        },
+        "click-010": {
+          "label": "git4data.ai",
+          "destination": "/"
+        },
+        "click-011": {
+          "label": "Take the workflow with you: download the skill →",
+          "destination": "agent-skill.html"
+        },
+        "click-012": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        }
+      },
+      "videos": []
+    },
+    {
+      "path": "/catalog-run",
+      "title": "10M Catalog Run — Git4Data",
+      "targets": {
+        "click-001": {
+          "label": "← git4data.ai",
+          "destination": "index.html"
+        },
+        "click-002": {
+          "label": "How we ran the experiment →",
+          "destination": "blog/10-million-products-20-codex-agents"
+        },
+        "click-003": {
+          "label": "阅读完整中文实录 →",
+          "destination": "blog/10-million-products-20-codex-agents-zh"
+        },
+        "click-004": {
+          "label": "Download measured results (JSON)",
+          "destination": "data/catalog-run.json"
+        },
+        "click-005": {
+          "label": "Read the reproduction scripts",
+          "destination": "github.com/dengn/git4data.ai/tree/catalog-merge-proof/scripts/catalog-proof"
+        },
+        "click-006": {
+          "label": "Try the live SQL Playground →",
+          "destination": "playground.html"
+        },
+        "click-007": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        }
+      },
+      "videos": [
+        "video-1"
+      ]
+    },
+    {
+      "path": "/",
+      "title": "Git4Data — Safe data mutations for AI agents",
+      "targets": {
+        "click-001": {
+          "label": "git4data home",
+          "destination": "#top"
+        },
+        "click-002": {
+          "label": "Product",
+          "destination": "#product"
+        },
+        "click-003": {
+          "label": "Live demo",
+          "destination": "playground.html"
+        },
+        "click-004": {
+          "label": "Agent skill",
+          "destination": "agent-skill.html"
+        },
+        "click-005": {
+          "label": "Blog",
+          "destination": "blog.html"
+        },
+        "click-006": {
+          "label": "Docs",
+          "destination": "docs.matrixorigin.cn/"
+        },
+        "click-007": {
+          "label": "Switch language",
+          "destination": ""
+        },
+        "click-008": {
+          "label": "GitHub",
+          "destination": "github.com/dengn/git4data.ai"
+        },
+        "click-009": {
+          "label": "Try the demo",
+          "destination": "playground.html"
+        },
+        "click-010": {
+          "label": "Menu",
+          "destination": ""
+        },
+        "click-011": {
+          "label": "Database-native branches in MatrixOne →",
+          "destination": "github.com/matrixorigin/matrixone"
+        },
+        "click-012": {
+          "label": "Watch the 60-second run",
+          "destination": "#catalog-film"
+        },
+        "click-013": {
+          "label": "Build with Git4Data",
+          "destination": "#start"
+        },
+        "click-014": {
+          "label": "Download the walkthrough",
+          "destination": "assets/video/catalog-agents.mp4"
+        },
+        "click-015": {
+          "label": "Try branch, diff & merge",
+          "destination": "playground.html"
+        },
+        "click-016": {
+          "label": "Run results & method →",
+          "destination": "catalog-run.html"
+        },
+        "click-017": {
+          "label": "Behind the film: read the full experiment →",
+          "destination": "blog.html"
+        },
+        "click-018": {
+          "label": "Get the agent skill →",
+          "destination": "agent-skill.html"
+        },
+        "click-019": {
+          "label": "100 GB table branch · 0.20 s · 314 KB — benchmark method →",
+          "destination": "benchmark.html"
+        },
+        "click-020": {
+          "label": "Copy",
+          "destination": ""
+        },
+        "click-021": {
+          "label": "See all results",
+          "destination": "benchmark.html"
+        },
+        "click-022": {
+          "label": "Try the live playground",
+          "destination": "playground.html"
+        },
+        "click-023": {
+          "label": "Open MatrixOne on GitHub",
+          "destination": "github.com/matrixorigin/matrixone"
+        },
+        "click-024": {
+          "label": "Copy",
+          "destination": ""
+        },
+        "click-025": {
+          "label": "git 4 data",
+          "destination": "#top"
+        },
+        "click-026": {
+          "label": "MatrixOne",
+          "destination": "github.com/matrixorigin/matrixone"
+        },
+        "click-027": {
+          "label": "Documentation",
+          "destination": "docs.matrixorigin.cn/"
+        },
+        "click-028": {
+          "label": "MatrixOrigin",
+          "destination": "www.matrixorigin.io/"
+        },
+        "click-029": {
+          "label": "Blog",
+          "destination": "blog.html"
+        },
+        "click-030": {
+          "label": "Agent skill",
+          "destination": "agent-skill.html"
+        },
+        "click-031": {
+          "label": "Git4Data deep dive",
+          "destination": "www.matrixorigin.io/blog/git4data-part4-landscape"
+        },
+        "click-032": {
+          "label": "Research paper",
+          "destination": "arxiv.org/abs/2604.03927"
+        },
+        "click-033": {
+          "label": "Benchmark results",
+          "destination": "benchmark.html"
+        },
+        "click-034": {
+          "label": "Discussions",
+          "destination": "github.com/matrixorigin/matrixone/discussions"
+        },
+        "click-035": {
+          "label": "Issues",
+          "destination": "github.com/matrixorigin/matrixone/issues"
+        },
+        "click-036": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        }
+      },
+      "videos": [
+        "video-1"
+      ]
+    },
+    {
+      "path": "/playground",
+      "title": "Playground — git4data",
+      "targets": {
+        "click-001": {
+          "label": "git4data home",
+          "destination": "index.html"
+        },
+        "click-002": {
+          "label": "Capabilities",
+          "destination": "index.html#features"
+        },
+        "click-003": {
+          "label": "Agent skill",
+          "destination": "agent-skill.html"
+        },
+        "click-004": {
+          "label": "Playground",
+          "destination": "playground.html"
+        },
+        "click-005": {
+          "label": "Benchmark",
+          "destination": "benchmark.html"
+        },
+        "click-006": {
+          "label": "Switch language",
+          "destination": ""
+        },
+        "click-007": {
+          "label": "GitHub",
+          "destination": "github.com/matrixorigin/matrixone"
+        },
+        "click-008": {
+          "label": "Menu",
+          "destination": ""
+        },
+        "click-009": {
+          "label": "Run",
+          "destination": ""
+        },
+        "click-010": {
+          "label": "Reset my branch",
+          "destination": ""
+        },
+        "click-011": {
+          "label": "← Back to git4data",
+          "destination": "index.html"
+        },
+        "click-012": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        },
+        "play-step-1": {
+          "label": "Playground step 1",
+          "destination": "tutorial"
+        },
+        "play-step-2": {
+          "label": "Playground step 2",
+          "destination": "tutorial"
+        },
+        "play-step-3": {
+          "label": "Playground step 3",
+          "destination": "tutorial"
+        },
+        "play-step-4": {
+          "label": "Playground step 4",
+          "destination": "tutorial"
+        },
+        "play-step-5": {
+          "label": "Playground step 5",
+          "destination": "tutorial"
+        },
+        "play-step-6": {
+          "label": "Playground step 6",
+          "destination": "tutorial"
+        },
+        "play-step-7": {
+          "label": "Playground step 7",
+          "destination": "tutorial"
+        },
+        "play-step-8": {
+          "label": "Playground step 8",
+          "destination": "tutorial"
+        }
+      },
+      "videos": []
+    },
+    {
+      "path": "/privacy",
+      "title": "网站统计与隐私 / Analytics & Privacy — Git4Data",
+      "targets": {
+        "click-001": {
+          "label": "← Git4Data",
+          "destination": "/"
+        },
+        "click-002": {
+          "label": "Return to the site",
+          "destination": "/"
+        }
+      },
+      "videos": []
+    },
+    {
+      "path": "/blog/10-million-products-20-codex-agents-zh",
+      "title": "1,000 万商品、20 个 Codex Agent：一次可审核的数据修复与合并实测 | Git4Data Blog",
+      "targets": {
+        "click-001": {
+          "label": "git4data",
+          "destination": "/"
+        },
+        "click-002": {
+          "label": "Blog",
+          "destination": "/blog"
+        },
+        "click-003": {
+          "label": "Agent Skill",
+          "destination": "/agent-skill"
+        },
+        "click-004": {
+          "label": "English",
+          "destination": "/blog/10-million-products-20-codex-agents"
+        },
+        "click-005": {
+          "label": "← 全部文章",
+          "destination": "/blog"
+        },
+        "click-006": {
+          "label": "获取 Agent Skill",
+          "destination": "/agent-skill"
+        },
+        "click-007": {
+          "label": "查看实测数据",
+          "destination": "/catalog-run"
+        },
+        "click-008": {
+          "label": "给 Codex 的任务约束",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/AGENT_TASK.md"
+        },
+        "click-009": {
+          "label": "原始品牌修复方案",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/agents/brand-0.json"
+        },
+        "click-010": {
+          "label": "造数脚本",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/seed.mjs"
+        },
+        "click-011": {
+          "label": "执行、校验、PICK 与 MERGE",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/execute.mjs"
+        },
+        "click-012": {
+          "label": "原始 SQL 与客户端计时",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/events.jsonl"
+        },
+        "click-013": {
+          "label": "完整执行结果",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/execution.json"
+        },
+        "click-014": {
+          "label": "小规模能力与冲突探针",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/merge-capabilities-v2.json"
+        },
+        "click-015": {
+          "label": "视频生成器",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/render-video.py"
+        },
+        "click-016": {
+          "label": "公开汇总结果 JSON",
+          "destination": "/data/catalog-run.json"
+        },
+        "click-017": {
+          "label": "01 · 定义修改范围",
+          "destination": "#contract"
+        },
+        "click-018": {
+          "label": "02 · 构造千万行数据",
+          "destination": "#fixture"
+        },
+        "click-019": {
+          "label": "03 · 20 个 Codex 任务",
+          "destination": "#agents"
+        },
+        "click-020": {
+          "label": "04 · 执行与完整校验",
+          "destination": "#validation"
+        },
+        "click-021": {
+          "label": "05 · 注入价格违规",
+          "destination": "#fault"
+        },
+        "click-022": {
+          "label": "06 · 实际提案结果",
+          "destination": "#report"
+        },
+        "click-023": {
+          "label": "07 · 审批分支与 MERGE",
+          "destination": "#merge"
+        },
+        "click-024": {
+          "label": "08 · 遇到的问题",
+          "destination": "#lessons"
+        },
+        "click-025": {
+          "label": "09 · 从日志生成视频",
+          "destination": "#film"
+        },
+        "click-026": {
+          "label": "10 · 带到你的项目",
+          "destination": "#takeaway"
+        },
+        "click-027": {
+          "label": "源代码与证据",
+          "destination": "#sources"
+        },
+        "click-028": {
+          "label": "git4data.ai",
+          "destination": "/"
+        },
+        "click-029": {
+          "label": "更多文章",
+          "destination": "/blog"
+        },
+        "click-030": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        }
+      },
+      "videos": [
+        "video-1"
+      ]
+    },
+    {
+      "path": "/blog/10-million-products-20-codex-agents",
+      "title": "10 Million Products, 20 Codex Agents: From Repair Plans to a Verified Merge | Git4Data Blog",
+      "targets": {
+        "click-001": {
+          "label": "git4data",
+          "destination": "/"
+        },
+        "click-002": {
+          "label": "Blog",
+          "destination": "/blog"
+        },
+        "click-003": {
+          "label": "Agent Skill",
+          "destination": "/agent-skill"
+        },
+        "click-004": {
+          "label": "中文",
+          "destination": "/blog/10-million-products-20-codex-agents-zh"
+        },
+        "click-005": {
+          "label": "← All articles",
+          "destination": "/blog"
+        },
+        "click-006": {
+          "label": "Get the Agent Skill",
+          "destination": "/agent-skill"
+        },
+        "click-007": {
+          "label": "Read the measured results",
+          "destination": "/catalog-run"
+        },
+        "click-008": {
+          "label": "Codex task contract",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/AGENT_TASK.md"
+        },
+        "click-009": {
+          "label": "Original brand repair plan",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/agents/brand-0.json"
+        },
+        "click-010": {
+          "label": "Dataset seeding script",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/seed.mjs"
+        },
+        "click-011": {
+          "label": "Execution, validation, PICK and MERGE",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/execute.mjs"
+        },
+        "click-012": {
+          "label": "Original SQL and client timings",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/events.jsonl"
+        },
+        "click-013": {
+          "label": "Complete execution report",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/execution.json"
+        },
+        "click-014": {
+          "label": "Small capability and conflict probe",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/outputs/catalog-proof/merge-capabilities-v2.json"
+        },
+        "click-015": {
+          "label": "Video renderer",
+          "destination": "github.com/dengn/git4data.ai/blob/2faf5b1874a04de24c567af354be579977d213fe/scripts/catalog-proof/render-video.py"
+        },
+        "click-016": {
+          "label": "Public summary JSON",
+          "destination": "/data/catalog-run.json"
+        },
+        "click-017": {
+          "label": "01 · Define the contract",
+          "destination": "#contract"
+        },
+        "click-018": {
+          "label": "02 · Build the catalog",
+          "destination": "#fixture"
+        },
+        "click-019": {
+          "label": "03 · Assign 20 tasks",
+          "destination": "#agents"
+        },
+        "click-020": {
+          "label": "04 · Execute and validate",
+          "destination": "#validation"
+        },
+        "click-021": {
+          "label": "05 · Inject a violation",
+          "destination": "#fault"
+        },
+        "click-022": {
+          "label": "06 · Report the changes",
+          "destination": "#report"
+        },
+        "click-023": {
+          "label": "07 · Approve and merge",
+          "destination": "#merge"
+        },
+        "click-024": {
+          "label": "08 · What went wrong",
+          "destination": "#lessons"
+        },
+        "click-025": {
+          "label": "09 · Render the film",
+          "destination": "#film"
+        },
+        "click-026": {
+          "label": "10 · Use the workflow",
+          "destination": "#takeaway"
+        },
+        "click-027": {
+          "label": "Source and evidence",
+          "destination": "#sources"
+        },
+        "click-028": {
+          "label": "git4data.ai",
+          "destination": "/"
+        },
+        "click-029": {
+          "label": "More from the blog",
+          "destination": "/blog"
+        },
+        "click-030": {
+          "label": "Analytics & privacy · 网站统计与隐私",
+          "destination": "/privacy"
+        }
+      },
+      "videos": [
+        "video-1"
+      ]
+    }
+  ]
+}

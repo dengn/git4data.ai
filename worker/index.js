@@ -19,6 +19,8 @@
 import mysql from 'mysql2/promise';
 import { compileSql, idOk, dbFor, snapshotsFor } from './playground-sql.mjs';
 import { skillDistribution } from './skill-distribution.mjs';
+import { analyticsRoutes } from './analytics.mjs';
+export { SiteAnalytics } from './analytics.mjs';
 
 const BASE_DB = 'g4d_demo';
 const BASE_TABLE = 'customers';
@@ -245,6 +247,7 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
+    if (url.pathname.startsWith('/api/analytics/')) return analyticsRoutes(request, env);
     if (url.pathname.startsWith('/api/skill/')) return skillDistribution(request, ctx);
 
     try {

@@ -4,3 +4,6 @@ node_modules/
 *.log
 .dev.vars*
 .env*
+
+# Local owner credentials: never commit or serve.
+/outputs/private/
