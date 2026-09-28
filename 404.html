@@ -16,14 +16,14 @@
   .nf .term{margin-top:34px;max-width:560px}
 </style>
 </head>
-<body>
+<body data-analytics-page="/404">
 <div class="bg-grid" aria-hidden="true"></div>
 <div class="bg-glow" aria-hidden="true"></div>
 <canvas id="dag" class="bg-dag" aria-hidden="true"></canvas>
 
 <header class="nav is-stuck">
   <div class="wrap nav-in">
-    <a class="brand" href="/">
+    <a class="brand" href="/" data-analytics-id="click-001">
       <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="6" cy="4" r="2"></circle><circle cx="6" cy="20" r="2"></circle><circle cx="18" cy="12" r="2"></circle>
         <path d="M6 6v12"></path><path d="M16 12H9a3 3 0 0 1-3-3"></path>
@@ -48,8 +48,8 @@
   </div>
 
   <div class="hero-cta">
-    <a class="btn btn-primary btn-lg" href="/">Back to git4data</a>
-    <a class="btn btn-ghost btn-lg" href="/benchmark">See the benchmark</a>
+    <a class="btn btn-primary btn-lg" href="/" data-analytics-id="click-002">Back to git4data</a>
+    <a class="btn btn-ghost btn-lg" href="/benchmark" data-analytics-id="click-003">See the benchmark</a>
   </div>
 </main>
 
@@ -62,5 +62,7 @@
 
 <script src="assets/js/dag.js?v=4" defer></script>
 <script src="assets/js/main.js?v=6" defer></script>
+<script src="/assets/js/analytics.js?v=1" defer></script>
+<p data-analytics-privacy style="text-align:center;padding:16px 24px;font-size:11px;color:#8f9cb3"><a href="/privacy" data-analytics-id="click-004">Analytics &amp; privacy · 网站统计与隐私</a></p>
 </body>
 </html>

@@ -7,6 +7,9 @@
   "main": "worker/index.js",
   "compatibility_flags": ["nodejs_compat"],
   "hyperdrive": [{ "binding": "HYPERDRIVE", "id": "f6ca605cdbbc4c0399310f4ab536d433" }],
+  "durable_objects": { "bindings": [{ "name": "SITE_ANALYTICS", "class_name": "SiteAnalytics" }] },
+  "migrations": [{ "tag": "site-analytics-v1", "new_sqlite_classes": ["SiteAnalytics"] }],
+  "ratelimits": [{ "name": "ANALYTICS_LIMIT", "namespace_id": "2026092601", "simple": { "limit": 60, "period": 60 } }],
   "triggers": { "crons": ["*/10 * * * *"] },
 
   // Binds both hostnames on every deploy and creates their DNS records, so the

@@ -24,7 +24,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css?v=8">
 </head>
-<body>
+<body data-analytics-page="/">
 
 <div class="bg-grid" aria-hidden="true"></div>
 <div class="bg-glow" aria-hidden="true"></div>
@@ -33,7 +33,7 @@
 <!-- ─────────── nav ─────────── -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="git4data home">
+    <a class="brand" href="#top" aria-label="git4data home" data-analytics-id="click-001">
       <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="6" cy="4" r="2"></circle><circle cx="6" cy="20" r="2"></circle><circle cx="18" cy="12" r="2"></circle>
         <path d="M6 6v12"></path><path d="M16 12H9a3 3 0 0 1-3-3"></path>
@@ -42,25 +42,25 @@
     </a>
 
     <nav class="nav-links" aria-label="Primary">
-      <a href="#product" data-i18n="nav.features">Product</a>
-      <a href="playground.html" data-i18n="nav.play">Live demo</a>
-      <a href="agent-skill.html" data-i18n="nav.skill">Agent skill</a>
-      <a href="blog.html" data-i18n="nav.blog">Blog</a>
-      <a href="https://docs.matrixorigin.cn/" target="_blank" rel="noopener" data-i18n="nav.docs">Docs</a>
+      <a href="#product" data-i18n="nav.features" data-analytics-id="click-002">Product</a>
+      <a href="playground.html" data-i18n="nav.play" data-analytics-id="click-003">Live demo</a>
+      <a href="agent-skill.html" data-i18n="nav.skill" data-analytics-id="click-004">Agent skill</a>
+      <a href="blog.html" data-i18n="nav.blog" data-analytics-id="click-005">Blog</a>
+      <a href="https://docs.matrixorigin.cn/" target="_blank" rel="noopener" data-i18n="nav.docs" data-analytics-id="click-006">Docs</a>
     </nav>
 
     <div class="nav-actions">
-      <button class="lang" id="langBtn" type="button" aria-label="Switch language">
+      <button class="lang" id="langBtn" type="button" aria-label="Switch language" data-analytics-id="click-007">
         <span class="lang-on">EN</span><span class="lang-sep">/</span><span class="lang-off">中文</span>
       </button>
-      <a class="btn btn-ghost" href="https://github.com/dengn/git4data.ai" target="_blank" rel="noopener">
+      <a class="btn btn-ghost" href="https://github.com/dengn/git4data.ai" target="_blank" rel="noopener" data-analytics-id="click-008">
         <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.49c-2.01.36-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
         <span>GitHub</span>
       </a>
-      <a class="btn btn-primary" href="playground.html" data-i18n="nav.cta">Try the demo</a>
+      <a class="btn btn-primary" href="playground.html" data-i18n="nav.cta" data-analytics-id="click-009">Try the demo</a>
     </div>
 
-    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false">
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" data-analytics-id="click-010">
       <span></span><span></span>
     </button>
   </div>
@@ -71,7 +71,7 @@
 <!-- ─────────── hero ─────────── -->
 <section class="hero hero-product wrap" id="product">
   <div class="hero-copy">
-    <a class="pill reveal" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener">
+    <a class="pill reveal" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener" data-analytics-id="click-011">
       <span class="pill-dot"></span>
       <span data-i18n="hero.pill">Database-native branches in MatrixOne</span>
       <span class="pill-arrow">→</span>
@@ -79,8 +79,8 @@
     <h1 class="reveal" data-d="1"><span data-i18n="hero.h1a">Let AI agents change millions of rows</span><br><span class="grad" data-i18n="hero.h1b">without touching production.</span></h1>
     <p class="lede reveal" data-d="2" data-i18n="hero.lede">Give every agent an isolated data branch. Review row-level changes, validate the result, then merge approved changes when you’re ready.</p>
     <div class="hero-cta reveal" data-d="3">
-      <a class="btn btn-primary btn-lg" href="#catalog-film" data-play-catalog data-i18n="hero.cta1">Watch the 60-second run</a>
-      <a class="btn btn-ghost btn-lg" href="#start" data-i18n="hero.cta2">Build with Git4Data</a>
+      <a class="btn btn-primary btn-lg" href="#catalog-film" data-play-catalog data-i18n="hero.cta1" data-analytics-id="click-012">Watch the 60-second run</a>
+      <a class="btn btn-ghost btn-lg" href="#start" data-i18n="hero.cta2" data-analytics-id="click-013">Build with Git4Data</a>
     </div>
     <p class="hero-support reveal" data-d="4" data-i18n="hero.support">Git for your data, built into the database. Powered by MatrixOne.</p>
   </div>
@@ -90,19 +90,19 @@
       <div><span class="pr-eyebrow" data-i18n="film.eyebrow">REAL DATABASE RUN</span><h2 data-i18n="film.title">10 Million Products.<br>20 Codex Agents.</h2></div>
       <span class="pr-state"><i></i><span data-i18n="film.length">60 sec</span></span>
     </div>
-    <video id="catalogVideo" controls playsinline preload="none" poster="assets/video/catalog-agents-poster.jpg?v=1" aria-label="10 Million Products and 20 Codex Agents: a measured database workflow replay" aria-describedby="catalogFilmNote">
+    <video id="catalogVideo" controls playsinline preload="none" poster="assets/video/catalog-agents-poster.jpg?v=1" aria-label="10 Million Products and 20 Codex Agents: a measured database workflow replay" aria-describedby="catalogFilmNote" data-analytics-video="video-1">
       <source src="assets/video/catalog-agents.mp4?v=1" type="video/mp4">
       <track kind="captions" src="assets/video/catalog-agents.en.vtt?v=1" srclang="en" label="English">
-      <a href="assets/video/catalog-agents.mp4?v=1" data-i18n="film.download">Download the walkthrough</a>
+      <a href="assets/video/catalog-agents.mp4?v=1" data-i18n="film.download" data-analytics-id="click-014">Download the walkthrough</a>
     </video>
     <div class="film-result"><span data-i18n="film.resultLabel">Approved rows merged</span><strong id="filmMergedCount">4,552,565</strong></div>
     <p class="film-promise" data-i18n="film.promise">0 price changes. 0 unreviewed changes in main.</p>
     <p class="film-note" id="catalogFilmNote" data-i18n="film.note">Measured-run replay on synthetic data. Twenty Codex-authored SQL plans; execution limited to three workers at a time. Price violations were deliberately injected to test the approval policy.</p>
     <div class="pr-preview-actions">
-      <a class="btn btn-primary" href="playground.html" data-i18n="film.try">Try branch, diff &amp; merge</a>
-      <a class="film-evidence" href="catalog-run.html" data-i18n="film.evidence">Run results &amp; method →</a>
+      <a class="btn btn-primary" href="playground.html" data-i18n="film.try" data-analytics-id="click-015">Try branch, diff &amp; merge</a>
+      <a class="film-evidence" href="catalog-run.html" data-i18n="film.evidence" data-analytics-id="click-016">Run results &amp; method →</a>
     </div>
-    <a class="text-link" href="blog.html" data-i18n="blog.filmLink">Behind the film: read the full experiment →</a>
+    <a class="text-link" href="blog.html" data-i18n="blog.filmLink" data-analytics-id="click-017">Behind the film: read the full experiment →</a>
   </div>
 </section>
 
@@ -110,7 +110,7 @@
 <section class="wrap" aria-label="Download the agent skill">
   <div class="skill-home">
     <div><p class="kick" data-i18n="skill.homeKick">TAKE THE WORKFLOW WITH YOU</p><h2 data-i18n="skill.homeTitle">Give your agent a reviewed path to production.</h2><p data-i18n="skill.homeText">Download the open-source MatrixOne skill: isolated branches, complete validation, and separately authorized merges. Use your own database and existing SQL tools.</p></div>
-    <a class="btn btn-primary" href="agent-skill.html" data-i18n="skill.homeLink">Get the agent skill →</a>
+    <a class="btn btn-primary" href="agent-skill.html" data-i18n="skill.homeLink" data-analytics-id="click-018">Get the agent skill →</a>
   </div>
 </section>
 
@@ -199,7 +199,7 @@
       <div class="ico i-rd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M3 12h12"></path><path d="M3 18h6"></path></svg></div>
       <h3 data-i18n="f6.h">Branch without full copies</h3>
       <p data-i18n="f6.p">Database-native branching avoids materializing a full copy for each candidate state. See the benchmark page for the measured environment, workload, and limits behind published results.</p>
-      <a class="chip" href="benchmark.html" data-i18n="feat.benchmarkLink">100 GB table branch · 0.20 s · 314 KB — benchmark method →</a>
+      <a class="chip" href="benchmark.html" data-i18n="feat.benchmarkLink" data-analytics-id="click-019">100 GB table branch · 0.20 s · 314 KB — benchmark method →</a>
     </article>
   </div>
 
@@ -251,7 +251,7 @@
         <div class="term-bar">
           <span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span>
           <span class="term-title" id="stepTitle">01 · Freeze</span>
-          <button class="copy" data-copy="#stepCode" type="button" data-i18n="copy">Copy</button>
+          <button class="copy" data-copy="#stepCode" type="button" data-i18n="copy" data-analytics-id="click-020">Copy</button>
         </div>
         <pre class="term-body"><code id="stepCode"></code></pre>
       </div>
@@ -268,7 +268,7 @@
       <h2 data-i18n="bt.h">Up to 18.5&times; faster than DoltDB.</h2>
       <p class="sub" data-i18n="bt.p">End-to-end wall-clock time on BranchBench's four agentic workflows at scale factor 100 — roughly 47 million rows, five concurrent agents, twenty steps each. Warm runs.</p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="benchmark.html" data-i18n="bt.cta">See all results</a>
+        <a class="btn btn-primary" href="benchmark.html" data-i18n="bt.cta" data-analytics-id="click-021">See all results</a>
       </div>
     </div>
     <div class="bt-chart" aria-hidden="true">
@@ -312,15 +312,15 @@
       <h2 data-i18n="cta.h">Try a branch. Inspect a diff. Then bring your workload.</h2>
       <p class="sub" data-i18n="cta.sub">Start with the live SQL playground, then run MatrixOne locally and follow the documented branch, diff, and merge workflow.</p>
       <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="playground.html" data-i18n="cta.b1">Try the live playground</a>
-        <a class="btn btn-ghost btn-lg" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener" data-i18n="cta.b2">Open MatrixOne on GitHub</a>
+        <a class="btn btn-primary btn-lg" href="playground.html" data-i18n="cta.b1" data-analytics-id="click-022">Try the live playground</a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener" data-i18n="cta.b2" data-analytics-id="click-023">Open MatrixOne on GitHub</a>
       </div>
     </div>
     <div class="term term-sm cta-term">
       <div class="term-bar">
         <span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span>
         <span class="term-title">bash</span>
-        <button class="copy" data-copy="#startCode" type="button" data-i18n="copy">Copy</button>
+        <button class="copy" data-copy="#startCode" type="button" data-i18n="copy" data-analytics-id="click-024">Copy</button>
       </div>
 <pre class="term-body"><code id="startCode"><span class="c-cmt"># 1 · run MatrixOne</span>
 docker run -d -p 6001:6001 --name matrixone \
@@ -341,7 +341,7 @@ mysql -h 127.0.0.1 -P 6001 -u root -p111
 <footer class="footer">
   <div class="wrap footer-in">
     <div class="foot-brand">
-      <a class="brand" href="#top">
+      <a class="brand" href="#top" data-analytics-id="click-025">
         <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="6" cy="4" r="2"></circle><circle cx="6" cy="20" r="2"></circle><circle cx="18" cy="12" r="2"></circle>
           <path d="M6 6v12"></path><path d="M16 12H9a3 3 0 0 1-3-3"></path>
@@ -353,22 +353,22 @@ mysql -h 127.0.0.1 -P 6001 -u root -p111
     <nav class="foot-cols" aria-label="Footer">
       <div>
         <h4 data-i18n="foot.c1">Project</h4>
-        <a href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener">MatrixOne</a>
-        <a href="https://docs.matrixorigin.cn/" target="_blank" rel="noopener" data-i18n="foot.docs">Documentation</a>
-        <a href="https://www.matrixorigin.io/" target="_blank" rel="noopener">MatrixOrigin</a>
+        <a href="https://github.com/matrixorigin/matrixone" target="_blank" rel="noopener" data-analytics-id="click-026">MatrixOne</a>
+        <a href="https://docs.matrixorigin.cn/" target="_blank" rel="noopener" data-i18n="foot.docs" data-analytics-id="click-027">Documentation</a>
+        <a href="https://www.matrixorigin.io/" target="_blank" rel="noopener" data-analytics-id="click-028">MatrixOrigin</a>
       </div>
       <div>
         <h4 data-i18n="foot.c2">Learn</h4>
-        <a href="blog.html" data-i18n="nav.blog">Blog</a>
-        <a href="agent-skill.html" data-i18n="nav.skill">Agent skill</a>
-        <a href="https://www.matrixorigin.io/blog/git4data-part4-landscape" target="_blank" rel="noopener" data-i18n="foot.blog">Git4Data deep dive</a>
-        <a href="https://arxiv.org/abs/2604.03927" target="_blank" rel="noopener" data-i18n="foot.paper">Research paper</a>
-        <a href="benchmark.html" data-i18n="foot.cmp">Benchmark results</a>
+        <a href="blog.html" data-i18n="nav.blog" data-analytics-id="click-029">Blog</a>
+        <a href="agent-skill.html" data-i18n="nav.skill" data-analytics-id="click-030">Agent skill</a>
+        <a href="https://www.matrixorigin.io/blog/git4data-part4-landscape" target="_blank" rel="noopener" data-i18n="foot.blog" data-analytics-id="click-031">Git4Data deep dive</a>
+        <a href="https://arxiv.org/abs/2604.03927" target="_blank" rel="noopener" data-i18n="foot.paper" data-analytics-id="click-032">Research paper</a>
+        <a href="benchmark.html" data-i18n="foot.cmp" data-analytics-id="click-033">Benchmark results</a>
       </div>
       <div>
         <h4 data-i18n="foot.c3">Community</h4>
-        <a href="https://github.com/matrixorigin/matrixone/discussions" target="_blank" rel="noopener">Discussions</a>
-        <a href="https://github.com/matrixorigin/matrixone/issues" target="_blank" rel="noopener">Issues</a>
+        <a href="https://github.com/matrixorigin/matrixone/discussions" target="_blank" rel="noopener" data-analytics-id="click-034">Discussions</a>
+        <a href="https://github.com/matrixorigin/matrixone/issues" target="_blank" rel="noopener" data-analytics-id="click-035">Issues</a>
       </div>
     </nav>
   </div>
@@ -381,5 +381,7 @@ mysql -h 127.0.0.1 -P 6001 -u root -p111
 <script src="assets/js/dag.js?v=4" defer></script>
 <script src="assets/js/i18n.js?v=10" defer></script>
 <script src="assets/js/main.js?v=6" defer></script>
+<script src="/assets/js/analytics.js?v=1" defer></script>
+<p data-analytics-privacy style="text-align:center;padding:16px 24px;font-size:11px;color:#8f9cb3"><a href="/privacy" data-analytics-id="click-036">Analytics &amp; privacy · 网站统计与隐私</a></p>
 </body>
 </html>

@@ -1,0 +1,32 @@
+(function(){
+'use strict';var token='',data=null,refreshTimer=null,busy=false;var $=function(id){return document.getElementById(id);};
+var names={page_view:'浏览',click:'点击',video_start:'视频开始',video_complete:'视频播完'};
+function cells(parent,values){var row=document.createElement('tr');values.forEach(function(value){var td=document.createElement('td');td.textContent=String(value);row.appendChild(td);});parent.appendChild(row);}
+function rows(){return data.rows.filter(function(r){return !$('analyticsPage').value||r.page===$('analyticsPage').value;});}
+function totals(list){var t={page_view:0,click:0,video_start:0,video_complete:0};list.forEach(function(r){t[r.event]+=r.count;});return t;}
+function render(){
+ var selected=rows(),t=totals(selected),pageMap=new Map(data.pages.map(function(p){return[p.path,p];}));
+ ['Views','Clicks','Starts','Completes'].forEach(function(s,i){$('metric'+s).textContent=t[['page_view','click','video_start','video_complete'][i]].toLocaleString();});
+ $('analyticsPeriod').textContent=data.start+' → '+data.end+' UTC · 采集启用 '+data.startedAt+' · 查询时间 '+data.generatedAt;
+ var daily=[];for(var d=Date.parse(data.start+'T00:00:00Z');d<=Date.parse(data.end+'T00:00:00Z');d+=86400000){var date=new Date(d).toISOString().slice(0,10);daily.push(Object.assign({day:date},totals(selected.filter(function(r){return r.day===date;}))));}
+ $('analyticsDaily').replaceChildren();daily.slice().reverse().forEach(function(r){cells($('analyticsDaily'),[r.day,r.page_view,r.click,r.video_start,r.video_complete]);});
+ var ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1100 220');
+ var max=Math.max(1,...daily.map(function(r){return Math.max(r.page_view,r.click);})),width=1060/daily.length;
+ daily.forEach(function(r,i){['page_view','click'].forEach(function(k,j){var bar=document.createElementNS(ns,'rect'),height=170*r[k]/max;bar.setAttribute('x',20+i*width+j*width/2);bar.setAttribute('y',180-height);bar.setAttribute('width',Math.max(.5,width/2-1));bar.setAttribute('height',height);bar.setAttribute('fill',j?'#34d399':'#22d3ee');var title=document.createElementNS(ns,'title');title.textContent=r.day+' '+names[k]+': '+r[k];bar.appendChild(title);svg.appendChild(bar);});});
+ [data.start,data.end].forEach(function(date,i){var label=document.createElementNS(ns,'text');label.setAttribute('x',i?1080:20);label.setAttribute('y',208);label.setAttribute('text-anchor',i?'end':'start');label.setAttribute('fill','#8f9cb3');label.setAttribute('font-size','13');label.textContent=date+' UTC';svg.appendChild(label);});$('analyticsChart').replaceChildren(svg);
+ $('analyticsPages').replaceChildren();data.pages.filter(function(p){return !$('analyticsPage').value||p.path===$('analyticsPage').value;}).map(function(p){return{p:p,t:totals(selected.filter(function(r){return r.page===p.path;}))};}).sort(function(a,b){return b.t.page_view-a.t.page_view;}).forEach(function(x){cells($('analyticsPages'),[x.p.title+' · '+x.p.path,x.t.page_view,x.t.click,x.t.page_view?(100*x.t.click/x.t.page_view).toFixed(1):'—',x.t.video_start]);});
+ var targets=new Map();selected.filter(function(r){return r.event==='click';}).forEach(function(r){var key=r.page+'|'+r.target;var v=targets.get(key)||{page:r.page,target:r.target,count:0};v.count+=r.count;targets.set(key,v);});
+ $('analyticsTargets').replaceChildren();Array.from(targets.values()).sort(function(a,b){return b.count-a.count;}).forEach(function(r){var p=pageMap.get(r.page),target=p&&p.targets[r.target];cells($('analyticsTargets'),[r.page,target?target.label:r.target,r.target,target?target.destination:'',r.count]);});if(!targets.size)cells($('analyticsTargets'),['所选范围暂无点击','','','','']);
+}
+async function load(){if(busy||!token)return;var requestToken=token;busy=true;$('analyticsStatus').textContent='正在读取汇总…';try{
+ var res=await fetch('/api/analytics/report?days='+$('analyticsDays').value,{headers:{authorization:'Bearer '+token},credentials:'omit',cache:'no-store'});
+ if(!res.ok)throw new Error(res.status===401?'密钥不正确或已失效。':res.status===429?'请求过于频繁，请稍后刷新。':'统计暂不可用，之前的结果未更新。');
+ var received=await res.json();if(token!==requestToken)return;data=received;var current=$('analyticsPage').value;$('analyticsPage').replaceChildren();var all=document.createElement('option');all.value='';all.textContent='全部页面';$('analyticsPage').appendChild(all);data.pages.forEach(function(p){var o=document.createElement('option');o.value=p.path;o.textContent=p.title;$('analyticsPage').appendChild(o);});$('analyticsPage').value=current;
+ $('analyticsLogin').hidden=true;$('analyticsReport').hidden=false;$('analyticsStatus').textContent='已更新。空白日期按 0 展示；采集启用前没有历史数据。';render();
+ }catch(e){$('analyticsStatus').textContent=e.message;}finally{busy=false;}}
+$('analyticsLogin').addEventListener('submit',function(e){e.preventDefault();token=$('analyticsToken').value.trim();$('analyticsToken').value='';load();});
+$('analyticsDays').addEventListener('change',load);$('analyticsPage').addEventListener('change',function(){if(data)render();});$('analyticsRefresh').addEventListener('click',load);
+$('analyticsAuto').addEventListener('change',function(){clearInterval(refreshTimer);refreshTimer=this.checked?setInterval(function(){if(document.visibilityState==='visible')load();},60000):null;});
+$('analyticsLogout').addEventListener('click',function(){token='';data=null;clearInterval(refreshTimer);$('analyticsAuto').checked=false;$('analyticsReport').hidden=true;$('analyticsLogin').hidden=false;$('analyticsStatus').textContent='已退出。';['analyticsDaily','analyticsPages','analyticsTargets','analyticsChart'].forEach(function(id){$(id).replaceChildren();});});
+$('analyticsExport').addEventListener('click',function(){if(!data)return;var pageMap=new Map(data.pages.map(function(p){return[p.path,p];}));var out=[['date_utc','page','event','target','label','count']];rows().forEach(function(r){var p=pageMap.get(r.page);out.push([r.day,r.page,r.event,r.target,p&&p.targets[r.target]?p.targets[r.target].label:r.target,r.count]);});var csv=out.map(function(row){return row.map(function(value){var text=String(value);if(/^[=+@\-]/.test(text))text="'"+text;return '"'+text.replace(/"/g,'""')+'"';}).join(',');}).join('\r\n');var url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));var a=document.createElement('a');a.href=url;a.download='git4data-analytics-'+data.start+'-'+data.end+'.csv';a.click();setTimeout(function(){URL.revokeObjectURL(url);},1000);});
+})();

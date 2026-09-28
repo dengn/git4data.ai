@@ -89,7 +89,7 @@
       var li = document.createElement('li');
       li.className = 'pstep';
       li.innerHTML =
-        '<button type="button">' +
+        '<button type="button" data-analytics-id="play-step-' + (i + 1) + '">' +
           '<span class="ps-n mono">' + String(i + 1).padStart(2, '0') + '</span>' +
           '<span class="ps-b">' +
             '<span class="ps-t">' + (isZh() ? s.tZh : s.t) + '</span>' +

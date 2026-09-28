@@ -285,7 +285,7 @@ Keep these signals separate:
 
 | Stage | Signal | Interpretation |
 | --- | --- | --- |
-| Awareness | Website analytics, if configured separately | Visits, not adoption; this change adds no browser analytics beacon |
+| Awareness | First-party page views and click counts | Events, not unique people or adoption; see Site analytics below |
 | Distribution | Release ZIP downloads by version | Requests, not unique users or installations |
 | Interest | Repository stars/forks | Covers the whole site repository, not only this skill |
 | Activation | Voluntary GitHub experience reports | Self-reported successful branch → review → merge |
@@ -317,3 +317,56 @@ Edit the two article files together when changing facts. Their evidence comes fr
 retained catalog run, not from another database execution. Add new article URLs to the
 blog index and sitemap. Shared editorial styles live in `assets/css/style.css`; bump its
 cache version in all HTML pages, including nested blog pages, whenever it changes.
+
+
+## Site analytics
+
+All public HTML pages (including both article languages and 404) load `assets/js/analytics.js`.
+The private `/analytics` dashboard does not track itself. `scripts/instrument-pages.py` assigns
+persistent control IDs and creates `data/analytics-catalog.json`, the server-side event allowlist.
+Run it after adding pages, links or buttons, or regenerating `catalog-run.html`; do not reuse an
+existing ID for a different action. Dynamic Playground steps and benchmark buttons are explicitly
+instrumented in their own scripts. New dynamic controls must be added to the catalog deliberately.
+
+### Metrics and limits
+
+- `page_view`: once when a page becomes visible per document load, and again on BFCache restoration.
+  Reloads count; hidden prerenders wait until visible. Internal anchor navigation does not add a view.
+- `click`: trusted link/button activation, including keyboard activation. Every occurrence counts;
+  dynamic benchmark button counts are grouped by control type. No arbitrary page/body-click heatmap.
+- `video_start` / `video_complete`: first play and first ended event per video per document lifetime.
+  The latter is an ended event, not proof that the viewer watched every second.
+- Ratios are clicks per 100 views, not unique-user conversion rates. No users, sessions, IPs,
+  cookies, fingerprints, referrers, query strings, SQL or form values are stored in analytics.
+- DNT, GPC, local opt-out and `?analytics=off` suppress collection. Automated/headless clients and
+  recognizable bots are filtered where possible. Ad blockers, navigation loss, quotas, rate limits
+  and network failures can reduce counts; forged or undetected bot events remain possible.
+- No historical data is backfilled. Reports clamp the requested range to collection activation.
+
+Events go to `/api/analytics/events` as small same-origin batches, with omitted credentials/referrer.
+The Worker validates the page/event/target against the catalog, limits body size and batch length,
+and uses Cloudflare's rate limiter (60 requests/minute per edge/IP key). IPs are transient rate-limit
+keys, not analytics dimensions or stored identifiers. The browser caps 200 events per document.
+
+`SiteAnalytics` is a SQLite Durable Object; it atomically increments daily UTC counters, independent
+of MatrixOne. Counts survive deploys. It retains 180 UTC days and prunes older buckets daily through
+an alarm, plus reads/writes. Cloudflare recovery backups may have additional retention. The `site-v1`
+object name, class name and `site-analytics-v1` migration are stable identities: do not rename or
+remove them casually. This uses existing Cloudflare services and their plan quotas, not unlimited
+free storage; quotas can cause missing events. No new paid subscription is purchased by deployment.
+
+### Owner dashboard
+
+Open `https://git4data.ai/analytics` and paste the private viewing key. `ANALYTICS_READ_TOKEN` is a
+Cloudflare secret. Its initial local copy is `outputs/private/analytics-access-key.txt` (mode 0600,
+Git-ignored, and excluded from deployed assets). It is never embedded in HTML or a URL. Anyone
+holding this read key can see aggregate statistics, so treat it as a secret and rotate on exposure.
+To rotate, securely generate a new key and upload via `wrangler secret put ANALYTICS_READ_TOKEN`;
+no source change is required. The dashboard keeps the key in memory and sends it only in the
+Authorization header to `/api/analytics/report`. Reports use `Cache-Control: no-store`.
+
+The dashboard provides 1/7/30/90/180-day ranges, page filtering, daily totals, page totals,
+per-control click counts, CSV export and optional one-minute refresh while visible. Login failures
+never return data. The public page shell is intentionally reachable but has no statistics embedded.
+Privacy disclosure and opt-out live at `/privacy`. Installed Skill telemetry remains absent; website
+clicks and GitHub release downloads remain separate measures.
