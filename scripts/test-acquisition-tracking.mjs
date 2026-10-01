@@ -29,6 +29,20 @@ test('normalizeSource - allowlisted values', () => {
   assert.strictEqual(normalizeSource('newsletter'), 'newsletter');
   assert.strictEqual(normalizeSource('github'), 'github');
   assert.strictEqual(normalizeSource('email'), 'email');
+  // Community-specific Slack channels
+  assert.strictEqual(normalizeSource('slack-postgres'), 'slack-postgres');
+  assert.strictEqual(normalizeSource('slack-datatalks'), 'slack-datatalks');
+  assert.strictEqual(normalizeSource('slack-mlops'), 'slack-mlops');
+  // Community-specific Discord servers
+  assert.strictEqual(normalizeSource('discord-latentspace'), 'discord-latentspace');
+  assert.strictEqual(normalizeSource('discord-llamaindex'), 'discord-llamaindex');
+  assert.strictEqual(normalizeSource('discord-duckdb'), 'discord-duckdb');
+  assert.strictEqual(normalizeSource('discord-langchain'), 'discord-langchain');
+  // Additional platforms
+  assert.strictEqual(normalizeSource('mo-blog'), 'mo-blog');
+  assert.strictEqual(normalizeSource('linux-do'), 'linux-do');
+  assert.strictEqual(normalizeSource('juejin'), 'juejin');
+  assert.strictEqual(normalizeSource('modb'), 'modb');
 });
 
 test('normalizeSource - non-allowlisted values collapse to other', () => {
@@ -51,6 +65,7 @@ test('normalizeMedium - allowlisted values', () => {
   assert.strictEqual(normalizeMedium('newsletter'), 'newsletter');
   assert.strictEqual(normalizeMedium('referral'), 'referral');
   assert.strictEqual(normalizeMedium('email'), 'email');
+  assert.strictEqual(normalizeMedium('profile'), 'profile');
 });
 
 test('normalizeMedium - non-allowlisted values collapse to other', () => {
@@ -239,4 +254,50 @@ test('privacy - never stores full referrer URLs', () => {
   assert.ok(!data.referrer.includes('comments'));
   assert.ok(!data.referrer.includes('abc123'));
   assert.ok(!data.referrer.includes('sensitive'));
+});
+
+test('privacy - utm_content is never stored', () => {
+  const url = 'https://git4data.ai/?utm_source=linkedin&utm_medium=profile&utm_campaign=test&utm_content=featured-post&utm_term=keywords';
+  const data = extractAcquisitionData(url, '');
+  
+  // Only source, medium, campaign, and referrer are returned
+  assert.strictEqual(Object.keys(data).length, 4);
+  assert.strictEqual(data.source, 'linkedin');
+  assert.strictEqual(data.medium, 'profile');
+  assert.strictEqual(data.campaign, 'test');
+  assert.strictEqual(data.referrer, 'direct');
+  
+  // utm_content and utm_term are never stored
+  assert.ok(!('content' in data));
+  assert.ok(!('term' in data));
+  assert.ok(!('utm_content' in data));
+  assert.ok(!('utm_term' in data));
+});
+
+test('extended allowlist - community-specific sources', () => {
+  // Slack communities
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=slack-postgres', '').source, 'slack-postgres');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=slack-datatalks', '').source, 'slack-datatalks');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=slack-mlops', '').source, 'slack-mlops');
+  
+  // Discord communities
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=discord-latentspace', '').source, 'discord-latentspace');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=discord-llamaindex', '').source, 'discord-llamaindex');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=discord-duckdb', '').source, 'discord-duckdb');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=discord-langchain', '').source, 'discord-langchain');
+  
+  // Additional platforms
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=mo-blog', '').source, 'mo-blog');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=linux-do', '').source, 'linux-do');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=juejin', '').source, 'juejin');
+  assert.strictEqual(extractAcquisitionData('https://git4data.ai/?utm_source=modb', '').source, 'modb');
+});
+
+test('extended allowlist - profile medium', () => {
+  const url = 'https://git4data.ai/?utm_source=linkedin&utm_medium=profile&utm_campaign=personal';
+  const data = extractAcquisitionData(url, '');
+  
+  assert.strictEqual(data.source, 'linkedin');
+  assert.strictEqual(data.medium, 'profile');
+  assert.strictEqual(data.campaign, 'personal');
 });
