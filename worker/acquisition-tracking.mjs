@@ -8,12 +8,18 @@
 // Allowlisted UTM sources
 const ALLOWED_SOURCES = new Set([
   'x', 'twitter', 'linkedin', 'reddit', 'substack', 'hackernoon', 'v2ex',
-  'hn', 'slack', 'discord', 'newsletter', 'github', 'email'
+  'hn', 'slack', 'discord', 'newsletter', 'github', 'email',
+  // Community-specific Slack channels
+  'slack-postgres', 'slack-datatalks', 'slack-mlops',
+  // Community-specific Discord servers
+  'discord-latentspace', 'discord-llamaindex', 'discord-duckdb', 'discord-langchain',
+  // Additional platforms
+  'mo-blog', 'linux-do', 'juejin', 'modb'
 ]);
 
 // Allowlisted UTM mediums
 const ALLOWED_MEDIUMS = new Set([
-  'social', 'community', 'article', 'comment', 'newsletter', 'referral', 'email'
+  'social', 'community', 'article', 'comment', 'newsletter', 'referral', 'email', 'profile'
 ]);
 
 // Campaign slug pattern: lowercase alphanumeric + hyphens, max 50 chars
@@ -112,6 +118,8 @@ export function categorizeReferrer(referrer) {
 
 /**
  * Extracts and normalizes acquisition parameters from a landing URL.
+ * Only utm_source, utm_medium, and utm_campaign are extracted.
+ * utm_content and all other parameters are never stored.
  * @param {string} urlString - Landing page URL with possible UTM parameters
  * @param {string} referrer - Document referrer
  * @returns {Object} Normalized acquisition data
@@ -137,6 +145,7 @@ export function extractAcquisitionData(urlString, referrer = '') {
     if (params.has('utm_campaign')) {
       data.campaign = normalizeCampaign(params.get('utm_campaign'));
     }
+    // utm_content and all other parameters are intentionally ignored
   } catch (e) {
     // Invalid URL, use defaults
   }
