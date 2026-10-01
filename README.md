@@ -338,6 +338,13 @@ instrumented in their own scripts. New dynamic controls must be added to the cat
   The latter is an ended event, not proof that the viewer watched every second.
 - Ratios are clicks per 100 views, not unique-user conversion rates. No users, sessions, IPs,
   cookies, fingerprints, referrers, query strings, SQL or form values are stored in analytics.
+- **Acquisition tracking**: Records normalized UTM parameters (source, medium, campaign) and coarse
+  referrer categories to measure promotion channel effectiveness. Only allowlisted values are stored;
+  others collapse to 'other'. Campaign values are validated against a strict lowercase alphanumeric
+  slug pattern (max 50 chars). Raw query strings, full referrer URLs, IPs, and user identifiers are
+  never stored. CTA clicks may be attributed to landing source within the same browser session
+  (sessionStorage only), cleared when the tab closes, with no cross-session or cross-device tracking.
+  See `worker/acquisition-tracking.mjs` for allowlists and `/privacy` for full disclosure.
 - DNT, GPC, local opt-out and `?analytics=off` suppress collection. Automated/headless clients and
   recognizable bots are filtered where possible. Ad blockers, navigation loss, quotas, rate limits
   and network failures can reduce counts; forged or undetected bot events remain possible.
@@ -366,7 +373,8 @@ no source change is required. The dashboard keeps the key in memory and sends it
 Authorization header to `/api/analytics/report`. Reports use `Cache-Control: no-store`.
 
 The dashboard provides 1/7/30/90/180-day ranges, page filtering, daily totals, page totals,
-per-control click counts, CSV export and optional one-minute refresh while visible. Login failures
-never return data. The public page shell is intentionally reachable but has no statistics embedded.
-Privacy disclosure and opt-out live at `/privacy`. Installed Skill telemetry remains absent; website
-clicks and GitHub release downloads remain separate measures.
+per-control click counts, acquisition source breakdowns (by UTM source/medium/campaign and referrer
+category), CTA click attribution by source, CSV export and optional one-minute refresh while visible.
+Login failures never return data. The public page shell is intentionally reachable but has no
+statistics embedded. Privacy disclosure and opt-out live at `/privacy`. Installed Skill telemetry
+remains absent; website clicks and GitHub release downloads remain separate measures.
