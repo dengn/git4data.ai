@@ -7,7 +7,9 @@
     "dev": "wrangler dev --port 3000",
     "start": "python3 -m http.server 8080",
     "deploy": "wrangler deploy",
-    "test": "node --test scripts/test-playground.mjs"
+    "test": "node --test scripts/test-playground.mjs",
+    "test:acquisition": "node --test scripts/test-acquisition-tracking.mjs",
+    "test:all": "node --test scripts/test-*.mjs"
   },
   "devDependencies": {
     "wrangler": "^4"

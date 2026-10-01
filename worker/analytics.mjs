@@ -1,5 +1,6 @@
 import {DurableObject} from 'cloudflare:workers';
 import catalog from '../data/analytics-catalog.json';
+import {normalizeSource,normalizeMedium,normalizeCampaign,categorizeReferrer} from './acquisition-tracking.mjs';
 
 const pageMap = new Map(catalog.pages.map(page => [page.path, page]));
 const DAY = 86400000;
@@ -15,8 +16,15 @@ export class SiteAnalytics extends DurableObject {
     this.sql.exec(`CREATE TABLE IF NOT EXISTS totals (
       day TEXT NOT NULL, page TEXT NOT NULL, event TEXT NOT NULL, target TEXT NOT NULL,
       count INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(day,page,event,target));
+      CREATE TABLE IF NOT EXISTS totals_v2 (
+      day TEXT NOT NULL, page TEXT NOT NULL, event TEXT NOT NULL, target TEXT NOT NULL,
+      source TEXT NOT NULL DEFAULT 'other', medium TEXT NOT NULL DEFAULT 'other',
+      campaign TEXT NOT NULL DEFAULT 'other', referrer TEXT NOT NULL DEFAULT 'direct',
+      count INTEGER NOT NULL DEFAULT 0,
+      PRIMARY KEY(day,page,event,target,source,medium,campaign,referrer));
       CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL);`);
     this.sql.exec('INSERT OR IGNORE INTO metadata VALUES (?,?)', 'started_at', new Date().toISOString());
+    this.sql.exec('INSERT OR IGNORE INTO metadata VALUES (?,?)', 'acquisition_enabled_at', new Date().toISOString());
     this.cleanedDay = '';
     ctx.blockConcurrencyWhile(async () => {
       if (await ctx.storage.getAlarm() === null) await ctx.storage.setAlarm((Math.floor(Date.now()/DAY)+1)*DAY);
@@ -25,7 +33,9 @@ export class SiteAnalytics extends DurableObject {
   cleanup() {
     const today = new Date().toISOString().slice(0,10);
     if (this.cleanedDay !== today) {
-      this.sql.exec('DELETE FROM totals WHERE day < ?', new Date(Date.now() - 179 * DAY).toISOString().slice(0,10));
+      const cutoff = new Date(Date.now() - 179 * DAY).toISOString().slice(0,10);
+      this.sql.exec('DELETE FROM totals WHERE day < ?', cutoff);
+      this.sql.exec('DELETE FROM totals_v2 WHERE day < ?', cutoff);
       this.cleanedDay = today;
     }
   }
@@ -38,8 +48,17 @@ export class SiteAnalytics extends DurableObject {
     this.cleanup();
     const day = new Date().toISOString().slice(0,10);
     this.ctx.storage.transactionSync(() => {
-      for (const item of events) this.sql.exec(`INSERT INTO totals(day,page,event,target,count) VALUES (?,?,?,?,1)
-        ON CONFLICT(day,page,event,target) DO UPDATE SET count=count+1`, day, item.page, item.event, item.target);
+      for (const item of events) {
+        const source = item.source || 'other';
+        const medium = item.medium || 'other';
+        const campaign = item.campaign || 'other';
+        const referrer = item.referrer || 'direct';
+        this.sql.exec(`INSERT INTO totals_v2(day,page,event,target,source,medium,campaign,referrer,count) VALUES (?,?,?,?,?,?,?,?,1)
+          ON CONFLICT(day,page,event,target,source,medium,campaign,referrer) DO UPDATE SET count=count+1`,
+          day, item.page, item.event, item.target, source, medium, campaign, referrer);
+        this.sql.exec(`INSERT INTO totals(day,page,event,target,count) VALUES (?,?,?,?,1)
+          ON CONFLICT(day,page,event,target) DO UPDATE SET count=count+1`, day, item.page, item.event, item.target);
+      }
     });
     return {accepted:events.length};
   }
@@ -48,11 +67,14 @@ export class SiteAnalytics extends DurableObject {
     const end = new Date().toISOString().slice(0,10);
     const requestedStart = new Date(Date.parse(end+'T00:00:00Z') - (days-1)*DAY).toISOString().slice(0,10);
     const startedAt=this.sql.exec("SELECT value FROM metadata WHERE key='started_at'").one().value;
+    const acqEnabledResult=this.sql.exec("SELECT value FROM metadata WHERE key='acquisition_enabled_at'").one();
+    const acqEnabledAt=acqEnabledResult?acqEnabledResult.value:startedAt;
     const start=requestedStart>startedAt.slice(0,10)?requestedStart:startedAt.slice(0,10);
     return {
-      generatedAt:new Date().toISOString(), startedAt, requestedStart,
+      generatedAt:new Date().toISOString(), startedAt, acquisitionEnabledAt: acqEnabledAt, requestedStart,
       start,end,timezone:'UTC',retentionDays:180,
       rows:this.sql.exec('SELECT day,page,event,target,count FROM totals WHERE day >= ? ORDER BY day,page,event,target',start).toArray(),
+      rowsV2:this.sql.exec('SELECT day,page,event,target,source,medium,campaign,referrer,count FROM totals_v2 WHERE day >= ? ORDER BY day,page,event,target,source,medium,campaign,referrer',start).toArray(),
       pages:catalog.pages,
     };
   }
@@ -99,12 +121,19 @@ export async function analyticsRoutes(request, env) {
   if (!Array.isArray(body.events) || body.events.length<1 || body.events.length>20) return json({error:'Invalid events'},400);
   const accepted=[];
   for (const event of body.events) {
-    if (!event || typeof event!=='object' || Object.keys(event).some(k=>!['page','event','target'].includes(k))) return json({error:'Invalid event'},400);
+    if (!event || typeof event!=='object') return json({error:'Invalid event'},400);
+    const allowedKeys=['page','event','target','source','medium','campaign','referrer'];
+    if (Object.keys(event).some(k=>!allowedKeys.includes(k))) return json({error:'Invalid event'},400);
     const page=pageMap.get(event.page);
     if (!page || typeof event.target!=='string') return json({error:'Invalid page'},400);
-    if (event.event==='page_view' && event.target==='') accepted.push(event);
-    else if (event.event==='click' && Object.hasOwn(page.targets,event.target)) accepted.push(event);
-    else if (['video_start','video_complete'].includes(event.event) && page.videos.includes(event.target)) accepted.push(event);
+    const item={page:event.page,event:event.event,target:event.target};
+    if(event.source && typeof event.source==='string') item.source=normalizeSource(event.source);
+    if(event.medium && typeof event.medium==='string') item.medium=normalizeMedium(event.medium);
+    if(event.campaign && typeof event.campaign==='string') item.campaign=normalizeCampaign(event.campaign);
+    if(event.referrer && typeof event.referrer==='string') item.referrer=categorizeReferrer('https://'+event.referrer+'.com');
+    if (event.event==='page_view' && event.target==='') accepted.push(item);
+    else if (event.event==='click' && Object.hasOwn(page.targets,event.target)) accepted.push(item);
+    else if (['video_start','video_complete'].includes(event.event) && page.videos.includes(event.target)) accepted.push(item);
     else return json({error:'Invalid target'},400);
   }
   try {

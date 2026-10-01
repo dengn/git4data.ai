@@ -3,11 +3,14 @@
 var names={page_view:'浏览',click:'点击',video_start:'视频开始',video_complete:'视频播完'};
 function cells(parent,values){var row=document.createElement('tr');values.forEach(function(value){var td=document.createElement('td');td.textContent=String(value);row.appendChild(td);});parent.appendChild(row);}
 function rows(){return data.rows.filter(function(r){return !$('analyticsPage').value||r.page===$('analyticsPage').value;});}
+function rowsV2(){return data.rowsV2?data.rowsV2.filter(function(r){return !$('analyticsPage').value||r.page===$('analyticsPage').value;}):[]; }
 function totals(list){var t={page_view:0,click:0,video_start:0,video_complete:0};list.forEach(function(r){t[r.event]+=r.count;});return t;}
+function totalsBy(list,key){var t={};list.forEach(function(r){var k=r[key]||'other';t[k]=(t[k]||0)+r.count;});return t;}
 function render(){
  var selected=rows(),t=totals(selected),pageMap=new Map(data.pages.map(function(p){return[p.path,p];}));
  ['Views','Clicks','Starts','Completes'].forEach(function(s,i){$('metric'+s).textContent=t[['page_view','click','video_start','video_complete'][i]].toLocaleString();});
- $('analyticsPeriod').textContent=data.start+' → '+data.end+' UTC · 采集启用 '+data.startedAt+' · 查询时间 '+data.generatedAt;
+ var acqInfo = data.acquisitionEnabledAt?' · 来源跟踪启用 '+data.acquisitionEnabledAt:'';
+ $('analyticsPeriod').textContent=data.start+' → '+data.end+' UTC · 采集启用 '+data.startedAt+acqInfo+' · 查询时间 '+data.generatedAt;
  var daily=[];for(var d=Date.parse(data.start+'T00:00:00Z');d<=Date.parse(data.end+'T00:00:00Z');d+=86400000){var date=new Date(d).toISOString().slice(0,10);daily.push(Object.assign({day:date},totals(selected.filter(function(r){return r.day===date;}))));}
  $('analyticsDaily').replaceChildren();daily.slice().reverse().forEach(function(r){cells($('analyticsDaily'),[r.day,r.page_view,r.click,r.video_start,r.video_complete]);});
  var ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1100 220');
@@ -17,6 +20,26 @@ function render(){
  $('analyticsPages').replaceChildren();data.pages.filter(function(p){return !$('analyticsPage').value||p.path===$('analyticsPage').value;}).map(function(p){return{p:p,t:totals(selected.filter(function(r){return r.page===p.path;}))};}).sort(function(a,b){return b.t.page_view-a.t.page_view;}).forEach(function(x){cells($('analyticsPages'),[x.p.title+' · '+x.p.path,x.t.page_view,x.t.click,x.t.page_view?(100*x.t.click/x.t.page_view).toFixed(1):'—',x.t.video_start]);});
  var targets=new Map();selected.filter(function(r){return r.event==='click';}).forEach(function(r){var key=r.page+'|'+r.target;var v=targets.get(key)||{page:r.page,target:r.target,count:0};v.count+=r.count;targets.set(key,v);});
  $('analyticsTargets').replaceChildren();Array.from(targets.values()).sort(function(a,b){return b.count-a.count;}).forEach(function(r){var p=pageMap.get(r.page),target=p&&p.targets[r.target];cells($('analyticsTargets'),[r.page,target?target.label:r.target,r.target,target?target.destination:'',r.count]);});if(!targets.size)cells($('analyticsTargets'),['所选范围暂无点击','','','','']);
+ var selectedV2=rowsV2();
+ if(selectedV2.length>0){
+   var bySource=totalsBy(selectedV2.filter(function(r){return r.event==='page_view';}),'source');
+   var byMedium=totalsBy(selectedV2.filter(function(r){return r.event==='page_view';}),'medium');
+   var byReferrer=totalsBy(selectedV2.filter(function(r){return r.event==='page_view';}),'referrer');
+   var sourceEntries=Object.entries(bySource).sort(function(a,b){return b[1]-a[1];});
+   var mediumEntries=Object.entries(byMedium).sort(function(a,b){return b[1]-a[1];});
+   var referrerEntries=Object.entries(byReferrer).sort(function(a,b){return b[1]-a[1];});
+   $('analyticsAcquisition').replaceChildren();
+   sourceEntries.forEach(function(e){cells($('analyticsAcquisition'),[e[0],'—','—',e[1]]);});
+   mediumEntries.forEach(function(e){cells($('analyticsAcquisition'),['—',e[0],'—',e[1]]);});
+   referrerEntries.forEach(function(e){cells($('analyticsAcquisition'),['—','—',e[0],e[1]]);});
+   var clicksBySource={};selectedV2.filter(function(r){return r.event==='click';}).forEach(function(r){var k=r.source||'other';clicksBySource[k]=(clicksBySource[k]||0)+r.count;});
+   $('analyticsAcquisitionClicks').replaceChildren();
+   Object.entries(clicksBySource).sort(function(a,b){return b[1]-a[1];}).forEach(function(e){cells($('analyticsAcquisitionClicks'),[e[0],e[1]]);});
+   if(!Object.keys(clicksBySource).length)cells($('analyticsAcquisitionClicks'),['暂无点击数据','']);
+ }else{
+   $('analyticsAcquisition').replaceChildren();cells($('analyticsAcquisition'),['暂无来源数据','','','']);
+   $('analyticsAcquisitionClicks').replaceChildren();cells($('analyticsAcquisitionClicks'),['暂无来源数据','']);
+ }
 }
 async function load(){if(busy||!token)return;var requestToken=token;busy=true;$('analyticsStatus').textContent='正在读取汇总…';try{
  var res=await fetch('/api/analytics/report?days='+$('analyticsDays').value,{headers:{authorization:'Bearer '+token},credentials:'omit',cache:'no-store'});
