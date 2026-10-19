@@ -20,7 +20,7 @@ for file in files:
     canonical=next((attr(tag,'href') for tag in re.findall(r'<link\b[^>]*>',source) if attr(tag,'rel')=='canonical'),'')
     page=urlsplit(canonical).path or ('/' if file.name=='index.html' else '/'+file.stem)
     source=re.sub(r'<body\b[^>]*>',lambda m: re.sub(r'\sdata-analytics-page="[^"]*"','',m.group(0))[:-1]+f' data-analytics-page="{page}">',source,count=1)
-    if '/assets/js/analytics.js?' not in source:source=source.replace('</body>','<script src="/assets/js/analytics.js?v=1" defer></script>\n</body>')
+    if '/assets/js/analytics.js?' not in source:source=source.replace('</body>','<script src="/assets/js/analytics.js?v=2" defer></script>\n</body>')
     if file.name!='privacy.html' and 'data-analytics-privacy' not in source:
         source=source.replace('</body>','<p data-analytics-privacy style="text-align:center;padding:16px 24px;font-size:11px;color:#8f9cb3"><a href="/privacy">Analytics &amp; privacy · 网站统计与隐私</a></p>\n</body>')
     ids=[int(n) for n in re.findall(r'data-analytics-id="click-(\d+)"',source)]
