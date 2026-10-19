@@ -26,11 +26,19 @@ const ALLOWED_MEDIUMS = new Set([
 const CAMPAIGN_PATTERN = /^[a-z0-9]([a-z0-9-]{0,48}[a-z0-9])?$/;
 const MAX_CAMPAIGN_LENGTH = 50;
 
+// Coarse referrer buckets the client may already send (never raw hostnames).
+const ALLOWED_REFERRER_BUCKETS = new Set([
+  'x', 'linkedin', 'reddit', 'substack', 'hackernoon', 'v2ex', 'hn', 'github',
+  'search', 'direct', 'other',
+]);
+
 // Referrer hostname to category mapping
 const REFERRER_MAP = {
   'x.com': 'x',
   'twitter.com': 'x',
+  't.co': 'x',
   'linkedin.com': 'linkedin',
+  'lnkd.in': 'linkedin',
   'reddit.com': 'reddit',
   'substack.com': 'substack',
   'hackernoon.com': 'hackernoon',
@@ -115,6 +123,29 @@ export function categorizeReferrer(referrer) {
     return 'other';
   }
 }
+
+/**
+ * Accepts a client-sent referrer bucket, or categorizes a full URL/hostname.
+ * Avoids the old `https://{bucket}.com` rewrite that mapped `direct`/`search` → `other`.
+ * @param {string} value - Bucket name or referrer URL/hostname
+ * @returns {string} Referrer category
+ */
+export function normalizeReferrerBucket(value) {
+  if (!value || typeof value !== 'string') return 'direct';
+  const trimmed = value.trim().toLowerCase();
+  if (!trimmed) return 'direct';
+  if (ALLOWED_REFERRER_BUCKETS.has(trimmed)) return trimmed;
+  if (/^https?:\/\//i.test(trimmed)) return categorizeReferrer(trimmed);
+  if (trimmed.includes('.')) return categorizeReferrer('https://' + trimmed);
+  return 'other';
+}
+
+/** Allowlists exported for client/server sync tests. */
+export const ACQUISITION_ALLOWLISTS = {
+  sources: [...ALLOWED_SOURCES].sort(),
+  mediums: [...ALLOWED_MEDIUMS].sort(),
+  referrerBuckets: [...ALLOWED_REFERRER_BUCKETS].sort(),
+};
 
 /**
  * Extracts and normalizes acquisition parameters from a landing URL.

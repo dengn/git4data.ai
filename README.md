@@ -68,6 +68,14 @@ Deploy from your laptop instead:
 npx wrangler deploy
 ```
 
+After any analytics-related deploy, confirm acquisition fields are live (they disappeared once when an older Worker build was redeployed — see `ACQUISITION_REDEPLOY.md`):
+
+```bash
+curl -sS 'https://git4data.ai/api/analytics/report?days=7' \
+  -H "Authorization: Bearer $ANALYTICS_READ_TOKEN" \
+  | jq 'has("acquisitionEnabledAt") and has("rowsV2")'
+```
+
 ### Pointing git4data.ai at it
 
 Nothing to click — `wrangler.jsonc` declares the custom domain:

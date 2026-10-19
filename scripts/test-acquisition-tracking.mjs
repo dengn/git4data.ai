@@ -6,13 +6,20 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import {
   normalizeSource,
   normalizeMedium,
   normalizeCampaign,
   categorizeReferrer,
+  normalizeReferrerBucket,
   extractAcquisitionData,
+  ACQUISITION_ALLOWLISTS,
 } from '../worker/acquisition-tracking.mjs';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 test('normalizeSource - allowlisted values', () => {
   assert.strictEqual(normalizeSource('x'), 'x');
@@ -300,4 +307,48 @@ test('extended allowlist - profile medium', () => {
   assert.strictEqual(data.source, 'linkedin');
   assert.strictEqual(data.medium, 'profile');
   assert.strictEqual(data.campaign, 'personal');
+});
+
+test('normalizeCampaign - published promo campaign slugs', () => {
+  for (const slug of ['agent-db-write', 'four-verbs', 'playground', 'evergreen', 'mo-blog']) {
+    assert.strictEqual(normalizeCampaign(slug), slug);
+  }
+});
+
+test('normalizeMedium - profile social comment referral', () => {
+  assert.strictEqual(normalizeMedium('profile'), 'profile');
+  assert.strictEqual(normalizeMedium('social'), 'social');
+  assert.strictEqual(normalizeMedium('comment'), 'comment');
+  assert.strictEqual(normalizeMedium('referral'), 'referral');
+});
+
+test('categorizeReferrer - short links t.co and lnkd.in', () => {
+  assert.strictEqual(categorizeReferrer('https://t.co/abc'), 'x');
+  assert.strictEqual(categorizeReferrer('https://lnkd.in/xyz'), 'linkedin');
+});
+
+test('normalizeReferrerBucket - preserves client buckets', () => {
+  assert.strictEqual(normalizeReferrerBucket('direct'), 'direct');
+  assert.strictEqual(normalizeReferrerBucket('search'), 'search');
+  assert.strictEqual(normalizeReferrerBucket('other'), 'other');
+  assert.strictEqual(normalizeReferrerBucket('x'), 'x');
+  assert.strictEqual(normalizeReferrerBucket('linkedin'), 'linkedin');
+  assert.strictEqual(normalizeReferrerBucket('https://t.co/abc'), 'x');
+  assert.strictEqual(normalizeReferrerBucket('news.ycombinator.com'), 'hn');
+  assert.strictEqual(normalizeReferrerBucket('not-a-bucket'), 'other');
+  assert.strictEqual(normalizeReferrerBucket(''), 'direct');
+});
+
+test('client analytics.js allowlists stay in sync with worker', () => {
+  const client = readFileSync(join(root, 'assets/js/analytics.js'), 'utf8');
+  const sourcesMatch = client.match(/var ALLOWED_SOURCES=\[([^\]]+)\]/);
+  const mediumsMatch = client.match(/var ALLOWED_MEDIUMS=\[([^\]]+)\]/);
+  assert.ok(sourcesMatch, 'client declares ALLOWED_SOURCES');
+  assert.ok(mediumsMatch, 'client declares ALLOWED_MEDIUMS');
+  const parseList = (raw) => raw.split(',').map((s) => s.trim().replace(/^'|'$/g, '')).filter(Boolean).sort();
+  assert.deepStrictEqual(parseList(sourcesMatch[1]), ACQUISITION_ALLOWLISTS.sources);
+  assert.deepStrictEqual(parseList(mediumsMatch[1]), ACQUISITION_ALLOWLISTS.mediums);
+  assert.ok(client.includes("record('page_view','',true)"), 'first page_view is recorded');
+  assert.ok(client.includes('utm_source'), 'client reads utm_source');
+  assert.ok(client.includes('categorizeReferrer'), 'client buckets referrer');
 });

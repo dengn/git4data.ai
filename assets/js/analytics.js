@@ -3,6 +3,9 @@
   'use strict';
   var page=document.body.getAttribute('data-analytics-page');
   var queue=[],timer=null,views=0,events=0,acquisition=null;
+  // Keep in sync with worker/acquisition-tracking.mjs allowlists.
+  var ALLOWED_SOURCES=['x','twitter','linkedin','reddit','substack','hackernoon','v2ex','hn','slack','discord','newsletter','github','email','slack-postgres','slack-datatalks','slack-mlops','discord-latentspace','discord-llamaindex','discord-duckdb','discord-langchain','mo-blog','linux-do','juejin','modb'];
+  var ALLOWED_MEDIUMS=['social','community','article','comment','newsletter','referral','email','profile'];
   function blocked() {
     var opted=false;try {opted=localStorage.getItem('g4d-analytics-optout')==='1';}catch(e){}
     return opted || navigator.doNotTrack==='1' || navigator.globalPrivacyControl===true || navigator.webdriver || new URLSearchParams(location.search).get('analytics')==='off';
@@ -11,7 +14,7 @@
     if(!ref || !ref.trim())return 'direct';
     try {
       var u=new URL(ref),h=u.hostname.toLowerCase();
-      var map={'x.com':'x','twitter.com':'x','linkedin.com':'linkedin','reddit.com':'reddit','substack.com':'substack','hackernoon.com':'hackernoon','v2ex.com':'v2ex','news.ycombinator.com':'hn','github.com':'github','google.com':'search','google.co.uk':'search','google.co.jp':'search','google.de':'search','google.fr':'search','bing.com':'search','duckduckgo.com':'search','baidu.com':'search'};
+      var map={'x.com':'x','twitter.com':'x','t.co':'x','linkedin.com':'linkedin','lnkd.in':'linkedin','reddit.com':'reddit','substack.com':'substack','hackernoon.com':'hackernoon','v2ex.com':'v2ex','news.ycombinator.com':'hn','github.com':'github','google.com':'search','google.co.uk':'search','google.co.jp':'search','google.de':'search','google.fr':'search','bing.com':'search','duckduckgo.com':'search','baidu.com':'search'};
       if(map[h])return map[h];
       for(var d in map){if(h===d||h.endsWith('.'+d))return map[d];}
       return 'other';
@@ -20,14 +23,8 @@
   function normalizeUtm(key,value) {
     if(!value||typeof value!=='string')return 'other';
     var v=value.toLowerCase().trim();
-    if(key==='source'){
-      var sources=['x','twitter','linkedin','reddit','substack','hackernoon','v2ex','hn','slack','discord','newsletter','github','email'];
-      return sources.indexOf(v)>=0?v:'other';
-    }
-    if(key==='medium'){
-      var mediums=['social','community','article','comment','newsletter','referral','email'];
-      return mediums.indexOf(v)>=0?v:'other';
-    }
+    if(key==='source')return ALLOWED_SOURCES.indexOf(v)>=0?v:'other';
+    if(key==='medium')return ALLOWED_MEDIUMS.indexOf(v)>=0?v:'other';
     if(key==='campaign'){
       if(v.length>50||!/^[a-z0-9]([a-z0-9-]{0,48}[a-z0-9])?$/.test(v))return 'other';
       return v;

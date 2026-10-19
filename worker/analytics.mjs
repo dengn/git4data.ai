@@ -1,6 +1,6 @@
 import {DurableObject} from 'cloudflare:workers';
 import catalog from '../data/analytics-catalog.json';
-import {normalizeSource,normalizeMedium,normalizeCampaign,categorizeReferrer} from './acquisition-tracking.mjs';
+import {normalizeSource,normalizeMedium,normalizeCampaign,normalizeReferrerBucket} from './acquisition-tracking.mjs';
 
 const pageMap = new Map(catalog.pages.map(page => [page.path, page]));
 const DAY = 86400000;
@@ -130,7 +130,7 @@ export async function analyticsRoutes(request, env) {
     if(event.source && typeof event.source==='string') item.source=normalizeSource(event.source);
     if(event.medium && typeof event.medium==='string') item.medium=normalizeMedium(event.medium);
     if(event.campaign && typeof event.campaign==='string') item.campaign=normalizeCampaign(event.campaign);
-    if(event.referrer && typeof event.referrer==='string') item.referrer=categorizeReferrer('https://'+event.referrer+'.com');
+    if(event.referrer && typeof event.referrer==='string') item.referrer=normalizeReferrerBucket(event.referrer);
     if (event.event==='page_view' && event.target==='') accepted.push(item);
     else if (event.event==='click' && Object.hasOwn(page.targets,event.target)) accepted.push(item);
     else if (['video_start','video_complete'].includes(event.event) && page.videos.includes(event.target)) accepted.push(item);
