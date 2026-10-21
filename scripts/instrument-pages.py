@@ -8,6 +8,10 @@ from urllib.parse import urlsplit
 import re,json
 ROOT=Path(__file__).resolve().parents[1]
 files=sorted(ROOT.glob('*.html'))+sorted((ROOT/'blog').glob('*.html'))
+GA4_HEAD='''<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SPH3ZK5VP1"></script>
+<script src="/assets/js/ga4.js"></script>
+'''
 pages=[]
 def attr(tag,name):
     m=re.search(r'\b'+re.escape(name)+r'\s*=\s*([\'\"])(.*?)\1',tag,re.S)
@@ -16,6 +20,8 @@ def text(value):return ' '.join(unescape(re.sub(r'<[^>]+>',' ',value)).split())
 for file in files:
     if file.name=='analytics.html':continue
     source=file.read_text()
+    if 'googletagmanager.com/gtag/js' not in source:
+        source=source.replace('</head>',GA4_HEAD+'</head>',1)
     title=re.search(r'<title>(.*?)</title>',source,re.S).group(1)
     canonical=next((attr(tag,'href') for tag in re.findall(r'<link\b[^>]*>',source) if attr(tag,'rel')=='canonical'),'')
     page=urlsplit(canonical).path or ('/' if file.name=='index.html' else '/'+file.stem)
